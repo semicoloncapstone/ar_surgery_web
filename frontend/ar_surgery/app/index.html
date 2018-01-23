@@ -12,9 +12,104 @@
 
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/ar-surgery.css">
+    
+    <!-- CSS Resources -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Graph Resources -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/pie.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <!-- Chart code -->
+<script>
+  var chart = AmCharts.makeChart("chartdiv", {
+    "type": "pie",
+    "startDuration": 0,
+     "theme": "light",
+    "addClassNames": false,
+    "legend":{
+       "position":"right",
+      "marginRight":100,
+      "autoMargins":false
+    },
+    "innerRadius": "10%",
+    "defs": {
+      "filter": [{
+        "id": "shadow",
+        "width": "200%",
+        "height": "200%",
+        "feOffset": {
+          "result": "offOut",
+          "in": "SourceAlpha",
+          "dx": 0,
+          "dy": 0
+        },
+        "feGaussianBlur": {
+          "result": "blurOut",
+          "in": "offOut",
+          "stdDeviation": 5
+        },
+        "feBlend": {
+          "in": "SourceGraphic",
+          "in2": "blurOut",
+          "mode": "normal"
+        }
+      }]
+    },
+    "dataProvider": [{
+      "country": "Lithuania",
+      "litres": 501.9
+    }, {
+      "country": "Czech Republic",
+      "litres": 301.9
+    }, {
+      "country": "Ireland",
+      "litres": 201.1
+    }, {
+      "country": "Germany",
+      "litres": 165.8
+    }, {
+      "country": "Australia",
+      "litres": 139.9
+    }, {
+      "country": "Austria",
+      "litres": 128.3
+    }, {
+      "country": "UK",
+      "litres": 99
+    }, {
+      "country": "Belgium",
+      "litres": 60
+    }, {
+      "country": "The Netherlands",
+      "litres": 50
+    }],
+    "valueField": "litres",
+    "titleField": "country",
+    "export": {
+      "enabled": true
+    }
+  });
+  
+  chart.addListener("init", handleInit);
+  
+  chart.addListener("rollOverSlice", function(e) {
+    handleRollOver(e);
+  });
+  
+  function handleInit(){
+    chart.legend.addListener("rollOverItem", handleRollOver);
+  }
+  
+  function handleRollOver(e){
+    var wedge = e.dataItem.wedge.node;
+    wedge.parentNode.appendChild(wedge);
+  }
+  </script>
 
     {{content-for "head-footer"}}
   </head>
@@ -161,3 +256,32 @@ function w3_close() {
 </body>
 </html>
 -->
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ember Starter Kit</title>
+  <script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+<script type="text/javascript" src="http://www.amcharts.com/lib/3/exporting/amexport_combined.js"></script>
+<script type="text/javascript" src="http://www.amcharts.com/lib/3/serial.js"></script>
+<script type="text/javascript" src="http://www.amcharts.com/lib/3/themes/none.js"></script>
+<div id="chartdiv"></div>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
+  <script src="http://builds.emberjs.com/tags/v1.6.0/ember.js"></script>
+</head>
+<body>
+
+  <script type="text/x-handlebars">
+    <h2> Welcome to Ember.js</h2>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+    {{view "chart" id="chartdiv"}}
+  </script>
+</body>
+</html>-->
