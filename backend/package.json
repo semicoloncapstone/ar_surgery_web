@@ -1,12 +1,12 @@
 {
-  "name": "students-records",
+  "name": "medicart",
   "version": "1.0.0",
-  "description": "studentsRecords server",
+  "description": "medicart web application",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ouda",
+  "author": "Cassidy-Rodriguez",
   "license": "ISC",
   "devDependencies": {
     "body-parser": "^1.15.2",
