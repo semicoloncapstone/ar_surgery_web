@@ -1,10 +1,11 @@
-var express = require('express');
+var express = require('express'); 
 var mongoose = require('mongoose');
+var app = express(); 
 var logger = require('./logger');
-var app = express();
-var path = require('path');
+mongoose.connect('mongodb://root:root@ds119088.mlab.com:19088/medicart');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
-//mongoose.connect('mongodb://root:root@ds123896.mlab.com:23896/medicart');
 
 app.use(function (request, response, next) {
     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
