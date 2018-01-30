@@ -75,6 +75,9 @@ export default Ember.Component.extend({
             this.set('isSettingsPage', true);
             this.set('S', "w3-orange");
         },
+        smallMenuClick(){
+            
+        },
 
     }
     

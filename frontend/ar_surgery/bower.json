@@ -3,6 +3,8 @@
   "dependencies": {
     "ember": "~2.9.0",
     "ember-cli-shims": "0.1.3",
-    "semantic-ui": "^2.2.13"
+    "semantic-ui": "^2.2.13",
+    "d3": "~3.5.3",
+    "lodash": "~3.10.0"
   }
 }

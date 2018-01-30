@@ -4,7 +4,7 @@ var logger = require('./logger');
 var app = express();
 var path = require('path');
 
-mongoose.connect('mongodb://root:root@ds123896.mlab.com:23896/medicart');
+//mongoose.connect('mongodb://root:root@ds123896.mlab.com:23896/medicart');
 
 app.use(function (request, response, next) {
     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
