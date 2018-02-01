@@ -2,10 +2,10 @@ var express = require('express');
 var mongoose = require('mongoose');
 var app = express(); 
 var logger = require('./logger');
+
 mongoose.connect('mongodb://root:root@ds119088.mlab.com:19088/medicart');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-
 
 app.use(function (request, response, next) {
     response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');

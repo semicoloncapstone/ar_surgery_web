@@ -7,6 +7,5 @@ var messagesSchema = mongoose.Schema(
 );
 
 var Messages = mongoose.model('messages', messagesSchema);
-
 exports.Model = Messages;
 
