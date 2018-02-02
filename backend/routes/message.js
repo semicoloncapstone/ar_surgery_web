@@ -5,10 +5,13 @@ var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var parseJSON = bodyParser.json();
 
-// Home page route.
-router.get('/messages', function (req, res) {
-  res.send('Response recieved');
-})
+
+router.route('/').get(parseUrlencoded, parseJSON, function (request, response) {
+    Messages.Model.find(function (error, messages) {
+        if (error) response.send(error);
+        response.json({message: messages});
+    });
+});
 
 module.exports = router;
 

@@ -20,12 +20,12 @@ app.use(function (request, response, next) {
     response.header('Access-Control-Allow-Methods', 'POST, PATCH, GET, PUT, DELETE, OPTIONS');
     next();
 });
-app.use(logger);
 
 app.listen(3700, function () {
     console.log('Server Listening: Port 3700');
 });
 
+app.use(logger);
 app.use('/messages', Messages);
 
 app.get('/', function(req, res){
