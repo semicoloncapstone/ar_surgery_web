@@ -18,6 +18,8 @@
     "express": "^4.14.1",
     "formidable": "^1.1.1",
     "mongoose": "^4.7.4",
-    "mongoose-paginate": "^5.0.3"
+    "mongoose-paginate": "^5.0.3",
+    "passport": "^0.4.0",
+    "passport-http-bearer": "^1.0.1"
   }
 }

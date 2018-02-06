@@ -62,8 +62,37 @@
 
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-  <span class="w3-bar-item w3-right">MedicART</span>
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"><i class="fa fa-bars"></i>  Menu</button>
+  <button class="w3-bar-item w3-button w3-right" onclick="document.getElementById('signIn').style.display='block'">Sign In</button>
+  <span class="w3-bar-item">MedicART</span>
+</div>
+
+<!-- The Modal -->
+<div id="signIn" class="w3-modal">
+  <div class="w3-modal-content w3-animate-top">
+    <header class="w3-container w3-black"> 
+      <span onclick="document.getElementById('signIn').style.display='none'" 
+      class="w3-button w3-display-topright">&times;</span>
+      <h2>Sign In</h2>
+    </header>
+
+    <div class="w3-container">
+      <header class="w3-container" style="padding-top:22px; padding-bottom:22px">
+        <h3><b><i class="fa fa-user"></i> Username</b></h3>
+      </header>
+      <!--<label>Username</label>-->
+        {{input value=username type="text"  class="w3-input w3-border w3-round-large"}}
+      <br>
+      <header class="w3-container" style="padding-top:22px; padding-bottom:22px">
+        <h3><b><i class="fa fa-lock"></i> Password</b></h3>
+      </header>
+      
+      <!--<label>Password</label>-->
+        {{input value=password type="password"  class="w3-input w3-border w3-round-large"}}
+      <br>
+      <br>
+    </div>
+  </div>
 </div>
 
 <!-- Sidebar/menu -->
