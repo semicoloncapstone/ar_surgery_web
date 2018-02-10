@@ -47,7 +47,7 @@ router.route('/')
                     newLogin.save(function (error) {
                         
                         if (error) return console.error(error);
-                        console.log('created new');
+                        
                         response.json({root: newLogin});
                     });
                     }
@@ -67,7 +67,7 @@ router.route('/')
                                 newLogin.save(function (error) {
                                     
                                     if (error) return console.error(error);
-                                    console.log('created new');
+                                    
                                     response.json({root: newLogin});
                                 });
                             }
@@ -88,7 +88,7 @@ router.route('/')
                 var recievedNonce = decrypt(request.body.root.response);
                 var storedNonce = null;
                 Roots.Model.findOne({}, function (error, message4) {
-                    console.log('did find');
+                   
                     if (!error) {
                         storedNonce = message4.nonce;
                         if (recievedNonce === storedNonce) {

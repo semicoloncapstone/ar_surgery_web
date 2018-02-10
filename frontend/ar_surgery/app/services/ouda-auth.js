@@ -97,8 +97,11 @@ export default Ember.Service.extend({
                     self.close(name);
                     reject("passwordReset");
                   } else {
+                    console.log('test1');
                     self.setName(name);
+                    console.log('test2');
                     var userRole = self.decrypt(message4.get('token'));
+                    console.log('test3');
                     self.set('isAuthenticated', true);
                     self.set('userCList', userRole);
                     resolve(userRole);

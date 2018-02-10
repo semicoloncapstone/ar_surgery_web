@@ -100,26 +100,44 @@ router.route('/')
                 if (request.body.login.requestType === "open") {// first message in the authentication protocol
                     // make sure to delete any leftover logins from any previous session for the same user if any.
                     Logins.Model.find({"userName": request.body.login.userName}, function (error, oldLogins) {
+                        if (oldLogins.length == 0)
+                        {
+                            var newLogin = new Logins.Model({
+                            userName: request.body.login.userName,
+                            password: null,
+                            nonce: rand(256, 36), // this is the server challenge
+                            response: null,
+                            loginFailed: false,
+                            token: null
+                            });
+                            newLogin.save(function (error) {// second message in the authentication protocol
+                                if (error) response.json({login: failedLogin()});
+                                response.json({login: newLogin});
+                            });
+                        }
+                        else {
                         oldLogins.forEach(function (record) {
                             Logins.Model.findByIdAndRemove(record.id,
                                 function (error, deleted) {
+                                    var newLogin = new Logins.Model({
+                                    userName: request.body.login.userName,
+                                    password: null,
+                                    nonce: rand(256, 36), // this is the server challenge
+                                    response: null,
+                                    loginFailed: false,
+                                    token: null
+                                });
+                                newLogin.save(function (error) {// second message in the authentication protocol
+                                    if (error) response.json({login: failedLogin()});
+                                    response.json({login: newLogin});
+                                });
                                 }
                             );
                         });
+                        }
                     });
 
-                    var newLogin = new Logins.Model({
-                        userName: request.body.login.userName,
-                        password: null,
-                        nonce: rand(256, 36), // this is the server challenge
-                        response: null,
-                        loginFailed: false,
-                        token: null
-                    });
-                    newLogin.save(function (error) {// second message in the authentication protocol
-                        if (error) response.json({login: failedLogin()});
-                        response.json({login: newLogin});
-                    });
+                    
 
 
                 } else {
@@ -160,7 +178,11 @@ router.route('/')
                                                     message4.loginFailed = false;
                                                     message4.save(function (error) { // fourth message in the authentication protocol
                                                         if (error) response.json({login: failedLogin()});
-                                                        response.json({login: message4});
+                                                        var tempRoot = new Logins.Model(request.body.login);
+                                                        tempRoot.token = message4.token;
+                                                        tempRoot.sessionIsActive = message4.sessionIsActive;
+                                                        tempRoot.loginFailed = message4.loginFailed;
+                                                        response.json({login: tempRoot});
                                                     });
                                                 });
                                             }
