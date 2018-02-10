@@ -30,48 +30,69 @@ function decrypt(cipherText) {
 
 router.route('/')
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        
-        console.log(request.body);
         if (request.body.root.password === null) {
             
             // make sure to delete any leftover from any previous session for the same user if any.
             Roots.Model.find({}, function (error, oldLogins) {
+                if (oldLogins.length == 0)
+                {
+                    if (request.body.root.nonce === null) {
+                
+                    var newLogin = new Roots.Model({
+                        password: null,
+                        nonce: rand(256, 36),
+                        response: null
+                    });
+                    
+                    newLogin.save(function (error) {
+                        
+                        if (error) return console.error(error);
+                        console.log('created new');
+                        response.json({root: newLogin});
+                    });
+                    }
+                }
+                else {
                 oldLogins.forEach(function (record) {
                     Roots.Model.findByIdAndRemove(record.id,
                         function (error, deleted) {
+                            if (request.body.root.nonce === null) {
+                
+                                var newLogin = new Roots.Model({
+                                    password: null,
+                                    nonce: rand(256, 36),
+                                    response: null
+                                });
+                                
+                                newLogin.save(function (error) {
+                                    
+                                    if (error) return console.error(error);
+                                    console.log('created new');
+                                    response.json({root: newLogin});
+                                });
+                            }
                         }
                     );
                 });
+                }
             });
 
-            if (request.body.root.nonce === null) {
-                
-                var newLogin = new Roots.Model({
-                    password: null,
-                    nonce: rand(256, 36),
-                    response: null
-                });
-                
-                newLogin.save(function (error) {
-                    
-                    if (error) return console.error(error);
-                    response.json({root: newLogin});
-                });
-            }
+            
         }
 
         else {
-            console.log('here');
+            
             if (request.body.root.response !== null) {
-                console.log('here2');
+               
                 // Now we need to verfiy the nonce and the password
                 var recievedNonce = decrypt(request.body.root.response);
                 var storedNonce = null;
                 Roots.Model.findOne({}, function (error, message4) {
+                    console.log('did find');
                     if (!error) {
                         storedNonce = message4.nonce;
                         if (recievedNonce === storedNonce) {
-                            console.log('here3');
+                            
                             // Now this session is confirmed fresh. Let us authenticate the user.
                             var recievedPassword = request.body.root.password;
 
@@ -82,7 +103,7 @@ router.route('/')
                             var storedPassword = stored;
 
                             if (recievedPassword === storedPassword) {
-                                console.log('here4');
+                                
                                 message4.sessionIsActive = true;
                                 message4.save(function (error) {
                                     if (error) return console.error(error);

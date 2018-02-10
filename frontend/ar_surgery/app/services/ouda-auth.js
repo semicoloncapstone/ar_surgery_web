@@ -164,6 +164,9 @@ export default Ember.Service.extend({
   },
 
   close(user) {
+    console.log('hello');
+    console.log(user);
+    
     var myStore = this.get('store');
     myStore.query('login', {filter: {userName: user}}).then(function (Login) {
       if (Login) {
@@ -221,6 +224,7 @@ export default Ember.Service.extend({
   },
 
   closeRoot() {
+    console.log('hello2');
     var myStore = this.get('store');
     myStore.queryRecord('root', {}).then(function (Login) {
       if (Login) {

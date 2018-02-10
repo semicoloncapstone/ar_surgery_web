@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-
+    routing: Ember.inject.service('-routing'),
     isHomePage: true, 
     isHistoryPage: false,
     isClassesPage: false,
@@ -74,6 +74,8 @@ export default Ember.Component.extend({
             this.set('M', "");
             this.set('isSettingsPage', true);
             this.set('S', "w3-orange");
+            console.log(this.get('oudaAuth').get('isAuthenticated'));
+            this.get('routing').transitionTo('add-user');
         },
         smallMenuClick(){
             
