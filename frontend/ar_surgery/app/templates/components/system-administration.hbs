@@ -4,15 +4,15 @@
 
 {{#if ADM01IsPermitted }}
   <div class="w3-bar w3-orange">
-      <a class="w3-bar-item w3-button w3-mobile" style="width:33%" {{action "manageUsers"}} >
+      <a class="w3-bar-item w3-button w3-mobile" style="width:33.33333%" {{action "manageUsers"}} >
         <i class="fa fa-users"></i>
         Manage User Accounts
       </a>
-      <a class="w3-bar-item w3-button w3-mobile" style="width:33%" {{action "manageRoles"}} >
+      <a class="w3-bar-item w3-button w3-mobile" style="width:33.33333%" {{action "manageRoles"}} >
         <i class="fa fa-list"></i>
         Manage System Roles
       </a>
-      <a class="w3-bar-item w3-button w3-mobile" style="width:33%" {{action "manageFeatures"}} >
+      <a class="w3-bar-item w3-button w3-mobile" style="width:33.33333%" {{action "manageFeatures"}} >
         <i class="fa fa-lock"></i>
         Manage System Privileges
       </a> 
@@ -30,42 +30,37 @@
 
 
 {{else}}
-  <div class="ui violet menu">
-        <a class="active item">
-          <i class="large setting icon"></i>
-            Change Password
-        </a>
-    </div>
+  <div class="w3-bar w3-orange">
+    <a class="w3-bar-item w3-button w3-mobile" style="width:50%">
+      <i class="fa fa-list"></i>
+      Edit User Information
+    </a>
+    <a class="w3-bar-item w3-button w3-mobile" style="width:50%">
+      <i class="fa fa-lock"></i>
+      Change Password
+    </a>
+  </div>
 
   
-  <div class="ui segment container">
-  <div class="ui grid">
-    <div class="ten wide centered column">
-      <div class="ui center aligned header">
-        <h2>Change Password</h2>
-      </div>
-    <div class="ui form">
-        <div class="field">
-          <label>Confirm Username</label>
-          {{input value=name type="text"}}
-        </div>
-        <div class="field">
-          <label>Password</label>
-          {{input value=firstPassword type="password"}}
-        </div>
-        <div class="field">
-          <label>Re-enter Password</label>
-          {{input value=secondPassword type="password"}}
-        </div>
-        <div class="field">
-          <button id = "button" class="ui button large fluid" style="background-color: #4F2683; color: #FFFFFF" {{action 'save'}}>
-            Change Password
-          </button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
+  <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+    <h4><b><i class="fa fa-lock"></i> Change Password</b></h4>
+  </header>
+  <form class="w3-container w3-center">
+    
+    <label>Confirm Username</label>
+    {{input class="w3-input w3-border w3-round-large" value=name type="text"}}
+
+    <label>Enter New Password</label>
+    {{input class="w3-input w3-border w3-round-large" value=firstPassword type="password"}}
+  
+
+    {{input class="w3-input w3-border w3-round-large" value=secondPassword type="password"}}
+  
+    <button class="w3-button" {{action 'save'}}>
+      Change Password
+    </button>
+    
+  </form>
   
 {{/if}}
 

@@ -1,27 +1,40 @@
-{{#if MF001IsPermitted }}
+<div class="w3-row-padding w3-margin-bottom">
+  <div class="w3-container w3-center w3-padding-16">
   {{#if isEditing }}
-    <h2>Add new system feature</h2>
-    <div class="ui form">
+    <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+      <h4><b><i class="fa fa-plus"></i> Add New Feature</b></h4>
+    </header>
+    <form class="w3-container w3-center">
       <div class="inline field">
         <label>Feature code</label>
-        {{input value=code type="text" placeholder="enter feature code" }}
+        {{input value=code type="text" placeholder="enter feature code" class="w3-input w3-border w3-round-large"}}
       </div>
       <div class="inline field">
         <label>Feature name</label>
-        {{input value=sysFeature type="text" placeholder="enter feature description" }}
+        {{input value=sysFeature type="text" placeholder="enter feature description" class="w3-input w3-border w3-round-large"}}
       </div>
-    </div>
+      <br>
+      <button class="w3-button w3-green w3-round-large" {{action 'save'}}>Save</button>
+      <button class="w3-button w3-red w3-round-large" {{action 'cancel'}}>Cancel</button>
+    </form>
     <br>
-    <button class="ui button" {{action 'save'}}>Save</button>
-    <button class="ui button" {{action 'cancel'}}>Cancel</button>
+    
   {{else}}
-    <h2>Manage System Features</h2>
-    <table class="ui table" style="margin-top: 25px;">
+    <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+      <h4><b><i class="fa fa-lock"></i> Manage System Permissions</b></h4>
+    </header>
+    <table class="w3-table-all">
       <thead>
       <tr>
         <th>System Role Name</th>
         <th></th>
-        <th></th>
+        <th class="w3-center">
+          {{#if MF001IsPermitted }}
+            <button class="w3-button w3-green w3-round-large" {{action 'addNewFeature'}}><i class="fa fa-plus"></i> Add System Feature</button>
+          {{else}}
+            <button class="w3-button w3-green w3-round-large w3-disabled" {{action 'addNewFeature'}}><i class="fa fa-plus"></i> Add System Feature (Not Permitted)</button>
+          {{/if}}
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -31,10 +44,10 @@
           <td>
             {{oneFeature.code}}
           </td>
-          <td>
+          <td >
             {{oneFeature.sysFeature}}
           </td>
-          <td class="right aligned">
+          <td class="w3-center">
             {{delete-feature ID=oneFeature.id }}
           </td>
         </tr>
@@ -42,25 +55,7 @@
       </tbody>
     </table>
     <br><br>
-    <button class="ui button" {{action 'addNewFeature'}}>Add System Feature</button>
-
-      <!--<button class="ui button">{{#file-picker fileLoaded="importFromExcel" accept=".xlsx"
-      readAs="readAsBinaryString"
-      dropzone=false progress=false  preview=false
-      }}
-        Import System Features
-      {{/file-picker}}</button> -->
-
+    
   {{/if}}
-{{else}}
-  <div class="ui center aligned raised segment">
-    <div class="ui icon header">
-      <i class="protect icon"></i>
-      Permission Denied
-    </div>
-    <div>
-      <p>This feature (MF001) is not allowed for your account.</p>
-      <p>Please contact the system administrator for more information.</p>
-    </div>
   </div>
-{{/if}}
+</div>

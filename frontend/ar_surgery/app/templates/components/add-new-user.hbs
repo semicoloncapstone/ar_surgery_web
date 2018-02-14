@@ -1,5 +1,5 @@
 {{#if  isUserFormEditing }}
-  {{#if ANU01IsPermitted }}
+  
     <div class="ui modal auth">
       <div class="header">Create New User Account</div>
       <div class="content">
@@ -41,38 +41,23 @@
         </div>
       </div>
     </div>
-  {{else}}
 
-    <div class="ui basic modal auth">
-      <div class="ui icon header">
-        <i class="protect icon"></i>
-        Permission Denied
-      </div>
-      <div class="content">
-        <p>This feature (ANU01) is not allowed for your account.</p>
-        <p>Please contact the system administrator for more information.</p>
-      </div>
-      <div class="actions">
-        <div class="ui red basic cancel inverted button"{{action 'cancel'}}>
-          <i class="remove icon"></i>
-          Exit
-        </div>
-      </div>
-    </div>
-
-
-
-  {{/if}}
+  
 {{/if}}
-<a class="w3-button w3-green w3-round-large w3-right" {{action 'addNewAccount'}}>
+{{#if ANU01IsPermitted }}
+<a class="w3-button w3-green w3-round-large" {{action 'addNewAccount'}}>
   <i class="fa fa-user-plus"></i>
   Add New User
 </a>
 <br><br>
 
-
-
-
+{{else}}
+  <a class="w3-button w3-green w3-round-large w3-disabled" {{action 'addNewAccount'}}>
+  <i class="fa fa-user-plus"></i>
+  Add New User (Not Permitted)
+</a>
+<br><br>
+{{/if}}
 
 
 

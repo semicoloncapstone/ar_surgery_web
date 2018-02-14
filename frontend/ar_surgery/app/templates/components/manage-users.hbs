@@ -16,7 +16,7 @@
           <th>Enabled</th>
           <th></th>
           <th></th>
-          <th>{{add-new-user}}</th>
+          <th class="w3-center">{{add-new-user}}</th>
         </tr>
         </thead>
         <tbody>
@@ -32,16 +32,16 @@
             <td>
               {{user.email}}
             </td>
-            <td>
+            <td class="w3-center">
               {{enable-disable-account ID=user.id status=user.enabled}}
             </td>
-            <td class="right aligned">
+            <td class="w3-center">
               {{assign-role ID=user.id}}
             </td>
-            <td class="right aligned">
+            <td class="w3-center">
             {{edit-user ID=user.id }}
             </td>
-            <td class="right aligned">
+            <td class="w3-center">
               {{delete-user ID=user.id }}
             </td>
           </tr>

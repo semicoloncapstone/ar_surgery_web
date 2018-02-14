@@ -20,7 +20,9 @@
       <tr>
         <th>System Role Name</th>
         <th></th>
-        <th><button class="w3-button w3-green w3-round-large w3-right" {{action 'addNewRole'}}><i class="fa fa-plus"></i> Add New Role</button></th>
+        <th class="w3-center">
+          <button class="w3-button w3-green w3-round-large" {{action 'addNewRole'}}><i class="fa fa-plus"></i> Add New Role</button>
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -30,11 +32,11 @@
           <td>
             {{oneCode.name}}
           </td>
-          <td>
+          <td class="w3-center">
             {{manage-permission roleID = oneCode.id}}
 
           </td>
-          <td class="right aligned">
+          <td class="w3-center">
             {{delete-role key=oneCode.id}}
           </td>
         </tr>
@@ -42,21 +44,7 @@
       </tbody>
     </table>
 
-    
-
-
   {{/if}}
-{{else}}
-  <div class="ui center aligned raised segment">
-    <div class="ui icon header">
-      <i class="protect icon"></i>
-      Permission Denied
-    </div>
-    <div>
-      <p>This feature (MSR01) is not allowed for your account.</p>
-      <p>Please contact the system administrator for more information.</p>
-    </div>
-  </div>
 {{/if}}
 </div>
 </div>

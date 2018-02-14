@@ -1,5 +1,5 @@
 {{#if isManagingUserRole}}
-  {{#if MR001IsPermitted }}
+  
 
     <div class="ui modal auth">
       <div class="header">Manage Roles for {{userRecord.firstName}} {{userRecord.lastName}}</div>
@@ -39,29 +39,16 @@
         </div>
       </div>
     </div>
-  {{else}}
-    <div class="ui basic modal auth">
-      <div class="ui icon header">
-        <i class="protect icon"></i>
-        Permission Denied
-      </div>
-      <div class="content">
-        <p>This feature (MR001) is not allowed for your account.</p>
-        <p>Please contact the system administrator for more information.</p>
-      </div>
-      <div class="actions">
-        <div class="ui red basic cancel inverted button"{{action 'done'}}>
-          <i class="remove icon"></i>
-          Exit
-        </div>
-      </div>
-    </div>
-
-  {{/if}}
 {{/if}}
+{{#if MR001IsPermitted }}
   <button class="w3-button w3-round-large w3-black" {{action 'manageRoles'}}>
     Manage Roles
   </button>
+  {{else}}
+  <button class="w3-button w3-round-large w3-black w3-disabled" {{action 'manageRoles'}}>
+    Manage Roles (Not Permitted)
+  </button>
+{{/if}}
 
 
 

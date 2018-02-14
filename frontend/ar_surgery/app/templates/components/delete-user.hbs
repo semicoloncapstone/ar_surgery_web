@@ -5,8 +5,8 @@
   </button>
 {{else}}
 
-  <div class="w3-button w3-round-large w3-red" data-content="This feature (EU003) is disabled">
-    <i class="fa fa-user-times"></i>
-  </div>
+  <button class="w3-button w3-round-large w3-red w3-disabled" {{action 'deleteUser' ID}}
+          title="Delete"> <i class="fa fa-user-times"></i>(Not Permitted)
+  </button>
 
 {{/if}}
