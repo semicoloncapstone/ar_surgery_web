@@ -21,7 +21,7 @@ export default Ember.Component.extend({
     Ember.$('.ui.modal.auth')
       .modal({
         closable: false,
-        transition: 'horizontal flip',
+        
       })
       .modal('show');
   },

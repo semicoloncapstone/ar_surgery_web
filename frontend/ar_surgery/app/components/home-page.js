@@ -75,7 +75,7 @@ export default Ember.Component.extend({
             this.set('isSettingsPage', true);
             this.set('S', "w3-orange");
             console.log(this.get('oudaAuth').get('isAuthenticated'));
-            this.get('routing').transitionTo('add-user');
+            //this.get('routing').transitionTo('add-user');
         },
         smallMenuClick(){
             

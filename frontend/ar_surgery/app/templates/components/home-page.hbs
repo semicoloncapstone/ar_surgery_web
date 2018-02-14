@@ -64,6 +64,7 @@
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
   <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"><i class="fa fa-bars"></i>  Menu</button>
   <span class="w3-bar-item">MedicART</span>
+  {{log-out}}
 </div>
 
 
@@ -87,7 +88,7 @@
     <a class="w3-bar-item w3-button w3-padding {{C}}" {{action "ClassPress"}}><i class="fa fa-users fa-fw"></i>  Classes  <span class="w3-badge w3-right">0</span></a>
     <a class="w3-bar-item w3-button w3-padding {{M}}" {{action "MessagePress"}}><i class="fa fa-comments fa-fw"></i>  Class Messages  <span class="w3-badge w3-right">0</span></a>
     <a class="w3-bar-item w3-button w3-padding {{S}}" {{action "SettingsPress"}}><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
-    {{log-out}}<br><br>
+    
   </div>
 </nav>
 
@@ -104,7 +105,7 @@
   
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px; padding-bottom:22px">
-    <h4><b><i class="fa fa-dashboard"></i> My Dashboard</b></h4>
+    <h4><b><i class="fab fa-slideshare"></i> My Dashboard</b></h4>
   </header>
 
   <div class="w3-row-padding w3-margin-bottom">
@@ -158,18 +159,17 @@
   {{message-page}}
 {{/if}}
 {{#if isSettingsPage}}
-  {{settings-page}}
+  {{system-administration}}
 {{/if}}
 
- 
 
-  <!-- Footer -->
-  <footer class="w3-container w3-padding-16 w3-center w3-light-grey">
+ <!-- End page content -->
+</div>
+
+<!-- Footer 
+  <footer class="w3-container w3-padding-16 w3-center w3-light-grey" style="position:absolute; bottom:0; width:100%">
       <p><strong>MedicART, Semicolon Software Capstone Project</strong></p>
       <p>Visit our Repository on GitHub</p>
       <a href="https://github.com/semicoloncapstone" target="_blank"><i class="fa fa-github w3-xxlarge w3-hover-opacity"></i></a>
       <!--<a href="https://semicolonmedicart.slack.com/messages/C94CYT0AV" target="_blank"><i class="fa fa-slack w3-xxlarge w3-hover-opacity"></i></a>-->
-  </footer>
-
- <!-- End page content -->
-</div>
+ <!-- </footer>-->

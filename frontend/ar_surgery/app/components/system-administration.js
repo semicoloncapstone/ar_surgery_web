@@ -3,15 +3,12 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   store: Ember.inject.service(),
   routing: Ember.inject.service('-routing'),
-  isUsersShowing: false,
+  isUsersShowing: true,
   isFeatureEditing: false,
   isRolesEditing: false,
-  isHomeShowing: true,
-  main: true,
-  change: false,
   
-  H: "item active",
-  SR: "item",
+
+  SR: "item active",
   MC: "item",
   CR: "item",
   ADM01IsPermitted: Ember.computed(function(){ //Manage system roles
@@ -54,23 +51,11 @@ export default Ember.Component.extend({
       });
     },
 
-    mainPress(){
-      this.set('main', true);
-      this.set('change', false);
-    },
-
-    changePress(){
-      this.set('main', false);
-      this.set('change', true);
-    },
-
     manageUsers () {
       this.set('isUsersShowing', true);
-      this.set('isHomeShowing', false);
       this.set('isFeaturesEditing', false);
       this.set('isRolesEditing', false);
       
-      this.set('H', 'item');
       this.set('SR', 'item active');
       this.set('MC', 'item');
       this.set('CR', 'item');
@@ -80,9 +65,7 @@ export default Ember.Component.extend({
       this.set('isUsersShowing', false);
       this.set('isFeaturesEditing', false);
       this.set('isRolesEditing', true);
-      this.set('isHomeShowing', false);
       
-      this.set('H', 'item');
       this.set('SR', 'item');
       this.set('MC', 'item');
       this.set('CR', 'item active');
@@ -92,29 +75,10 @@ export default Ember.Component.extend({
       this.set('isUsersShowing', false);
       this.set('isFeaturesEditing', true);
       this.set('isRolesEditing', false);
-      this.set('isHomeShowing', false);
       
-      this.set('H', 'item');
       this.set('SR', 'item');
       this.set('MC', 'item active');
       this.set('CR', 'item');
-    },
-    home()
-    {
-      this.set('isUsersShowing', false);
-      this.set('isFeaturesEditing', false);
-      this.set('isRolesEditing', false);
-      this.set('isHomeShowing', true);
-      this.set('H', 'item active');
-      
-      this.set('SR', 'item');
-      this.set('MC', 'item');
-      this.set('CR', 'item');
-      
-    },
-    
-    exitAdmin(){
-      this.get('routing').transitionTo('home');
     },
 
 
