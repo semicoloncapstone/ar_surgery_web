@@ -8,8 +8,13 @@ var parseJSON = bodyParser.json();
 var mongoose = require('mongoose');
 var messagesSchema = mongoose.Schema(
     {
-        user: String,
-        post: String
+        sender: {type: mongoose.Schema.ObjectId, ref: ('Users')},
+        reciever: {type: mongoose.Schema.ObjectId, ref: ('Users')},
+        messageBoard: {type: mongoose.Schema.ObjectId, ref: ('MessageBoards')},
+        date: String,
+        header: String,
+        body: String,
+        type: String,
     }
 );
 

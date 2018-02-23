@@ -52,6 +52,7 @@ export default Ember.Service.extend({
     var self = this;
     return new Ember.RSVP.Promise(function (resolve, reject) {
       // send username and password to the server asking for a challenge (nonce)
+      console.log(password)
       self.setPassword(password);
       var myStore = self.get('store');
       var loginRequest = myStore.createRecord('login', {

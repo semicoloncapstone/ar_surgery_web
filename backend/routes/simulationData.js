@@ -35,7 +35,7 @@ router.route('/')
         var newSimulation = new Simulation(request.body.simulation);
         newSimulation.date = new Date();
         newSimulation.toolPoints= request.body.simulation.toolPoints;
-        newSimulation.headPoints= request.body.simulation.headPoints;
+        newSimulation.headPoints= request.body.simulation.headPoints;   
         newSimulation.target = request.body.simulation.target;
         newSimulation.user= request.body.simulation.user;
         newSimulation.save(function (error) {

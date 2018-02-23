@@ -19,6 +19,9 @@ var userRoles = require('./routes/usersRoles');
 var rolePermissions = require('./routes/rolePermissions');
 var logins = require('./routes/logins');
 var roots = require('./routes/roots');
+var registrations = require('./routes/registrations');
+var classes = require('./routes/class');
+var messageBoards = require('./routes/messageBoards');
 
 
 app.use(function (request, response, next) {
@@ -50,6 +53,9 @@ app.use('/passwords', passwords);
 app.use('/roleCodes', roleCodes);
 app.use('/userRoles', userRoles);
 app.use('/rolePermissions', rolePermissions);
+app.use('/registrations', registrations);
+app.use('/class', classes);
+app.use('/messageBoards', messageBoards);
 
 app.post('/upload', function(request, response){
     //console.log('entering upload route');

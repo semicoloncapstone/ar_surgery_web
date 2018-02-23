@@ -152,11 +152,14 @@ router.route('/')
                                     if (recievedNonce === storedNonce) {
                                         // Now this session is confirmed fresh. Let us authenticate the user.
                                         var recievedPassword = request.body.login.password;
+                                        
                                         var storedPassword = null;
                                         var salt = null;
                                         storedPassword = UserShadow.encryptedPassword;
                                         salt = UserShadow.salt;
+                                        
                                         var saltedPassword = hash(recievedPassword + salt);
+                                        
                                         if (saltedPassword === storedPassword) {
                                             // Now the user is authenticated.
                                             //
