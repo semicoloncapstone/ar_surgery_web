@@ -44,7 +44,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(logger);
 app.use('/messages', Messages);
 app.use('/simulationData', Simulations);
-
+app.use('/registrations', registrations);
+app.use('/class', classes);
+app.use('/messageBoards', messageBoards);
 //oudaAuth
 app.use('/logins', logins);
 app.use('/roots', roots);
@@ -53,9 +55,7 @@ app.use('/passwords', passwords);
 app.use('/roleCodes', roleCodes);
 app.use('/userRoles', userRoles);
 app.use('/rolePermissions', rolePermissions);
-app.use('/registrations', registrations);
-app.use('/class', classes);
-app.use('/messageBoards', messageBoards);
+
 
 app.post('/upload', function(request, response){
     //console.log('entering upload route');

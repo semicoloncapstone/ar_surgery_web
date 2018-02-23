@@ -22,10 +22,35 @@ var Messages = mongoose.model('messages', messagesSchema);
 
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-       Messages.find(function (error, messages) {
-            if (error) response.send(error);
-            response.json({msg: messages});
-        });
+        var query = request.query;
+        if (query.sender)
+        {
+            Messages.find({"sender": query.sender}, function (error, messages) {
+                if (error) response.send(error);
+                response.json({msg: messages});
+            });
+        }
+        else if (query.reciever)
+        {
+            Messages.find({"reciever": query.reciever}, function (error, messages) {
+                if (error) response.send(error);
+                response.json({msg: messages});
+            });
+        }
+        else if (query.messageBoard)
+        {
+            Messages.find({"messageBoard": query.messageBoard}, function (error, messages) {
+                if (error) response.send(error);
+                response.json({msg: messages});
+            });
+        }
+        else {
+            Messages.find(function (error, messages) {
+                if (error) response.send(error);
+                response.json({msg: messages});
+            });
+        }
+       
     })
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var newMessage = new Messages(request.body.message);
