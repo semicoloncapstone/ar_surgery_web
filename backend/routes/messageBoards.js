@@ -33,4 +33,46 @@ router.route('/')
         });
     });
 
+router.route('/:messageBoard_id')
+    .get(parseUrlencoded, parseJSON, function (request, response) {
+        MessageBoards.Model.findById(request.params.messageBoard_id, function (error, role) {
+            if (error) {
+                response.send({error: error});
+            }
+            else {
+                response.json({messageBoard: role});
+            }
+        });
+    })
+    .put(parseUrlencoded, parseJSON, function (request, response) {
+        MessageBoards.Model.findById(request.params.messageBoard_id, function (error, role) {
+            if (error) {
+                response.send({error: error});
+            }
+            else {
+                // update the role info
+                role.class = request.body.messageBoard.class;
+                role.capacity = request.body.messageBoard.capacity;
+                role.type = request.body.messageBoard.type;
+
+                role.save(function (error) {
+                    if (error) {
+                        response.send({error: error});
+                    }
+                    else {
+                        response.json({messageBoard: role});
+                    }
+                });
+            }
+        });
+    })
+    .delete(parseUrlencoded, parseJSON, function (request, response) {
+        MessageBoards.Model.findByIdAndRemove(request.params.messageBoard_id,
+            function (error, deleted) {
+                if (!error) {
+                    response.json({messageBoard: deleted});
+                };
+            }
+        );
+    });
 module.exports = router;
