@@ -6,6 +6,8 @@ export default Ember.Component.extend({
   isUsersShowing: true,
   isFeatureEditing: false,
   isRolesEditing: false,
+  ChangePasswordEnabled: true,
+  EditUserEnabled: false,
   
 
   SR: "item active",
@@ -17,6 +19,15 @@ export default Ember.Component.extend({
       return true;
     } else {
       return (authentication.get('userCList').indexOf("ADM01") >= 0);
+    }
+  }),
+
+  UE001IsPermitted: Ember.computed(function(){ //Manage system roles
+    var authentication = this.get('oudaAuth');
+    if (authentication.getName === "Root") {
+      return true;
+    } else {
+      return (authentication.get('userCList').indexOf("UE001") >= 0);
     }
   }),
 
@@ -80,6 +91,16 @@ export default Ember.Component.extend({
       this.set('MC', 'item active');
       this.set('CR', 'item');
     },
+
+    changePassword (){
+      this.set('ChangePasswordEnabled', true);
+      this.set('EditUserEnabled', false);
+    },
+
+    editUser (){
+      this.set('ChangePasswordEnabled', false);
+      this.set('EditUserEnabled', true);
+    }
 
 
   }
