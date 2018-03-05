@@ -25,8 +25,8 @@ export default Ember.Component.extend({
       console.log('uo');
     },
     login(){
-      console.log(this.get('name'));
-        console.log(this.get('password'));
+      //console.log(this.get('name'));
+        //console.log(this.get('password'));
         
         
       var authentication = this.get('oudaAuth');

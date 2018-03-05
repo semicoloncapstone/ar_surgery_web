@@ -1,0 +1,43 @@
+{{#if isUserFormEditing }}
+    <div class="ui modal auth">
+      <div class="header">Create New Class</div>
+      <div class="content">
+        <div class="ui form">
+          <div class="inline field">
+            <label>Class Name</label>
+            {{input value=className type="text" placeholder="Enter Class Name" }}
+          </div>
+          <div class="inline field">
+            <label>Class Size</label>
+            {{input value=classSize type="text" placeholder="Enter Class Size"}}
+          </div>
+          <div class="inline field">
+            <label>Program</label>
+            {{input value=program type="text" placeholder="Enter Program"}}
+          </div>
+          <div class="inline field">
+            <label>School</label>
+            {{input value=school type="text" placeholder="Enter School"}}
+          </div>
+          <div class="inline field">
+            <label>Instructor</label>
+            {{input value=instructor type="text" placeholder="EDIT* - MAKE DROPDOWN TO USERS WHO ARE TEACHERS"}}
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui button" {{action "save"}}>
+          Save
+        </div>
+        <div class="ui button" {{action "cancel"}}>
+          Cancel
+        </div>
+      </div>
+    </div>
+{{/if}}
+
+<a class="w3-button w3-green w3-round-large w3-right" {{action 'addNewClass'}}>
+  <i class="fa fa-plus"></i>
+  Add New Class
+</a>
+<br><br>

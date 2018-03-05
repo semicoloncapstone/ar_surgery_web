@@ -45,7 +45,7 @@ app.use(logger);
 app.use('/messages', Messages);
 app.use('/simulationData', Simulations);
 app.use('/registrations', registrations);
-app.use('/class', classes);
+app.use('/classes', classes);
 app.use('/messageBoards', messageBoards);
 //oudaAuth
 app.use('/logins', logins);
