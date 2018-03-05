@@ -1,3 +1,41 @@
 <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
     <h1><b><i class="fa fa-users"></i> Classes</b></h1>
   </header>
+
+<div class="w3-row-padding w3-margin-bottom">
+      <div class="w3-container w3-padding-16">
+          <table class="w3-table-all">
+            <thead>
+            <tr>
+              <th>Class Name</th>
+              <th>Instructor</th>
+              <th>Size</th>
+              <th>Program</th>
+              <th>School</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {{#each classesModel as |class|}}
+              <tr>
+                <td>
+                  {{class.className}}
+                </td>
+                <td>
+                  {{class.teacher}}
+                </td>
+                <td>
+                  {{class.classSize}}
+                </td>
+                <td>
+                  {{class.program}}
+                </td>
+                <td>
+                  {{class.school}}
+                </td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+      </div>
+</div>
