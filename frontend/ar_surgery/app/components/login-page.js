@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   keyPress: function (e) {
       
         if (e.which === 13) {
-            Ember.$('#button').click();
+            Ember.$('#login').click();
         }
   },
   
