@@ -3,18 +3,18 @@
   </header>
 
 {{#if ADM01IsPermitted }}
-  <div class="w3-bar w3-orange">
-      <a class="w3-bar-item w3-button w3-mobile" style="width:33.33333%" {{action "manageUsers"}} >
+  <div class="w3-bar w3-black">
+      <a class="w3-bar-item w3-button w3-mobile {{UA}}" style="width:33.33333%" {{action "manageUsers"}} >
         <i class="fa fa-users"></i>
         Manage User Accounts
       </a>
-      <a class="w3-bar-item w3-button w3-mobile" style="width:33.33333%" {{action "manageRoles"}} >
+      <a class="w3-bar-item w3-button w3-mobile {{SR}}" style="width:33.33333%" {{action "manageRoles"}} >
         <i class="fa fa-list"></i>
         Manage System Roles
       </a>
-      <a class="w3-bar-item w3-button w3-mobile" style="width:33.33333%" {{action "manageFeatures"}} >
+      <a class="w3-bar-item w3-button w3-mobile {{SP}}" style="width:33.33333%" {{action "manageFeatures"}} >
         <i class="fa fa-lock"></i>
-        Manage System Privileges
+        Manage System Permissions
       </a> 
     </div>
   
