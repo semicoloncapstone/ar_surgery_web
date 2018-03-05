@@ -60,5 +60,51 @@ router.route('/')
         });
     });
 
+router.route('/:message_id')
+    .get(parseUrlencoded, parseJSON, function (request, response) {
+        Messages.Model.findById(request.params.message_id, function (error, role) {
+            if (error) {
+                response.send({error: error});
+            }
+            else {
+                response.json({message: role});
+            }
+        });
+    })
+    .put(parseUrlencoded, parseJSON, function (request, response) {
+        Messages.Model.findById(request.params.message_id, function (error, role) {
+            if (error) {
+                response.send({error: error});
+            }
+            else {
+                // update the role info
+                role.messageBoard = request.body.message.messageBoard;
+                role.sender = request.body.message.sender;
+                role.reciever = request.body.message.reciever;
+                role.date = request.body.message.date;
+                role.header = request.body.message.header;
+                role.body = request.body.message.body;
+                role.type = request.body.message.type;
+                
+                role.save(function (error) {
+                    if (error) {
+                        response.send({error: error});
+                    }
+                    else {
+                        response.json({message: role});
+                    }
+                });
+            }
+        });
+    })
+    .delete(parseUrlencoded, parseJSON, function (request, response) {
+        Messages.Model.findByIdAndRemove(request.params.message_id,
+            function (error, deleted) {
+                if (!error) {
+                    response.json({message: deleted});
+                };
+            }
+        );
+    });
 module.exports = router;
 
