@@ -35,7 +35,7 @@ export default Ember.Component.extend({
         this.get('store').findAll('class').then(function (records) {
             self.set('classModel', records);
             teachID = records;
-            console.log(teachID.content[0].__data.teacher);
+            console.log(teachID);
         });
         //console.log(this.get('classModel'));
         //console.log(teachID);
