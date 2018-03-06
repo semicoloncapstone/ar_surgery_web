@@ -30,12 +30,17 @@ export default Ember.Component.extend({
         var teachID = null;
         this.get('store').findAll('registration').then(function (records) {
             self.set('regModel', records);
+            console.log(self.get('regModel').objectAt(0).get('user'));
         });
         //console.log(this.get('regModel'));
         this.get('store').findAll('class').then(function (records) {
             self.set('classModel', records);
             teachID = records;
-            console.log(teachID);
+            //console.log(teachID.objectAt(0).teacher);
+            console.log(teachID.objectAt(0).get('teacher').content.data);
+            console.log(teachID.length);
+            //for {i=0;i<teachID.length}
+
         });
         //console.log(this.get('classModel'));
         //console.log(teachID);
