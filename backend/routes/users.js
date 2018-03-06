@@ -19,8 +19,8 @@ router.route('/')
     })
 
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        var USER = request.query.filter;
-        if (!USER) {
+        var USER = request.query;
+        if (!USER.userName) {
             Users.Model.find(function (error, users) {
                 if (error) response.send(error);
                 response.json({user: users});
