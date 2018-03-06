@@ -13,13 +13,20 @@ export default Ember.Component.extend({
         var auth = this.get('oudaAuth');
         this.set('username', auth.getName);
         
-        console.log(auth.getName);
-        console.log(this.get('store').queryRecord('user',{userName: auth.getName}));
-
-        this.get('store').queryRecord('user',{userName: auth.getName}).then(function (records){
+        //console.log(auth.getName);
+        //console.log(this.get('store').queryRecord('user',{userName: auth.getName}));
+        /*
+        this.get('store').findAll('user').then(function (records){
+          self.set('currentUser', records.objectAt(3));
+          console.log(records.objectAt(0).id);
+        });*/
+        
+        //console.log(this.get('store').queryRecord('password',{userName: auth.getName}));
+        
+        this.get('store').queryRecord('password',{userName: auth.getName}).then(function (records){
           self.set('currentUser', records);
           //console.log(self.get('currentUser'));
-          //console.log(records);
+          console.log(records);
         });
         //console.log(this.get('currentUser'));
     },
@@ -38,7 +45,7 @@ export default Ember.Component.extend({
         save () {
             var self = this;
             var myStore = this.get('store');
-            console.log(this.get('currentUser'));
+            
             var newClass = myStore.createRecord('class', {
               className: this.get('className'),
               classSize: this.get('classSize'),
