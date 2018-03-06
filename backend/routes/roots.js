@@ -53,10 +53,12 @@ router.route('/')
                     }
                 }
                 else {
+                var count = oldLogins.length;
                 oldLogins.forEach(function (record) {
                     Roots.Model.findByIdAndRemove(record.id,
                         function (error, deleted) {
-                            if (request.body.root.nonce === null) {
+                            count--;
+                            if (request.body.root.nonce === null && count ==0) {
                 
                                 var newLogin = new Roots.Model({
                                     password: null,
