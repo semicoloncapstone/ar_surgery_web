@@ -21,6 +21,7 @@ router.route('/')
         else {
             Simulations.Model.find({"user": user.user}, function (error,simulations) {
                 if (error) response.send(error);
+                
                 response.json({simulations: simulations});
             });
         }
@@ -39,6 +40,7 @@ router.route('/:simulation_id')
                 response.send({error: error});
             }
             else {
+                console.log("Returned a simulation")
                 response.json({simulation: role});
             }
         });

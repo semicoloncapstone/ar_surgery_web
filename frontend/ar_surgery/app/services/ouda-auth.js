@@ -198,7 +198,7 @@ export default Ember.Service.extend({
         });
         loginRequest.save().then(function (serverResponse) {
           // encrypt server nonce and set client response
-          console.log(serverResponse);
+          
           var NONCE = self.encrypt(serverResponse.get('nonce'));
           var clientResponse = myStore.createRecord('root', {
             password: self.encrypt(self.hash(password)),

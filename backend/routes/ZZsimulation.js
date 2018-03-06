@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var simulationSchema = mongoose.Schema(
     {
         date: String,
-        user: {type: mongoose.Schema.ObjectId, ref: ('Users')},
+        user: String,
         target: {
             position: [Number],
             orientiation: [Number],
