@@ -10,9 +10,14 @@ export default Ember.Component.extend({
   EditUserEnabled: false,
   
 
-  SR: "item active",
-  MC: "item",
-  CR: "item",
+  UA: "w3-orange",
+  SR: "",
+  SP: "",
+
+  CP: "w3-orange",
+  EU: "",
+
+
   ADM01IsPermitted: Ember.computed(function(){ //Manage system roles
     var authentication = this.get('oudaAuth');
     if (authentication.getName === "Root") {
@@ -67,9 +72,9 @@ export default Ember.Component.extend({
       this.set('isFeaturesEditing', false);
       this.set('isRolesEditing', false);
       
-      this.set('SR', 'item active');
-      this.set('MC', 'item');
-      this.set('CR', 'item');
+      this.set('UA', 'w3-orange');
+      this.set('SR', '');
+      this.set('SP', '');
 
     },
     manageRoles (){
@@ -77,9 +82,9 @@ export default Ember.Component.extend({
       this.set('isFeaturesEditing', false);
       this.set('isRolesEditing', true);
       
-      this.set('SR', 'item');
-      this.set('MC', 'item');
-      this.set('CR', 'item active');
+      this.set('UA', '');
+      this.set('SR', 'w3-orange');
+      this.set('SP', '');
     },
 
     manageFeatures (){
@@ -87,19 +92,25 @@ export default Ember.Component.extend({
       this.set('isFeaturesEditing', true);
       this.set('isRolesEditing', false);
       
-      this.set('SR', 'item');
-      this.set('MC', 'item active');
-      this.set('CR', 'item');
+      this.set('UA', '');
+      this.set('SR', '');
+      this.set('SP', 'w3-orange');
     },
 
     changePassword (){
       this.set('ChangePasswordEnabled', true);
       this.set('EditUserEnabled', false);
+
+      this.set('CP', 'w3-orange');
+      this.set('EU', '');
     },
 
     editUser (){
       this.set('ChangePasswordEnabled', false);
       this.set('EditUserEnabled', true);
+
+      this.set('CP', '');
+      this.set('EU', 'w3-orange');
     }
 
 

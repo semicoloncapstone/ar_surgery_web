@@ -14,10 +14,10 @@
       <img src="/assets/images/generic_user.png" class="w3-circle w3-margin-right" style="width:46px">
     </div>-->
     <div class="w3-container w3-center">
-      <span>Welcome, <strong>*Name*</strong></span><br>
-      <a class="w3-bar-item w3-button" {{action "HistoryPress"}}><i class="fa fa-history"></i></a>
-      <a class="w3-bar-item w3-button" {{action "MessagePress"}}><i class="fa fa-comment"></i></a>
-      <a class="w3-bar-item w3-button" {{action "SettingsPress"}}><i class="fa fa-cog"></i></a>
+      <span>Welcome, <strong>{{username}}</strong></span><br>
+      <a class="w3-bar-item w3-button {{Hi}}" {{action "HistoryPress"}}><i class="fa fa-history"></i></a>
+      <a class="w3-bar-item w3-button {{M}}" {{action "MessagePress"}}><i class="fa fa-comment"></i></a>
+      <a class="w3-bar-item w3-button {{S}}" {{action "SettingsPress"}}><i class="fa fa-cog"></i></a>
     </div>
   </div>
   <hr>
@@ -25,7 +25,7 @@
     <a class="w3-bar-item w3-button w3-padding {{Ho}}" {{action "HomePress"}}><i class="fa fa-home fa-fw"></i>  Home</a>
     <a class="w3-bar-item w3-button w3-padding {{Hi}}" {{action "HistoryPress"}}><i class="fa fa-history fa-fw"></i>  History</a>
     <a class="w3-bar-item w3-button w3-padding {{C}}" {{action "ClassPress"}}><i class="fa fa-users fa-fw"></i>  Classes  <span class="w3-badge w3-right">0</span></a>
-    <a class="w3-bar-item w3-button w3-padding {{M}}" {{action "MessagePress"}}><i class="fa fa-comments fa-fw"></i>  Class Messages  <span class="w3-badge w3-right">0</span></a>
+    <a class="w3-bar-item w3-button w3-padding {{M}}" {{action "MessagePress"}}><i class="fa fa-comments fa-fw"></i>  Messages  <span class="w3-badge w3-right">0</span></a>
     <a class="w3-bar-item w3-button w3-padding {{S}}" {{action "SettingsPress"}}><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
     
   </div>
@@ -41,44 +41,6 @@
 
 {{#if isHomePage}}
   <!-- Enter Home Page Code Here -->
-  
-  <!-- Header -->
-  <header class="w3-container" style="padding-top:22px; padding-bottom:22px">
-    <h4><b><i class="fab fa-slideshare"></i> My Dashboard</b></h4>
-  </header>
-
-  <div class="w3-row-padding w3-margin-bottom">
-    <div class="w3-third">
-      <div class="w3-container w3-blue w3-padding-16">
-        <div class="w3-left"><i class="fa fa-life-ring w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>##</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Simulations Performed</h4>
-      </div>
-    </div>
-    <div class="w3-third">
-      <div class="w3-container w3-red w3-padding-16">
-        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>##</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Classes Joined</h4>
-      </div>
-    </div>
-    <div class="w3-third">
-      <div class="w3-container w3-green w3-padding-16">
-        <div class="w3-left"><i class="fa fa-comments w3-xxxlarge"></i></div>
-        <div class="w3-right">
-          <h3>##</h3>
-        </div>
-        <div class="w3-clear"></div>
-        <h4>Class Messages</h4>
-      </div>
-    </div>
-  </div>
 
   <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
     <h1><b><i class="fa fa-home"></i> Home</b></h1>

@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var user = request.query;
-        if (!user){
+        if (!user.user){
             Registrations.Model.find(function (error, messages) {
                 if (error) response.send(error);
                 response.json({registrations: messages});

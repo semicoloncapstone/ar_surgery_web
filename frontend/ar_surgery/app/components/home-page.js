@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     store: Ember.inject.service(),
     routing: Ember.inject.service('-routing'),
+    username: "",
+    currentUser: null,
     isHomePage: true, 
     isHistoryPage: false,
     isClassesPage: false,
@@ -13,6 +15,16 @@ export default Ember.Component.extend({
     C: "",
     M: "",
     S: "",
+
+    init() {
+        this._super(...arguments);
+        var auth = this.get('oudaAuth');
+        var self = this;
+        this.set('username', auth.getName);
+        //this.set('currentUser', self.get('store').queryRecord('user',{userName: auth.getName}));
+        
+        //this.set('username', this.get('currentUser').firstName + " " + this.get('currentUser').lastName);
+    },
 
     actions: {
     

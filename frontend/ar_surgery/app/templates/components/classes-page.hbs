@@ -4,6 +4,9 @@
 
 <div class="w3-row-padding w3-margin-bottom">
       <div class="w3-container w3-padding-16">
+        {{#if TCLADDIsPermitted}}
+          {{add-new-class}}
+        {{/if}}
           <table class="w3-table-all">
             <thead>
             <tr>
@@ -12,11 +15,14 @@
               <th>Size</th>
               <th>Program</th>
               <th>School</th>
+              {{#if TCLDELIsPermitted}}
+                <th></th>
+              {{/if}}
             </tr>
             </thead>
             <tbody>
 
-            {{#each classesModel as |class|}}
+            {{#each classModel as |class|}}
               <tr>
                 <td>
                   {{class.className}}
@@ -33,6 +39,11 @@
                 <td>
                   {{class.school}}
                 </td>
+                {{#if TCLDELIsPermitted}}
+                <td>
+                  {{delete-class ID=class.id}}
+                </td>
+                {{/if}}
               </tr>
             {{/each}}
             </tbody>

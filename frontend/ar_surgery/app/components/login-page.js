@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   keyPress: function (e) {
       
         if (e.which === 13) {
-            Ember.$('#button').click();
+            Ember.$('#login').click();
         }
   },
   
@@ -25,8 +25,8 @@ export default Ember.Component.extend({
       console.log('uo');
     },
     login(){
-      console.log(this.get('name'));
-        console.log(this.get('password'));
+      //console.log(this.get('name'));
+        //console.log(this.get('password'));
         
         
       var authentication = this.get('oudaAuth');
