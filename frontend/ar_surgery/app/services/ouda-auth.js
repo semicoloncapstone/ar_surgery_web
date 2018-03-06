@@ -52,7 +52,7 @@ export default Ember.Service.extend({
     var self = this;
     return new Ember.RSVP.Promise(function (resolve, reject) {
       // send username and password to the server asking for a challenge (nonce)
-      console.log(password)
+      //console.log(password)
       self.setPassword(password);
       var myStore = self.get('store');
       var loginRequest = myStore.createRecord('login', {
@@ -98,11 +98,11 @@ export default Ember.Service.extend({
                     self.close(name);
                     reject("passwordReset");
                   } else {
-                    console.log('test1');
+                    //console.log('test1');
                     self.setName(name);
-                    console.log('test2');
+                    //console.log('test2');
                     var userRole = self.decrypt(message4.get('token'));
-                    console.log('test3');
+                    //console.log('test3');
                     self.set('isAuthenticated', true);
                     self.set('userCList', userRole);
                     resolve(userRole);
@@ -168,8 +168,8 @@ export default Ember.Service.extend({
   },
 
   close(user) {
-    console.log('hello');
-    console.log(user);
+    //console.log('hello');
+    //console.log(user);
     
     var myStore = this.get('store');
     myStore.query('login', {filter: {userName: user}}).then(function (Login) {
@@ -198,14 +198,14 @@ export default Ember.Service.extend({
         });
         loginRequest.save().then(function (serverResponse) {
           // encrypt server nonce and set client response
-          console.log(serverResponse);
+          //console.log(serverResponse);
           var NONCE = self.encrypt(serverResponse.get('nonce'));
           var clientResponse = myStore.createRecord('root', {
             password: self.encrypt(self.hash(password)),
             nonce: null,
             response: NONCE
           });
-           console.log('here');
+           //console.log('here');
           clientResponse.save().then(function (message4) {
            
             if (message4.get('wrongPassword')) {
@@ -228,7 +228,7 @@ export default Ember.Service.extend({
   },
 
   closeRoot() {
-    console.log('hello2');
+    //console.log('hello2');
     var myStore = this.get('store');
     myStore.queryRecord('root', {}).then(function (Login) {
       if (Login) {

@@ -14,7 +14,7 @@ export default Ember.Component.extend({
         this.set('username', auth.getName);
         
         this.set('currentUser', self.get('store').queryRecord('user',{userName: auth.getName}));
-        console.log(this.get('currentUser'));
+        //console.log(this.get('currentUser'));
     },
 
     didRender() {
