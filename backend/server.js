@@ -9,7 +9,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 
 var Messages = require('./routes/message');
-var Simulations = require('./routes/simulationData');
+var Simulations = require('./routes/simulation');
 
 //oudaAuth
 var users = require('./routes/users');
@@ -43,9 +43,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(logger);
 app.use('/messages', Messages);
-app.use('/simulationData', Simulations);
+app.use('/simulations', Simulations);
 app.use('/registrations', registrations);
-app.use('/class', classes);
+app.use('/classes', classes);
 app.use('/messageBoards', messageBoards);
 //oudaAuth
 app.use('/logins', logins);

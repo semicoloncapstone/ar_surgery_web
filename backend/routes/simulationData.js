@@ -5,7 +5,7 @@ var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var parseJSON = bodyParser.json();
 
 var mongoose = require('mongoose');
-var simulationSchema = mongoose.Schema(
+/*var simulationSchema = mongoose.Schema(
     {
         user: String,//will be a reference to user later
         date: Date,
@@ -45,4 +45,4 @@ router.route('/')
         
     });
 
-module.exports = router;
+module.exports = router;*/

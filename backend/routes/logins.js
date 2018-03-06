@@ -116,21 +116,25 @@ router.route('/')
                             });
                         }
                         else {
+                        var count = oldLogins.length;
                         oldLogins.forEach(function (record) {
                             Logins.Model.findByIdAndRemove(record.id,
                                 function (error, deleted) {
-                                    var newLogin = new Logins.Model({
-                                    userName: request.body.login.userName,
-                                    password: null,
-                                    nonce: rand(256, 36), // this is the server challenge
-                                    response: null,
-                                    loginFailed: false,
-                                    token: null
-                                });
-                                newLogin.save(function (error) {// second message in the authentication protocol
-                                    if (error) response.json({login: failedLogin()});
-                                    response.json({login: newLogin});
-                                });
+                                    count--;
+                                    if (count ==0){
+                                        var newLogin = new Logins.Model({
+                                            userName: request.body.login.userName,
+                                            password: null,
+                                            nonce: rand(256, 36), // this is the server challenge
+                                            response: null,
+                                            loginFailed: false,
+                                            token: null
+                                        });
+                                        newLogin.save(function (error) {// second message in the authentication protocol
+                                            if (error) response.json({login: failedLogin()});
+                                            response.json({login: newLogin});
+                                        });
+                                    }
                                 }
                             );
                         });

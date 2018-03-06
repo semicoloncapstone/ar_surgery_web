@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Classes = require('./ZZclass');
+var Registrations = require('./ZZregistration');
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var parseJSON = bodyParser.json();
@@ -11,11 +12,34 @@ var mongoose = require('mongoose');
 
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        
-        Classes.Model.find(function (error, messages) {
-            if (error) response.send(error);
-            response.json({classes: messages});
-        });
+        var user = request.query;
+        if (!user.user){
+            Classes.Model.find(function (error, messages) {
+                if (error) response.send(error);
+                response.json({classes: messages});
+            });
+        }
+        else 
+        {
+            
+            Registrations.Model.find({"user": user.user}, function (error,registrations) {
+                if (error) response.send(error);
+                
+                var idArray = [];
+                //response.json({registrations: registrations});
+                for(var i =0; i<registrations.length; i++)
+                {
+                    
+                    idArray.push(registrations[i].class);
+                }
+                console.log(idArray);
+                Classes.Model.find({_id : {$in : idArray}}, function (error, messages) {
+                    
+                    if (error) response.send(error);
+                    response.json({classes: messages});
+                });
+            });
+        }
     })
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var newclass = new Classes.Model(request.body.class);
