@@ -14,6 +14,9 @@ export default Ember.Component.extend({
   SR: "",
   SP: "",
 
+  CP: "w3-orange",
+  EU: "",
+
 
   ADM01IsPermitted: Ember.computed(function(){ //Manage system roles
     var authentication = this.get('oudaAuth');
@@ -97,11 +100,17 @@ export default Ember.Component.extend({
     changePassword (){
       this.set('ChangePasswordEnabled', true);
       this.set('EditUserEnabled', false);
+
+      this.set('CP', 'w3-orange');
+      this.set('EU', '');
     },
 
     editUser (){
       this.set('ChangePasswordEnabled', false);
       this.set('EditUserEnabled', true);
+
+      this.set('CP', '');
+      this.set('EU', 'w3-orange');
     }
 
 

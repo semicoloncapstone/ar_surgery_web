@@ -15,6 +15,9 @@
               <th>Size</th>
               <th>Program</th>
               <th>School</th>
+              {{#if TCLDELIsPermitted}}
+                <th></th>
+              {{/if}}
             </tr>
             </thead>
             <tbody>
@@ -36,6 +39,11 @@
                 <td>
                   {{class.school}}
                 </td>
+                {{#if TCLDELIsPermitted}}
+                <td>
+                  {{delete-class ID=class.id}}
+                </td>
+                {{/if}}
               </tr>
             {{/each}}
             </tbody>

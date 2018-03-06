@@ -15,6 +15,15 @@ export default Ember.Component.extend({
         }
     }),
 
+    TCLDELIsPermitted: Ember.computed(function(){
+        var authentication = this.get('oudaAuth');
+        if (authentication.getName === "Root") {
+          return true;
+        } else {
+          return (authentication.get('userCList').indexOf("TCLDEL") >= 0);
+        }
+    }),
+
     init(){
         this._super(...arguments);
         var self = this;
