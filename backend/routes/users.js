@@ -20,15 +20,19 @@ router.route('/')
 
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var USER = request.query;
+        
         if (!USER.userName) {
             Users.Model.find(function (error, users) {
                 if (error) response.send(error);
                 response.json({user: users});
             });
         } else {
+            //console.log(USER.userName);
             Users.Model.findOne({"userName": USER.userName}, function (error, User) {
+                console.log(User);
                 if (error) response.send(error);
                 response.json({user: User});
+                
             });
         }
     });

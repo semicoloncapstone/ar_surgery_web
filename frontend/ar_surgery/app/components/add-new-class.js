@@ -13,7 +13,14 @@ export default Ember.Component.extend({
         var auth = this.get('oudaAuth');
         this.set('username', auth.getName);
         
-        this.set('currentUser', self.get('store').queryRecord('user',{userName: auth.getName}));
+        console.log(auth.getName);
+        console.log(this.get('store').queryRecord('user',{userName: auth.getName}));
+
+        this.get('store').queryRecord('user',{userName: auth.getName}).then(function (records){
+          self.set('currentUser', records);
+          //console.log(self.get('currentUser'));
+          //console.log(records);
+        });
         //console.log(this.get('currentUser'));
     },
 
@@ -31,13 +38,15 @@ export default Ember.Component.extend({
         save () {
             var self = this;
             var myStore = this.get('store');
+            console.log(this.get('currentUser'));
             var newClass = myStore.createRecord('class', {
               className: this.get('className'),
               classSize: this.get('classSize'),
               program: this.get('program'),
               school: this.get('school'),
-              teacher: self.get('currentUser')
+              teacher: this.get('currentUser')
             });
+            //console.log(newClass);
             newClass.save();
 
             this.set('isUserFormEditing', false);
