@@ -15,19 +15,12 @@ export default Ember.Component.extend({
         
         //console.log(auth.getName);
         //console.log(this.get('store').queryRecord('user',{userName: auth.getName}));
-        /*
+        
         this.get('store').findAll('user').then(function (records){
           self.set('currentUser', records.objectAt(3));
           console.log(records.objectAt(0).id);
-        });*/
-        
-        //console.log(this.get('store').queryRecord('password',{userName: auth.getName}));
-        
-        this.get('store').queryRecord('password',{userName: auth.getName}).then(function (records){
-          self.set('currentUser', records);
-          //console.log(self.get('currentUser'));
-          console.log(records);
         });
+      
         //console.log(this.get('currentUser'));
     },
 
