@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Users = require('./ZZusers');
+var Passwords = require('./ZZpasswords');
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var parseJSON = bodyParser.json();
@@ -28,10 +29,14 @@ router.route('/')
             });
         } else {
             //console.log(USER.userName);
-            Users.Model.findOne({"userName": USER.userName}, function (error, User) {
-                console.log(User);
+            Passwords.Model.findOne({"userName": USER.userName}, function (error, pass) {
+                
                 if (error) response.send(error);
-                response.json({user: User});
+                Users.Model.findById(pass.user, function (error, user) {
+                    if (error) response.send(error);
+                    response.json({user: user});
+                });
+                
                 
             });
         }

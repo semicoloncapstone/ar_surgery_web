@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Passwords = require('./ZZpasswords');
+var UserNames = require('./ZZuserNames');
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var parseJSON = bodyParser.json();
@@ -42,13 +43,19 @@ router.route('/')
             user: request.body.password.user
 
         });
+        var newUserName = new UserNames.Model({
+            userName: request.body.password.userName,
+        });
 
         newUserShadow.save(function (error) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                response.json({password: newUserShadow});
+                newUserName.save(function (error){
+                    response.json({password: newUserShadow});
+                });
+                
             }
         });
     })
@@ -105,11 +112,16 @@ router.route('/:password_id')
                     UserShadow.salt = Salt;
                     UserShadow.passwordMustChanged = false;
                 }
+                var name = UserShadow.userName;
+                UserNames.Model.findOne({"userName": name}, function (error, usernames) {
+                    usernames.userName = request.body.password.userName;
+                    usernames.save();
+                });
                 UserShadow.passwordReset = request.body.password.passwordReset;
                 UserShadow.userName = request.body.password.userName;
                 UserShadow.userAccountExpiryDate = request.body.password.userAccountExpiryDate;
                 UserShadow.user = request.body.password.user;
-
+                
                 UserShadow.save(function (error) {
                     if (error) {
                         response.send({error: error});
@@ -122,13 +134,19 @@ router.route('/:password_id')
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        Passwords.Model.findByIdAndRemove(request.params.password_id,
-            function (error, deleted) {
+        Passwords.Model.findByIdAndRemove(request.params.password_id, function (error, deleted) {
                 if (!error) {
+                    
+                    UserNames.Model.findOne({"userName": deleted.userName}, function (error, usernames) {
+                        
+                        UserNames.Model.findByIdAndRemove(usernames._id, function (error2, deleted2) {
+                            
+                        });
+                        
+                    });
                     response.json({password: deleted});
                 };
-            }
-        );
+            });
     });
 
 module.exports = router;

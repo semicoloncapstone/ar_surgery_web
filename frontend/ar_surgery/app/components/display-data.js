@@ -89,8 +89,11 @@ export default Ember.Component.extend({
                 },
                 scales: {
                     yAxes: [{
+
                         gridLines: {
-                            display: false
+                            //display: false,
+                            color: 'rgba(0, 0, 0, 0)',
+                            zeroLineColor: 'rgba(0, 0, 0, 1)'
                         },
                         scaleLabel: {
                             display: true,
@@ -104,7 +107,8 @@ export default Ember.Component.extend({
                     }],
                 xAxes: [{
                     gridLines: {
-                        display: false
+                        color: 'rgba(0, 0, 0, 0)',
+                        zeroLineColor: 'rgba(0, 0, 0, 1)'
                     },
                     scaleLabel: {
                         display: true,

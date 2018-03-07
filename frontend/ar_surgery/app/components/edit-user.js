@@ -62,7 +62,9 @@ export default Ember.Component.extend({
             userShadow.set('passwordMustChanged', true);
             userShadow.set('passwordReset', true);
           }
+          console.log(self.get('userName'));
           userShadow.set ('user', self.get('userRecord'));
+          userShadow.set ('userName', self.get('userName'));//<<-----------
           userShadow.save().then(function () {
             user.save().then(function(){
               self.set('isUserFormEditing', false);
