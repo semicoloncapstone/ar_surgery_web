@@ -16,10 +16,14 @@ export default Ember.Component.extend({
         //console.log(auth.getName);
         //console.log(this.get('store').queryRecord('user',{userName: auth.getName}));
         
-        this.get('store').findAll('user').then(function (records){
-          self.set('currentUser', records.objectAt(3));
-          console.log(records.objectAt(0).id);
-        });
+        if (auth.getName === "Root"){
+            
+        } else {
+            this.get('store').queryRecord('user',{userName: auth.getName}).then(function (record){
+                self.set('currentUser', record);
+                //console.log(record);
+            });
+        }
       
         //console.log(this.get('currentUser'));
     },

@@ -22,6 +22,14 @@ export default Ember.Component.extend({
         var self = this;
         this.set('username', auth.getName);
         //this.set('currentUser', self.get('store').queryRecord('user',{userName: auth.getName}));
+        if (auth.getName === "Root"){
+            
+        } else {
+            this.get('store').queryRecord('user',{userName: auth.getName}).then(function (record){
+                self.set('currentUser', record);
+                //console.log(record);
+            });
+        }
         
         //this.set('username', this.get('currentUser').firstName + " " + this.get('currentUser').lastName);
     },

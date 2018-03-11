@@ -52,19 +52,21 @@ export default Ember.Component.extend({
       var name = this.get('userName');
       var myStore = this.get('store');
       var self = this;
-
+      console.log(name);
+      console.log(self.get('userRecord'));
       myStore.queryRecord('password', {filter: {userName: name}}).then(function (userShadow) {
         userShadow.set('userAccountExpiryDate', new Date(self.get('selectedDate')));
-        myStore.find('user',  userShadow.get('user').get('id')).then(function(user) {
+        myStore.find('user', userShadow.get('user').get('id')).then(function(user) {
           if (self.get('isResettingPassword')){
             var authentication = self.get('oudaAuth');
             userShadow.set('encryptedPassword', authentication.hash(self.get('tempPassword')));
             userShadow.set('passwordMustChanged', true);
             userShadow.set('passwordReset', true);
           }
+          //console.log(self.get('userName'));
+          userShadow.set('user', self.get('userRecord'));
+          userShadow.set('userName', self.get('userName'));//<-----------
           console.log(self.get('userName'));
-          userShadow.set ('user', self.get('userRecord'));
-          userShadow.set ('userName', self.get('userName'));//<<-----------
           userShadow.save().then(function () {
             user.save().then(function(){
               self.set('isUserFormEditing', false);
@@ -99,6 +101,7 @@ export default Ember.Component.extend({
         var datestring = date.toISOString().substring(0, 10);
         self.set('selectedDate', datestring);
         self.set('userName', userShadow.get('userName'));
+        console.log(self.get('userName'));
         self.set('isUserFormEditing', true);
       });
     },

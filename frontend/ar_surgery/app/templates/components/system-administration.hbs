@@ -30,43 +30,8 @@
 
 
 {{else}}
-{{#if UE001IsPermitted}}
-  <div class="w3-bar w3-black">
-    <a class="w3-bar-item w3-button w3-mobile {{CP}}" style="width:50%" {{action 'changePassword'}}>
-      <i class="fa fa-lock"></i>
-      Change Password
-    </a>
-    <a class="w3-bar-item w3-button w3-mobile {{EU}}" style="width:50%" {{action 'editUser'}}>
-      <i class="fa fa-list"></i>
-      Edit User Information
-    </a>
-  </div>
-
-  {{#if EditUserEnabled}}
-    {{edit-user ID=user.id }}
-  {{/if}}
-  {{#if ChangePasswordEnabled}}
-  <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
-    <h4><b><i class="fa fa-lock"></i> Change Password</b></h4>
-  </header>
-  <form class="w3-container w3-center">
-    
-    <label>Confirm Username</label>
-    {{input class="w3-input w3-border w3-round-large" value=name type="text"}}
-
-    <label>Enter New Password</label>
-    {{input class="w3-input w3-border w3-round-large" value=firstPassword type="password"}}
-  
-    <label>Confirm New Password</label>
-    {{input class="w3-input w3-border w3-round-large" value=secondPassword type="password"}}
-
-    <br>
-    <button class="w3-button w3-round-large w3-orange" {{action 'save'}}>
-      Change Password
-    </button>
-    
-  </form>
-  {{/if}}
+  {{#if UE001IsPermitted}}
+    {{user-edit}}
   {{/if}}
 {{/if}}
 

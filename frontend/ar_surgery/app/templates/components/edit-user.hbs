@@ -1,7 +1,7 @@
 {{#if  isUserFormEditing }}
   {{#if EU001IsPermitted }}
     <div class="ui modal auth">
-      <div class="header">Modify User Profile for {{userRecord.firstName}} {{userRecord.lastName}}</div>
+      <div class="header">Modify User Profile for {{userRecord.firstName}} {{userRecord.lastName}} {{userName}}</div>
       <div class="content">
         <div class="ui form">
           <div class="inline field">
@@ -39,7 +39,7 @@
           {{else}}
             <div class="inline field">
               <label>Password</label>
-              <button class="ui button"  {{action 'resetPassword'}}>Reset password</button>
+              <button class="w3-button w3-black w3-round-large" {{action 'resetPassword'}}>Reset password</button>
             </div>
 
           {{/if}}
@@ -51,12 +51,12 @@
         </div>
       </div>
       <div class="actions">
-        <div class="ui button" {{action "saveUser"}}>
+        <button class="w3-button w3-green w3-round-large" {{action "saveUser"}}>
           Save
-        </div>
-        <div class="ui button" {{action "cancel"}}>
+        </button>
+        <button class="w3-button w3-red w3-round-large" {{action "cancel"}}>
           Cancel
-        </div>
+        </button>
       </div>
     </div>
   {{else}}

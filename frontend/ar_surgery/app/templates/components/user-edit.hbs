@@ -1,0 +1,59 @@
+<br>
+<div class="w3-row-padding">
+    <div class="w3-col" style="width:20%"><br></div>
+    <div class="w3-col" style="width:60%">
+        <div class="w3-row-padding">
+            <div class="w3-half">
+                <label>First Name</label>
+                {{input class="w3-input w3-border w3-round-large" value=currentUser.firstName type="text" placeholder="First Name"}}
+            </div>
+            <div class="w3-half">
+                <label>Last Name</label>
+                {{input class="w3-input w3-border w3-round-large" value=currentUser.lastName type="text" placeholder="Last Name"}}
+            </div>
+        </div>
+        <br>
+        <div class="w3-row-padding">
+            <div class="w3-half">
+                <label>Username</label>
+                {{input class="w3-input w3-border w3-round-large" value=userName type="text" placeholder="Username"}}
+            </div>
+            <div class="w3-half">
+                <label>Email</label>
+                {{input class="w3-input w3-border w3-round-large" value=currentUser.email type="text" placeholder="Email"}}
+            </div>
+        </div>
+        <br>
+        
+            
+        
+        <br>
+        <button class="w3-button w3-round-large w3-black w3-right" {{action 'changePass'}}>
+            {{passButtonTitle}}
+        </button>
+        
+        <button class="w3-button w3-round-large w3-green w3-right" {{action 'save'}}>
+            Save
+        </button>
+
+        <br><br><br>
+        {{#if isChangingPassword}}
+            <div class="w3-row-padding">
+                <label>Enter New Password</label>
+                {{input class="w3-input w3-border w3-round-large" value=firstPassword type="password" placeholder="New Password"}}
+            </div>
+            <br>
+            <div class="w3-row-padding">
+                <label>Confirm New Password</label>
+                {{input class="w3-input w3-border w3-round-large" value=secondPassword type="password" placeholder="Confirm New Password"}}
+            </div>
+            <br>
+            <button class="w3-button w3-round-large w3-green w3-right" {{action 'savePass'}}>
+                Save Password
+            </button>
+        {{/if}}
+        
+    </div>
+    <div class="w3-col" style="width:20%"><br></div>
+</div>
+
