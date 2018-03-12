@@ -5,7 +5,6 @@ export default DS.Model.extend({
     reciever: DS.belongsTo('user', {async: true}),
     messageBoard: DS.belongsTo('messageBoard', {async: true}),
     date: DS.attr(),
-    date: DS.attr(),
     header: DS.attr(),
     body: DS.attr(),
     type: DS.attr(),

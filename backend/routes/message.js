@@ -27,27 +27,27 @@ router.route('/')
         {
             Messages.find({"sender": query.sender}, function (error, messages) {
                 if (error) response.send(error);
-                response.json({msg: messages});
+                response.json({message: messages});
             });
         }
         else if (query.reciever)
         {
             Messages.find({"reciever": query.reciever}, function (error, messages) {
                 if (error) response.send(error);
-                response.json({msg: messages});
+                response.json({message: messages});
             });
         }
         else if (query.messageBoard)
         {
             Messages.find({"messageBoard": query.messageBoard}, function (error, messages) {
                 if (error) response.send(error);
-                response.json({msg: messages});
+                response.json({message: messages});
             });
         }
         else {
             Messages.find(function (error, messages) {
                 if (error) response.send(error);
-                response.json({msg: messages});
+                response.json({message: messages});
             });
         }
        

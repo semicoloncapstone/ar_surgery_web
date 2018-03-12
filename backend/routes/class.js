@@ -19,9 +19,7 @@ router.route('/')
                 response.json({classes: messages});
             });
         }
-        else 
-        {
-            
+        else {
             Registrations.Model.find({"user": user.user}, function (error,registrations) {
                 if (error) response.send(error);
                 

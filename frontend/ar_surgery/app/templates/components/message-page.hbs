@@ -5,37 +5,31 @@
 <div class="w3-row-padding w3-margin-bottom">
     <div class="w3-third">
       <div class="w3-container w3-padding-16">
-          <button class="w3-button w3-block w3-green">Class Name</button>
-          <button class="w3-button w3-block">Class Name</button>
-          <button class="w3-button w3-block">Class Name</button>
-          <button class="w3-button w3-block">Class Name</button>
+          <button class="w3-button w3-round-large w3-black"><i class="fas fa-plus"></i>  Edit</button>
+          <button class="w3-button w3-round-large w3-black w3-right"><i class="fas fa-pencil-alt"></i>  New</button>
+          <h4 class="w3-center"><i class="fas fa-user"></i>  Personal Messages</h4>
+          <br>
+          <button class="w3-button w3-block w3-round-large">Sender Name</button>
+          <br>
+      </div>
+      <br>
+      <div class="w3-container w3-padding-16">
+          <h4 class="w3-center"><i class="fas fa-users"></i>  Class Messages</h4>
+          <br>
+          <button class="w3-button w3-block w3-round-large">Class Name</button>
+          <br>
       </div>
     </div>
     <div class="w3-twothird">
         <div class="w3-container w3-padding-16">
-            <div class="container">
-            <img src="/assets/images/generic_user.png" alt="Avatar">
-            <p>Post Text</p>
-            <span class="time-right">xx:xx</span>
-            </div>
-
-            <div class="container darker">
-            <img src="/assets/images/generic_user.png" alt="Avatar" class="right">
-            <p>Post Text</p>
-            <span class="time-left">xx:xx</span>
-            </div>
-
-            <div class="container">
-            <img src="/assets/images/generic_user.png" alt="Avatar">
-            <p>Post Text</p>
-            <span class="time-right">xx:xx</span>
-            </div>
-
-            <div class="container darker">
-            <img src="/assets/images/generic_user.png" alt="Avatar" class="right">
-            <p>Post Text</p>
-            <span class="time-left">xx:xx</span>
-            </div>
+            {{#each personalMessages as |mess|}}
+                <div class="container">
+                    <p><strong>{{mess.sender}}</strong></p>
+                    <p><strong>Subject: </strong>{{mess.header}}</p>
+                    <p>{{mess.body}}</p>
+                    <p class="w3-right">{{mess.date}}</p>
+                </div>
+            {{/each}}
         </div>
     </div>
 </div>
