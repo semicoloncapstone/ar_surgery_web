@@ -3,10 +3,10 @@
 </header>
 
 <div class="w3-row-padding w3-margin-bottom">
-    <div class="w3-third">
+    <div class="w3-third w3-border w3-round-large">
       <div class="w3-container w3-padding-16">
-          <button class="w3-button w3-round-large w3-black"><i class="fas fa-plus"></i>  Edit</button>
-          <button class="w3-button w3-round-large w3-black w3-right"><i class="fas fa-pencil-alt"></i>  New</button>
+          <button class="w3-button w3-round-large w3-black"><i class="fas fa-pencil-alt"></i>  Edit</button>
+          <button class="w3-button w3-round-large w3-black w3-right" {{action 'openNewMessage'}}><i class="fas fa-plus"></i>  New</button>
           <h4 class="w3-center"><i class="fas fa-user"></i>  Personal Messages</h4>
           <br>
           <button class="w3-button w3-block w3-round-large">Sender Name</button>
@@ -33,3 +33,38 @@
         </div>
     </div>
 </div>
+
+{{#if isMakingNew}}
+    <div class="ui modal auth">
+      <div class="header">Send New Message</div>
+      <div class="content">
+        <div class="ui form">
+          <div class="inline field">
+            <label>Select Message Reciever</label>
+            <select name="studentList" onchange={{action "selectReciever" value="target.value"}}>
+                <option hidden>Select Reciever</option>
+                {{#each allUsers as |user|}}
+                    <option value={{user}}>{{user.firstName}} {{user.lastName}}</option>
+                {{/each}}
+            </select>
+          </div>
+          <div class="inline field">
+            <label>Subject</label>
+            {{input value=header type="text" placeholder="Enter Subject"}}
+          </div>
+          <div class="inline field">
+            <label>Message</label>
+            {{textarea type="text" rows="4" value=body}}
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="w3-button w3-green w3-round-large" {{action "sendMessage"}}>
+          Send
+        </button>
+        <button class="w3-button w3-red w3-round-large" {{action "cancelSend"}}>
+          Cancel
+        </button>
+      </div>
+    </div>
+{{/if}}
