@@ -22,9 +22,9 @@
     </div>
     <div class="w3-twothird">
         <div class="w3-container w3-padding-16">
-            {{#each personalMessages as |mess|}}
+            {{#each personalMessages as |mess index|}}
                 <div class="container">
-                    <p><strong>{{mess.sender}}</strong></p>
+                    <p><strong>{{mess.sender}} index: {{index}}</strong></p>
                     <p><strong>Subject: </strong>{{mess.header}}</p>
                     <p>{{mess.body}}</p>
                     <p class="w3-right">{{mess.date}}</p>
@@ -41,10 +41,10 @@
         <div class="ui form">
           <div class="inline field">
             <label>Select Message Reciever</label>
-            <select name="studentList" onchange={{action "selectReciever" value="target.value"}}>
+            <select class="ui dropdown" name="studentList" onchange={{action "selectReciever" value="target.value"}}>
                 <option hidden>Select Reciever</option>
-                {{#each allUsers as |user|}}
-                    <option value={{user}}>{{user.firstName}} {{user.lastName}}</option>
+                {{#each allUsers as |user index|}}
+                    <option value={{user.id}}>{{user.firstName}} {{user.lastName}}</option>
                 {{/each}}
             </select>
           </div>

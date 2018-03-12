@@ -67,7 +67,7 @@ export default Ember.Component.extend({
                 b: 100,
                 t: 100
             }};
-            console.log(data);
+            //console.log(data);
             Plotly.newPlot('tester', data, layout);
         });
         //this.set('username', this.get('currentUser').firstName + " " + this.get('currentUser').lastName);

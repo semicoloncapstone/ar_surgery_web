@@ -8,6 +8,7 @@ export default Ember.Component.extend({
     isMakingNew: false,
     allUsers: null,
     currentReciever: null,
+    userArray: null,
 
     didRender() {
         this._super(...arguments);
@@ -25,6 +26,7 @@ export default Ember.Component.extend({
         var self = this;
         var myStore = this.get('store');
         var user = null;
+        var users = [];
         
         myStore.queryRecord('user',{userName: auth.getName}).then(function (record){
             self.set('currentUser', record);
@@ -33,11 +35,19 @@ export default Ember.Component.extend({
         
         myStore.query('message', {sender: user}).then(function (records){
             self.set('personalMessages', records);
-            console.log(records);
+            console.log(records.content.length);
+            console.log(records.objectAt(0).data.sender);
+            for (var i = 0; i < records.content.length ; i++){
+                users[i] = records.objectAt(i);
+            }
+            console.log(users);
+            self.set('userArray', users);
+            console.log(self.get('userArray'));
         });
 
         myStore.findAll('user').then(function (records){
             self.set('allUsers', records);
+            
         });
 
     },
@@ -77,9 +87,16 @@ export default Ember.Component.extend({
         },
 
         selectReciever(rcv){
-            this.set('currentReciever', rcv);
-            console.log("Setting Reciever");
+            var self = this;
+            var myStore = this.get('store');
             console.log(rcv);
+            myStore.findRecord('user', rcv).then(function (record){
+                self.set('currentReciever', record);
+                console.log(self.get('currentReciever'));
+            });
+            //this.set('currentReciever', rcv);
+            //console.log("Setting Reciever");
+            //console.log(rcv);
         }
     }
 

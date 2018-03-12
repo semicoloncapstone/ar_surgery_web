@@ -42,6 +42,8 @@ export default Ember.Component.extend({
         save () {
             var self = this;
             var myStore = this.get('store');
+            var d = new Date();
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             
             var newClass = myStore.createRecord('class', {
               className: this.get('className'),
@@ -52,6 +54,16 @@ export default Ember.Component.extend({
             });
             //console.log(newClass);
             newClass.save();
+
+            /*var newReg = myStore.createRecord('registration', {
+                date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(),
+                duration: 6,
+                type: "Public",
+                class: newClass,
+                user: this.get('currentUser')
+            });
+
+            newReg.save()*/
 
             this.set('isUserFormEditing', false);
             Ember.$('.ui.modal.auth').modal('hide');

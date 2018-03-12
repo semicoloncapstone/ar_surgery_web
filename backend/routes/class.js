@@ -13,7 +13,9 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var user = request.query;
-        if (!user.user){
+        console.log(user.user);
+        console.log("here");
+        if (user.user == null){
             Classes.Model.find(function (error, messages) {
                 if (error) response.send(error);
                 response.json({classes: messages});
@@ -22,7 +24,8 @@ router.route('/')
         else {
             Registrations.Model.find({"user": user.user}, function (error,registrations) {
                 if (error) response.send(error);
-                
+                console.log(user.user);
+                console.log(registrations);
                 var idArray = [];
                 //response.json({registrations: registrations});
                 for(var i =0; i<registrations.length; i++)
