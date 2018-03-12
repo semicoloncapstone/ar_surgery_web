@@ -39,17 +39,17 @@ export default Ember.Component.extend({
             self.set('currentUser', record);
             console.log(record.id);
             userID = record.id;
-            
-        }).then(myStore.query('class', {user: userID}).then(function(records) {
-            console.log(self.get('currentUser'));
-            self.set('personalClasses', records);
-            console.log(records);
-        }));
+            myStore.query('class', {user: userID}).then(function(records) {
+                console.log(self.get('currentUser'));
+                self.set('personalClasses', records);
+                console.log(records);
+            })
+        });
 
-        myStore.findAll('registration').then(function (records) {
+        /*myStore.findAll('registration').then(function (records) {
             self.set('regModel', records);
             //console.log(self.get('regModel').objectAt(0).get('user'));
-        });
+        })
         //console.log(this.get('regModel'));
         /*myStore.findAll('class').then(function (records) {
             self.set('classModel', records);

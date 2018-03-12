@@ -13,7 +13,7 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var user = request.query;
-        console.log(user.user);
+        console.log("HEY THIS:" + user);
         console.log("here");
         if (user.user == null){
             Classes.Model.find(function (error, messages) {
