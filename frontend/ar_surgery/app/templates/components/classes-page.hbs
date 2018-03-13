@@ -3,13 +3,13 @@
   </header>
 
   <div class="w3-bar w3-black">
-    <a class="w3-bar-item w3-button w3-mobile {{AC}}" style="width:50%" {{action "allClass"}}>
-        <i class="fa fa-user"></i>
-        All Classes
-    </a>
     <a class="w3-bar-item w3-button w3-mobile {{MC}}" style="width:50%" {{action "myClass"}}>
-        <i class="fa fa-users"></i>
+        <i class="fas fa-graduation-cap"></i>
         My Classes
+    </a>
+    <a class="w3-bar-item w3-button w3-mobile {{AC}}" style="width:50%" {{action "allClass"}}>
+        <i class="fas fa-globe"></i>
+        All Classes
     </a>
 </div>
 <br>
@@ -78,6 +78,7 @@
               <th>Size</th>
               <th>Program</th>
               <th>School</th>
+              <th></th>
               {{#if TCLDELIsPermitted}}
                 <th></th>
               {{/if}}
@@ -101,6 +102,9 @@
                 </td>
                 <td>
                   {{class.school}}
+                </td>
+                <td>
+                  <button class="w3-button w3-center w3-round-large w3-black">Class Page</button>
                 </td>
                 {{#if TCLDELIsPermitted}}
                 <td>

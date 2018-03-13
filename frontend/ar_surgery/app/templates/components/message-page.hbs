@@ -1,20 +1,6 @@
 <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
     <h1><b><i class="fa fa-comments"></i> Class Messages</b></h1>
 </header>
-
-<div class="w3-bar w3-black">
-    <a class="w3-bar-item w3-button w3-mobile {{PM}}" style="width:50%" {{action "personalMsgs"}} >
-        <i class="fa fa-user"></i>
-        Personal Messages
-    </a>
-    <a class="w3-bar-item w3-button w3-mobile {{MB}}" style="width:50%" {{action "boardMsgs"}} >
-        <i class="fa fa-users"></i>
-        Message Boards
-    </a>
-</div>
-<br>
-
-{{#if isPersonalMsgs}}
     <div class="w3-row-padding w3-margin-bottom">
         <div class="w3-third w3-round-large">
             <div class="w3-container w3-padding-16">
@@ -51,27 +37,6 @@
             </div>
         </div>
     </div>
-{{/if}}
-
-{{#if isMsgsBoard}}
-    <div class="w3-row-padding w3-margin-bottom">
-        <div class="w3-third w3-round-large">
-            <div class="w3-container w3-padding-16">
-                <button class="w3-button w3-block w3-round-large" {{action 'recievedMsgs'}}>Message Board Title</button> 
-            </div>
-            <br>
-        </div>
-    <div class="w3-twothird">
-        <div class="w3-container w3-padding-16">
-            {{#each regs as |reg index|}}
-                <div class="container">
-                    <p>{{reg.type}}</p>
-                </div>
-            {{/each}}
-        </div>
-    </div>
-    </div>
-{{/if}}
 
 {{#if isMakingNew}}
     <div class="ui modal auth">

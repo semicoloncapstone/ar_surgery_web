@@ -8,10 +8,10 @@ export default Ember.Component.extend({
     allClasses: null,
     currentUser: null,
     noClass: false,
-    isAllClass: true,
-    isMyClass: false,
-    AC: "w3-red",
-    MC: "w3-black",
+    isAllClass: false,
+    isMyClass: true,
+    AC: "w3-black",
+    MC: "w3-red",
 
     TCLADDIsPermitted: Ember.computed(function(){
         var authentication = this.get('oudaAuth');

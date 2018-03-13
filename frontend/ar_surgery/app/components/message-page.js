@@ -10,12 +10,8 @@ export default Ember.Component.extend({
     allUsers: null,
     currentReciever: null,
     userArray: null,
-    isPersonalMsgs: true,
     isSentMsgs: false,
     isRcvdMsgs: false,
-    isMsgsBoard: false,
-    PM: "w3-green",
-    MB: "",
     SM: "w3-black",
     RM: "w3-green",
     isZeroMsgs: false,
@@ -170,30 +166,6 @@ export default Ember.Component.extend({
                     });
                 });
             });
-        },
-
-        personalMsgs(){
-            this.set('isZeroMsgs', false);
-            this.set('isPersonalMsgs', true);
-            this.set('isMsgsBoard', false);
-
-            this.set('PM', 'w3-green');
-            this.set('MB', 'w3-black');
-        },
-
-        boardMsgs(){
-            this.set('isZeroMsgs', false);
-            this.set('isPersonalMsgs', false);
-            this.set('isMsgsBoard', true);
-
-            this.set('PM', 'w3-black');
-            this.set('MB', 'w3-green');
-
-            this.set('isRcvdMsgs', false);
-            this.set('isSentMsgs', false);
-
-            this.set('SM', 'w3-black');
-            this.set('RM', 'w3-black');
         },
     }
 
