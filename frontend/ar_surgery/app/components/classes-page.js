@@ -41,7 +41,7 @@ export default Ember.Component.extend({
         
         myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
             self.set('currentUser', record);
-            console.log(record.id);
+            //console.log(record.id);
             userID = record.id;
             myStore.query('class', {user: userID}).then(function(records) {
                 //console.log(self.get('currentUser'));
