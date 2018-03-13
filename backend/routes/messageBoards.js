@@ -12,7 +12,8 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var theclass = request.query;
-        if (!theclass){
+        console.log(theclass.class);
+        if (!theclass.class){
             MessageBoards.Model.find(function (error, messages) {
                 if (error) response.send(error);
                 response.json({messageBoards: messages});

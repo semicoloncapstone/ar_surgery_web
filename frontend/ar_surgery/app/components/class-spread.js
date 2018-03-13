@@ -11,8 +11,9 @@ export default Ember.Component.extend({
         this._super(...arguments);
         var myStore = this.get('store');
         var self = this;
-        console.log(self.get('cls'));
-        myStore.queryRecord('messageBoard', {class: self.get('cls')}).then(function(record){
+        var thisClass = this.get('cls');
+        console.log(thisClass);
+        myStore.queryRecord('messageBoard', {class: thisClass}).then(function(record){
             console.log(record);
         });
         
