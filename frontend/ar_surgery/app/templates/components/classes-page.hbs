@@ -2,11 +2,74 @@
     <h1><b><i class="fa fa-users"></i> Classes</b></h1>
   </header>
 
-<div class="w3-row-padding w3-margin-bottom">
+  <div class="w3-bar w3-black">
+    <a class="w3-bar-item w3-button w3-mobile {{AC}}" style="width:50%" {{action "allClass"}}>
+        <i class="fa fa-user"></i>
+        All Classes
+    </a>
+    <a class="w3-bar-item w3-button w3-mobile {{MC}}" style="width:50%" {{action "myClass"}}>
+        <i class="fa fa-users"></i>
+        My Classes
+    </a>
+</div>
+<br>
+{{#if isAllClass}}
+  <div class="w3-row-padding w3-margin-bottom">
       <div class="w3-container w3-padding-16">
         {{#if TCLADDIsPermitted}}
           {{add-new-class}}
         {{/if}}
+          <table class="w3-table-all">
+            <thead>
+            <tr>
+              <th>Class Name</th>
+              <th>Instructor</th>
+              <th>Size</th>
+              <th>Program</th>
+              <th>School</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {{#each allClasses as |class|}}
+              <tr>
+                <td>
+                  {{class.className}}
+                </td>
+                <td>
+                  {{class.teacher.lastName}}, {{class.teacher.firstName}}
+                </td>
+                <td>
+                  {{class.classSize}}
+                </td>
+                <td>
+                  {{class.program}}
+                </td>
+                <td>
+                  {{class.school}}
+                </td>
+                <td>
+                  {{class-register}}
+                </td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+      </div>
+</div>
+<br>
+{{/if}}
+
+{{#if isMyClass}}
+  <div class="w3-row-padding w3-margin-bottom">
+      <div class="w3-container w3-padding-16">
+        {{#if TCLADDIsPermitted}}
+          {{add-new-class}}
+        {{/if}}
+        {{#if noClass}}
+          <h5 class="w3-center">No Class Registrations Found</h5>
+        {{else}}
           <table class="w3-table-all">
             <thead>
             <tr>
@@ -48,6 +111,10 @@
             {{/each}}
             </tbody>
           </table>
+          {{/if}}
       </div>
 </div>
+
 <br>
+{{/if}}
+
