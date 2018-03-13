@@ -1,6 +1,6 @@
 /* Chat containers */
 .container {
-    border: 2px solid #dedede;
+    border: 2px solid red;
     background-color: #f1f1f1;
     border-radius: 5px;
     padding: 10px;
@@ -9,8 +9,8 @@
 
 /* Darker chat container */
 .darker {
-    border-color: #4CA14F;
-    background-color: #4CAF4F;
+    border-color: green;
+    background-color: #f1f1f1;
 }
 
 /* Clear floats */

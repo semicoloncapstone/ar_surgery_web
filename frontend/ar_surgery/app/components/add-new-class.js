@@ -49,7 +49,9 @@ export default Ember.Component.extend({
               className: this.get('className'),
               classSize: this.get('classSize'),
               program: this.get('program'),
+              programDesc: this.get('progDesc'),
               school: this.get('school'),
+              schoolDesc: this.get('schlDesc'),
               teacher: this.get('currentUser')
             });
             //console.log(newClass);

@@ -4,7 +4,9 @@ export default DS.Model.extend({
     className: DS.attr(),
     classSize: DS.attr(),
     program: DS.attr(),
+    programDesc: DS.attr(),
     school: DS.attr(),
+    schoolDesc: DS.attr(),
     teacher: DS.belongsTo('user',{ async: true }),
 });
 

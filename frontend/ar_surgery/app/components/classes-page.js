@@ -16,6 +16,7 @@ export default Ember.Component.extend({
     isMainClasses: true,
     isOneClass: false,
     oneClass: null,
+    isOwningTeacher: null, 
 
     TCLADDIsPermitted: Ember.computed(function(){
         var authentication = this.get('oudaAuth');

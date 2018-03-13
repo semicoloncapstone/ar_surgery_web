@@ -11,19 +11,23 @@ var mongoose = require('mongoose');
 
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        var user = request.query;
-        if (!user.user){
+        var query = request.query;
+        if (query.class){
+            Registrations.Model.find({"class": query.class}, function (error,registrations) {
+                if (error) response.send(error);
+                response.json({registrations: registrations});
+            });
+        } else if (query.user) {
+            Registrations.Model.find({"user": query.user}, function (error,registrations) {
+                if (error) response.send(error);
+                response.json({registrations: registrations});
+            });
+        } else {
             Registrations.Model.find(function (error, messages) {
                 if (error) response.send(error);
                 response.json({registrations: messages});
             });
-        }
-        else {
-            Registrations.Model.find({"user": user.user}, function (error,registrations) {
-                if (error) response.send(error);
-                response.json({registrations: registrations});
-            });
-        }
+        } 
     })
     .post(parseUrlencoded, parseJSON, function (request, response) {
         var newRegistration = new Registrations.Model(request.body.registration);

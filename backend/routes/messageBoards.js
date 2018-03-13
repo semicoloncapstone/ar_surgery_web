@@ -20,7 +20,7 @@ router.route('/')
             });
         }
         else {
-            MessageBoards.Model.find({"class": theclass.class}, function (error, messages) {
+            MessageBoards.Model.findOne({"class": theclass.class}, function (error, messages) {
                 if (error) response.send(error);
                 response.json({messageBoards: messages});
             });

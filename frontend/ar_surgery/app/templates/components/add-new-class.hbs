@@ -16,8 +16,16 @@
             {{input value=program type="text" placeholder="Enter Program"}}
           </div>
           <div class="inline field">
+            <label>Course Description</label>
+            {{textarea type="text" rows="4" value=progDesc}}
+          </div>
+          <div class="inline field">
             <label>School</label>
             {{input value=school type="text" placeholder="Enter School"}}
+          </div>
+          <div class="inline field">
+            <label>School Description</label>
+            {{textarea type="text" rows="4" value=schlDesc}}
           </div>
         </div>
       </div>
@@ -34,7 +42,7 @@
 
 <button class="w3-button w3-green w3-round-large w3-right" {{action 'addNewClass'}}>
   <i class="fa fa-plus"></i>
-  Add New Class
+  Create New Class
 </button>
 <br><br>
 
