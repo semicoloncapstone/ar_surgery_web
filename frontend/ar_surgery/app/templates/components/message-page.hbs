@@ -51,17 +51,16 @@
             </div>
             <br>
         </div>
-        <div class="w3-twothird">
-            <div class="w3-container w3-padding-16">
-                {{#each personalMessages as |mess index|}}
-                    <div class="container">
-                        <p><strong>{{mess.sender}} index: {{index}}</strong></p>
-                        <p><strong>Subject: </strong>{{mess.header}}</p>
-                        <p>{{mess.body}}</p>
-                        <p class="w3-right">{{mess.date}}</p>
-                    </div>
-                {{/each}}
-            </div>
+    <div class="w3-twothird">
+        <div class="w3-container w3-padding-16">
+            {{#each personalMessages as |mess index|}}
+                <div class="container">
+                    <p><strong>From: {{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
+                    <p><strong>Subject: </strong>{{mess.header}}</p>
+                    <p>{{mess.body}}</p>
+                    <p class="w3-right">{{mess.date}}</p>
+                </div>
+            {{/each}}
         </div>
     </div>
 {{/if}}
