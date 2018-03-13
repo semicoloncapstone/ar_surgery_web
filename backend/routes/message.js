@@ -23,6 +23,7 @@ var Messages = mongoose.model('messages', messagesSchema);
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var query = request.query;
+        console.log(query);
         if (query.sender)
         {
             Messages.find({"sender": query.sender}, function (error, messages) {
