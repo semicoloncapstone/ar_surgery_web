@@ -15,8 +15,9 @@ export default Ember.Component.extend({
     isMsgsBoard: false,
     PM: "w3-green",
     MB: "",
-    SM: "",
-    RM: "",
+    SM: "w3-black",
+    RM: "w3-green",
+    isZeroMsgs: false,
 
     didRender() {
         this._super(...arguments);
@@ -36,32 +37,19 @@ export default Ember.Component.extend({
         var users = [];
         
         myStore.queryRecord('user',{userName: auth.getName}).then(function (record){
-            console.log('here1');
             self.set('currentUser', record);
             user = record.id;
             myStore.findAll('user').then(function (records){
-                console.log('here2');
                 self.set('allUsers', records);
-                myStore.query('message', {sender: user}).then(function (records){
-                    console.log('here3');
-                    self.set('personalMessages', records);
-                    console.log(records.content.length);
-                    console.log(records.objectAt(0).data.sender);
-                    for (var i = 0; i < records.content.length ; i++){
-                        users[i] = records.objectAt(i);
+                myStore.query('message', {reciever: user}).then(function (records){
+                    if (records.content.length === 0){
+                        self.set('isZeroMsgs', true);
+                    } else {
+                        self.set('Messages', records);
                     }
-                    console.log(users);
-                    self.set('userArray', users);
-                    console.log(self.get('userArray'));
                 });
             });
-            
-
         });
-        
-        
-        
-
     },
 
     actions: {
@@ -112,51 +100,88 @@ export default Ember.Component.extend({
         },
 
         recievedMsgs(){
+            this.set('isZeroMsgs', false);
             this.set('isRcvdMsgs', true);
             this.set('isSentMsgs', false);
 
-            this.set('SM', '');
+            this.set('SM', 'w3-black');
             this.set('RM', 'w3-green');
+
+            var auth = this.get('oudaAuth');
+            var self = this;
+            var myStore = this.get('store');
+            var user = null;
+            
+            myStore.queryRecord('user',{userName: auth.getName}).then(function (record){
+                self.set('currentUser', record);
+                user = record.id;
+                myStore.findAll('user').then(function (records){
+                    self.set('allUsers', records);
+                    myStore.query('message', {reciever: user}).then(function (records){
+                        
+                        //console.log(records.content.length);
+                        if (records.content.length === 0){
+                            self.set('isZeroMsgs', true);
+                        } else {
+                            self.set('Messages', records);
+                        }
+                    });
+                });
+            });
         },
 
         sentMsgs(){
+            this.set('isZeroMsgs', false);
             var myStore = this.get('store');
             var self = this;
+            var user = null;
             
             this.set('isRcvdMsgs', false);
             this.set('isSentMsgs', true);
 
             this.set('SM', 'w3-green');
-            this.set('RM', '');
+            this.set('RM', 'w3-black');
 
-            console.log(this.get('currentUser'));
-
-            myStore.query('message', {sender: this.get('currentUser')}).then(function (records){
-                self.set('Messages', records);
-                self.get(records);
+            var auth = this.get('oudaAuth');
+            
+            myStore.queryRecord('user',{userName: auth.getName}).then(function (record){
+                self.set('currentUser', record);
+                user = record.id;
+                myStore.findAll('user').then(function (records){
+                    self.set('allUsers', records);
+                    myStore.query('message', {sender: user}).then(function (records){
+                        if (records.content.length === 0){
+                            self.set('isZeroMsgs', true);
+                        } else {
+                            self.set('Messages', records);
+                        }
+                    });
+                });
             });
         },
 
         personalMsgs(){
+            this.set('isZeroMsgs', false);
             this.set('isPersonalMsgs', true);
             this.set('isMsgsBoard', false);
 
             this.set('PM', 'w3-green');
-            this.set('MB', '');
+            this.set('MB', 'w3-black');
         },
 
         boardMsgs(){
+            this.set('isZeroMsgs', false);
             this.set('isPersonalMsgs', false);
             this.set('isMsgsBoard', true);
 
-            this.set('PM', '');
+            this.set('PM', 'w3-black');
             this.set('MB', 'w3-green');
 
             this.set('isRcvdMsgs', false);
             this.set('isSentMsgs', false);
 
-            this.set('SM', '');
-            this.set('RM', '');
+            this.set('SM', 'w3-black');
+            this.set('RM', 'w3-black');
         },
     }
 

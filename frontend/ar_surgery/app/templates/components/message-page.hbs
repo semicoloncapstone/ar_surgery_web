@@ -18,11 +18,12 @@
     <div class="w3-row-padding w3-margin-bottom">
         <div class="w3-third w3-round-large">
             <div class="w3-container w3-padding-16">
-                <button class="w3-button w3-round-large w3-black"><i class="fas fa-pencil-alt"></i>  Edit</button>
-                <button class="w3-button w3-round-large w3-black w3-right" {{action 'openNewMessage'}}><i class="fas fa-plus"></i>  New</button>
-                <br><br>
-                <button class="w3-button w3-block w3-round-large {{RM}}" {{action 'recievedMsgs'}}>Recieved Messages</button>
-                <button class="w3-button w3-block w3-round-large {{SM}}" {{action 'sentMsgs'}}>Sent Messages</button>
+                <!--<button class="w3-button w3-round-large w3-black"><i class="fas fa-pencil-alt"></i>  Edit</button>-->
+                <button class="w3-button w3-round-large w3-black w3-block" {{action 'openNewMessage'}}><i class="fas fa-pencil-alt"></i>  New Message</button>
+                <br>
+                <button class="w3-button w3-block w3-round-large {{RM}}" {{action 'recievedMsgs'}}><i class="fas fa-inbox"></i>  Recieved</button>
+                <br>
+                <button class="w3-button w3-block w3-round-large {{SM}}" {{action 'sentMsgs'}}><i class="fas fa-paper-plane"></i>  Sent</button>
                 <br>
             </div>
             <br>
@@ -30,14 +31,23 @@
         </div>
         <div class="w3-twothird">
             <div class="w3-container w3-padding-16">
+                {{#if isZeroMsgs}}
+                    <h5 class="w3-center"><strong>No Messages</strong></h5>
+                {{else}}
                 {{#each Messages as |mess index|}}
                     <div class="container">
-                        <p><strong>{{mess.sender}} index: {{index}}</strong></p>
+                        {{#if Msgs}}
+                        <p><strong>From: {{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
+                        {{/if}}
+                        {{#if isSentMsgs}}
+                        <p><strong>To: {{mess.reciever.firstName}} {{mess.reciever.lastName}}</strong></p>
+                        {{/if}}
                         <p><strong>Subject: </strong>{{mess.header}}</p>
                         <p>{{mess.body}}</p>
                         <p class="w3-right">{{mess.date}}</p>
                     </div>
                 {{/each}}
+                {{/if}}
             </div>
         </div>
     </div>
@@ -53,7 +63,7 @@
         </div>
     <div class="w3-twothird">
         <div class="w3-container w3-padding-16">
-            {{#each personalMessages as |mess index|}}
+            {{#each Messages as |mess index|}}
                 <div class="container">
                     <p><strong>From: {{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
                     <p><strong>Subject: </strong>{{mess.header}}</p>
@@ -62,6 +72,7 @@
                 </div>
             {{/each}}
         </div>
+    </div>
     </div>
 {{/if}}
 
