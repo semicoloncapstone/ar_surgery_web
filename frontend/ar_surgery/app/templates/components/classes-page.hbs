@@ -32,7 +32,7 @@
             </thead>
             <tbody>
 
-            {{#each allClasses as |class|}}
+            {{#each allClasses as |class index|}}
               <tr>
                 <td>
                   {{class.className}}
@@ -50,7 +50,7 @@
                   {{class.school}}
                 </td>
                 <td>
-                  {{class-register ID=class}}
+                  {{class-register ID=class in=index already=regdClasses}}
                 </td>
               </tr>
             {{/each}}
@@ -62,6 +62,7 @@
 {{/if}}
 
 {{#if isMyClass}}
+  {{#if isMainClasses}}
   <div class="w3-row-padding w3-margin-bottom">
       <div class="w3-container w3-padding-16">
         {{#if TCLADDIsPermitted}}
@@ -78,6 +79,7 @@
               <th>Size</th>
               <th>Program</th>
               <th>School</th>
+              <th></th>
               <th></th>
               {{#if TCLDELIsPermitted}}
                 <th></th>
@@ -104,7 +106,10 @@
                   {{class.school}}
                 </td>
                 <td>
-                  <button class="w3-button w3-center w3-round-large w3-black">Class Page</button>
+                  <button class="w3-button w3-center w3-round-large w3-black" {{action 'viewOneClassSpread' class}}>Class Page</button>
+                </td>
+                <td>
+                  <button class="w3-button w3-center w3-round-large w3-black" {{action 'drop' class.id}}>Drop Class</button>
                 </td>
                 {{#if TCLDELIsPermitted}}
                 <td>
@@ -117,8 +122,16 @@
           </table>
           {{/if}}
       </div>
-</div>
-
+    </div>
+    {{/if}}
+    {{#if isOneClass}}
+      <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-container w3-padding-16">
+          <button class="w3-button w3-center w3-round-large w3-black" {{action 'myClass'}}><i class="fas fa-arrow-left"></i>  Back to My Classes</button>
+          {{class-spread cls=oneClass}}
+        </div>
+      </div>
+    {{/if}}
 <br>
 {{/if}}
 

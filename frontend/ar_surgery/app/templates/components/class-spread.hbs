@@ -1,1 +1,10 @@
-{{yield}}
+{{#if TCLADDIsPermitted}}
+    {{#if isOwningTeacher}}
+        <button class="w3-button w3-right w3-round-large w3-green" {{action 'establishMsgBoard'}}><i class="fas fa-comments"></i>  Establish Message Board</button>
+    {{/if}}
+{{/if}}
+
+<header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+    <h3><b><i class="fas fa-graduation-cap"></i> {{cls.className}}</b></h3>
+</header>
+

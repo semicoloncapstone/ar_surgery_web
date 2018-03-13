@@ -12,6 +12,10 @@ export default Ember.Component.extend({
     isMyClass: true,
     AC: "w3-black",
     MC: "w3-red",
+    regdClasses: null,
+    isMainClasses: true,
+    isOneClass: false,
+    oneClass: null,
 
     TCLADDIsPermitted: Ember.computed(function(){
         var authentication = this.get('oudaAuth');
@@ -49,6 +53,7 @@ export default Ember.Component.extend({
                     self.set('noClass', true);
                 } else {
                     self.set('personalClasses', records);
+                    //console.log(records.objectAt(0).id);
                 }
                 //console.log(records);
             })
@@ -74,18 +79,61 @@ export default Ember.Component.extend({
         allClass(){
             this.set('isAllClass', true);
             this.set('isMyClass', false);
+            this.set('isMainClasses', false);
+            this.set('isOneClass', false);
 
             this.set('AC', 'w3-red');
             this.set('MC', 'w3-black');
+
+            var myClasses = this.get('personalClasses');
+            var buttonSet = [];
+            var self = this;
+
+            this.get('store').findAll('class').then(function (records){
+                //console.log(records);
+                //console.log(myClasses);
+                for (var i = 0; i < records.content.length; i++){
+                    for (var j = 0; j < myClasses.content.length; j++){
+                        if (records.objectAt(i).id === myClasses.objectAt(j).id){
+                            buttonSet[i] = "";
+                        } else {
+                            buttonSet[i] = "w3-disabled";
+                        }
+                    }
+                }
+                //console.log(buttonSet);
+                self.set('regdClasses', buttonSet);
+                //console.log(self.get('regdClasses'));
+            });
             
         },
 
         myClass(){
             this.set('isAllClass', false);
             this.set('isMyClass', true);
+            this.set('isOneClass', false);
+            this.set('isMainClasses', true);
 
             this.set('AC', 'w3-black');
             this.set('MC', 'w3-red');
-        }
+        },
+
+        drop(id){
+            console.log(id);
+            var myStore = this.get('store');
+            if (confirm ('Are you sure you need to drop this class registration?')) {
+                /*myStore.find('registration', id).then(function(reg) {
+                    reg.destroyRecord();
+                });*/
+            }
+        },
+
+        viewOneClassSpread(theClass){
+            this.set('isOneClass', true);
+            this.set('isMainClasses', false);
+
+            this.set('oneClass', theClass);
+        },
+
     }
 });
