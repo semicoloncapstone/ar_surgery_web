@@ -8,6 +8,9 @@ export default Ember.Component.extend({
   tempPassword: null,
   error: null,
   self: this,
+  buttonIcon: "fas fa-eye",
+  seeNoSee: "password",
+
   keyPress: function (e) {
       
         if (e.which === 13) {
@@ -80,6 +83,17 @@ export default Ember.Component.extend({
           //self.get('routing').transitionTo('login');
         });
       });
+    },
+
+    seePass(){
+      var self = this;
+      if (this.get('seeNoSee') === 'password'){
+          self.set('seeNoSee', 'text');
+          self.set('buttonIcon', 'fas fa-eye-slash')
+      } else {
+          self.set('seeNoSee', 'password');
+          self.set('buttonIcon', 'fas fa-eye')
+      }
     }
   }
 });

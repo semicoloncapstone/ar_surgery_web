@@ -17,11 +17,14 @@
             {{input value=name type="text"  class="w3-input w3-border w3-round-large"}}
         <br>
         <header class="w3-container" style="padding-top:22px; padding-bottom:22px">
-            <h3><b><i class="fa fa-lock"></i> Password</b></h3>
+            <h3 class="w3-left"><b><i class="fa fa-lock"></i> Password</b></h3>
+            <button class="w3-button w3-round-large w3-black w3-right" {{action 'seePass'}}><i class={{buttonIcon}}></i></button>
         </header>
         
+        
         <!--<label>Password</label>-->
-            {{input value=password type="password"  class="w3-input w3-border w3-round-large"}}
+            {{input value=password type=seeNoSee  class="w3-input w3-border w3-round-large"}}
+            
         <br><br>
         <button id="login" class="w3-button w3-round-large w3-black w3-bar" {{action 'login'}}><i class="fas fa-sign-in-alt"></i> Login</button>
         <br><br>

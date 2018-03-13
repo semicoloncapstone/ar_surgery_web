@@ -5,6 +5,7 @@ export default Ember.Component.extend({
     store: Ember.inject.service(),
     currentUser: null,
     Messages: null,
+    messageBoardMessages: null,
     isMakingNew: false,
     allUsers: null,
     currentReciever: null,
@@ -18,6 +19,7 @@ export default Ember.Component.extend({
     SM: "w3-black",
     RM: "w3-green",
     isZeroMsgs: false,
+    regs: null,
 
     didRender() {
         this._super(...arguments);
@@ -34,6 +36,7 @@ export default Ember.Component.extend({
         var self = this;
         var myStore = this.get('store');
         var user = null;
+        var user2 = null;
         var users = [];
         
         myStore.queryRecord('user',{userName: auth.getName}).then(function (record){
@@ -48,6 +51,15 @@ export default Ember.Component.extend({
                         self.set('Messages', records);
                     }
                 });
+            });
+        });
+
+        myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+            user2 = record.id;
+            myStore.query('registration', {user: user2}).then(function (records){
+                console.log(records);
+                console.log(records.objectAt(0).data);
+                self.set('regs', records);
             });
         });
     },

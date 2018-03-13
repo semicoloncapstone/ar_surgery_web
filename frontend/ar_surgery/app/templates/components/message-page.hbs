@@ -63,12 +63,9 @@
         </div>
     <div class="w3-twothird">
         <div class="w3-container w3-padding-16">
-            {{#each Messages as |mess index|}}
+            {{#each regs as |reg index|}}
                 <div class="container">
-                    <p><strong>From: {{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
-                    <p><strong>Subject: </strong>{{mess.header}}</p>
-                    <p>{{mess.body}}</p>
-                    <p class="w3-right">{{mess.date}}</p>
+                    <p>{{reg.type}}</p>
                 </div>
             {{/each}}
         </div>

@@ -7,6 +7,8 @@ export default Ember.Component.extend({
     passButtonTitle: 'Change Password',
     currentUser: null,
     userName: null,
+    seeNoSee: "password",
+    buttonIcon: "fas fa-eye",
 
     init(){
         this._super(...arguments);
@@ -67,6 +69,17 @@ export default Ember.Component.extend({
                     userShadow.save().then(function () { user.save(); });
                 });
             });
+        },
+
+        seePass(){
+            var self = this;
+            if (this.get('seeNoSee') === 'password'){
+                self.set('seeNoSee', 'text');
+                self.set('buttonIcon', 'fas fa-eye-slash')
+            } else {
+                self.set('seeNoSee', 'password');
+                self.set('buttonIcon', 'fas fa-eye')
+            }
         }
 
     }

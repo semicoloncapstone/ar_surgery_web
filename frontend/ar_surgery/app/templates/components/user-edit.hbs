@@ -38,19 +38,22 @@
 
         <br><br><br>
         {{#if isChangingPassword}}
+            
             <div class="w3-row-padding">
                 <label>Enter New Password</label>
-                {{input class="w3-input w3-border w3-round-large" value=firstPassword type="password" placeholder="New Password"}}
+                {{input class="w3-input w3-border w3-round-large" value=firstPassword type=seeNoSee placeholder="New Password"}}
             </div>
             <br>
             <div class="w3-row-padding">
                 <label>Confirm New Password</label>
-                {{input class="w3-input w3-border w3-round-large" value=secondPassword type="password" placeholder="Confirm New Password"}}
+                {{input class="w3-input w3-border w3-round-large" value=secondPassword type=seeNoSee placeholder="Confirm New Password"}}
             </div>
             <br>
+            <button class="w3-button w3-round-large w3-black w3-right w3-margin-left" {{action 'seePass'}}><i class={{buttonIcon}}></i></button>
             <button class="w3-button w3-round-large w3-green w3-right" {{action 'savePass'}}>
                 Save Password
             </button>
+            
         {{/if}}
         
     </div>

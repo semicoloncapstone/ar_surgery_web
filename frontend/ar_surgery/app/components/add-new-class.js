@@ -55,6 +55,8 @@ export default Ember.Component.extend({
             //console.log(newClass);
             newClass.save();
 
+            console.log(newClass);
+
             /*var newReg = myStore.createRecord('registration', {
                 date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(),
                 duration: 6,
