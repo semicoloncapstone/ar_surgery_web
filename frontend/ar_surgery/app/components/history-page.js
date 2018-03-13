@@ -20,7 +20,7 @@ export default Ember.Component.extend({
                     color: 'rgba(0, 0, 0, 1)',
                     width: 0.5},
                     markeredgewidth: 0.0,
-                    opacity: .1},
+                    opacity: 0.1},
                     
                 type: 'scatter3d'
             };
@@ -36,17 +36,47 @@ export default Ember.Component.extend({
                     color: 'rgb(204, 204, 204)',
                     width: 1},
                     opacity: 0.8},
-                type: 'surface'};*/
+                type: 'scatter3d'};*/
 
             var data = [trace1];
-            var layout = {margin: {
-                l: 100,
-                r: 100,
-                b: 100,
-                t: 100
-            }};
+            var layout = {
+                hovermode: false,
+                
+                scene : {
+                    xaxis: {
+                        autorange: true,
+                        showgrid: false,
+                        zeroline: false,
+                        showline: false,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: false,
+                        title: "",
+                    },
+                    yaxis: {
+                        autorange: true,
+                        showgrid: false,
+                        zeroline: false,
+                        showline: false,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: false,
+                        title: "",
+                    },
+                    zaxis: {
+                        autorange: true,
+                        showgrid: false,
+                        zeroline: false,
+                        showline: false,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: false,
+                        title: "",
+                    }
+                }
+            };
             //console.log(data);
-            Plotly.newPlot('tester', data, layout);
+            Plotly.newPlot('tester', data, layout, {displaylogo: false, displayModeBar: false});
         });
         /*Plotly.d3.csv("http://localhost:3700/ventricles.csv", function(err, rows){
             console.log(rows);
