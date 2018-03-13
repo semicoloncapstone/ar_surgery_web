@@ -83,6 +83,7 @@ app.post('/upload', function(request, response){
     }
   });
   
+  
   form.on('error', function(err) {
     
     console.log('An error has occured: \n' + err);
@@ -108,6 +109,12 @@ app.post('/upload', function(request, response){
     response.end('Successfully uploaded file: '+fileNameSave);
   });
   form.parse(request);
+});
+app.get('/ventricles.csv', function(req, res) {
+    res.sendFile('C:/Users/Daniel/Documents/CapstoneProj/ar_surgery_web/backend/ventricles.csv')
+});
+app.get('/skull.csv', function(req, res) {
+    res.sendFile('C:/Users/Daniel/Documents/CapstoneProj/ar_surgery_web/backend/skull.csv')
 });
 app.listen(3700, function () {
     console.log('Server Listening: Port 3700');

@@ -29,7 +29,7 @@ export default Ember.Component.extend({
             console.log(self.get('dataObject').get('target').get('position'));
             console.log("toolpoints1.posx");
             console.log(self.get('dataObject').get('toolPoints').objectAt(0).get('position')[0]);*/
-            console.log(self.get('dataObject').get('toolPoints').get('length'));
+            
             var initialTime = self.get('dataObject').get('toolPoints').objectAt(0).get('time');
             var length = self.get('dataObject').get('toolPoints').get('length');
             var time;
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
             var myduration = self.get('dataObject').get('toolPoints').objectAt(length-1).get('time') - initialTime;
             self.set('duration', myduration);
             var endTime = myduration - myduration%1;
-            console.log(endTime);
+            
             for (var i =0; i<length; i++)
             {
                 x = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[0];
