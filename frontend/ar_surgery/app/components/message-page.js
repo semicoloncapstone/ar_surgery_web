@@ -29,26 +29,31 @@ export default Ember.Component.extend({
         var users = [];
         
         myStore.queryRecord('user',{userName: auth.getName}).then(function (record){
+            console.log('here1');
             self.set('currentUser', record);
-            user = record;
+            user = record.id;
+            myStore.findAll('user').then(function (records){
+                console.log('here2');
+                self.set('allUsers', records);
+                myStore.query('message', {sender: user}).then(function (records){
+                    console.log('here3');
+                    self.set('personalMessages', records);
+                    console.log(records.content.length);
+                    console.log(records.objectAt(0).data.sender);
+                    for (var i = 0; i < records.content.length ; i++){
+                        users[i] = records.objectAt(i);
+                    }
+                    console.log(users);
+                    self.set('userArray', users);
+                    console.log(self.get('userArray'));
+                });
+            });
+            
+
         });
         
-        myStore.query('message', {sender: user}).then(function (records){
-            self.set('personalMessages', records);
-            console.log(records.content.length);
-            console.log(records.objectAt(0).data.sender);
-            for (var i = 0; i < records.content.length ; i++){
-                users[i] = records.objectAt(i);
-            }
-            console.log(users);
-            self.set('userArray', users);
-            console.log(self.get('userArray'));
-        });
-
-        myStore.findAll('user').then(function (records){
-            self.set('allUsers', records);
-            
-        });
+        
+        
 
     },
 
