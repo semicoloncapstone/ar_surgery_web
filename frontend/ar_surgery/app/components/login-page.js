@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   routing: Ember.inject.service('-routing'),
   isPasswordChanging: null,
   tempPassword: null,
-  error: null,
+  error: "",
   self: this,
   buttonIcon: "fas fa-eye",
   seeNoSee: "password",
@@ -44,7 +44,7 @@ export default Ember.Component.extend({
       } else {
         authentication.open(this.get('name'), this.get('password')).then(function () {
           authentication.set('getName', self.get('name'));
-          self.set('error', null);
+          self.set('error', "");
           self.get('routing').transitionTo('home');
         }, function (error) {
           if (error === "passwordReset") {
@@ -54,6 +54,7 @@ export default Ember.Component.extend({
               self.set('error', 'Please enter a correct user name');
             } else {
               if (error === "wrongPassword") {
+                console.log('wrong password')
                 self.set('error', 'Please enter a correct password');
               } else {
                 if (error === "loginFailed") {

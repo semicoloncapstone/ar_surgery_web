@@ -1,8 +1,40 @@
-hello {{dataID}}
-<div class = "ui form">
-{{ember-chart type="scatter" data=numberData1 height=500 width=500 options=barOptions1}}
+
+<div class="w3-bar w3-black">
+    <a class="w3-bar-item w3-button w3-mobile {{threeD}}" style="width:50%" {{action "pressThree"}}>
+        <i class="fas fa-globe"></i>
+        3D Tracking Data
+    </a>
+    <a class="w3-bar-item w3-button w3-mobile {{perf}}" style="width:50%" {{action "pressPerf"}}>
+        <i class="fas fa-graduation-cap"></i>
+        Performance Data
+    </a>
 </div>
-<div class = "ui form">
-{{ember-chart type="scatter" data=numberData height=500 width=500 options=barOptions}}
-</div>
-<div id="tester" style="width:1200px;height:1200px;"></div>
+
+*** Current Test ID: {{dataID}} ***
+
+{{#if isPerfData}}
+    <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-half w3-round-large">
+            <div class="w3-container w3-padding-16">
+                <div class = "ui form">
+                    {{ember-chart type="scatter" data=numberData height=500 width=500 options=barOptions}}
+                </div>
+            </div>
+        </div>
+        <div class="w3-half w3-round-large">
+            <div class="w3-container w3-padding-16">
+                <div class = "ui form">
+                    {{ember-chart type="scatter" data=numberData1 height=500 width=500 options=barOptions1}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{/if}}
+{{#if isThreeData}}
+    <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-container w3-padding-16 w3-border w3-round-large w3-center">
+            <div id="tester" style="width:1200px;height:1200px;"></div>
+        </div>
+    </div>
+{{/if}}

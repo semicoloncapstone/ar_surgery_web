@@ -27,6 +27,13 @@ export default Ember.Component.extend({
     maxDistance: null,
     origin: {x:-2.858, y: -10.2024, z: 15.1032},
     scaleFactor: 3.88,
+
+    /* VARIABLES FOR UI */
+    perf: "w3-black",
+    threeD: 'w3-blue',
+    isPerfData: false,
+    isThreeData: true,
+
     init(){
         this._super(...arguments);
         var self = this;
@@ -404,6 +411,33 @@ export default Ember.Component.extend({
     },
     
     actions: {
+        pressPerf(){
+            this.set('perf', 'w3-blue');
+            this.set('threeD', 'w3-black')
 
+            this.set('isPerfData', true);
+            this.set('isThreeData', false);
+        },
+
+        pressThree(){
+            this.set('perf', 'w3-black');
+            this.set('threeD', 'w3-blue')
+
+            this.set('isPerfData', false);
+            this.set('isThreeData', true);
+        },
+
+        selectData(dat){
+
+        },
     }
 });
+
+
+/**
+ * 
+ * perf: "w3-blue",
+    threeD: 'w3-black',
+    isPerfData: true,
+    isThreeData: false,
+ */
