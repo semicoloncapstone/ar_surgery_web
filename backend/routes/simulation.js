@@ -12,6 +12,8 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var user = request.query;
+        console.log(user.user);
+        console.log(user.date);
         if (!user.user){
             Simulations.Model.find(function (error, messages) {
                 if (error) response.send(error);
@@ -19,7 +21,7 @@ router.route('/')
             });
         }
         else {
-            Simulations.Model.find({"user": user.user}, function (error,simulations) {
+            Simulations.Model.findOne({"user": user.user, "date": user.date}, function (error,simulations) {
                 if (error) response.send(error);
                 
                 response.json({simulations: simulations});

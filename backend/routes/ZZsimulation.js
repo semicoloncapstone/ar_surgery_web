@@ -9,7 +9,7 @@ var simulationSchema = mongoose.Schema(
             time: Number,
             inSkull: Boolean
         },
-        truepath: [Number],
+        truePath: [Number],
         toolPoints: [{
             position: [Number],
             orientiation: [Number],
