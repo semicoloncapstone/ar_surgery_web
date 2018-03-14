@@ -104,12 +104,14 @@ export default Ember.Component.extend({
     actions: {
         establishMsgBoard(cls){
             //createRecord --> messageBoard
+            //console.log(cls.get('className'));
             var myStore = this.get('store');
             var self = this;
             var newBoard = myStore.createRecord('messageBoard', {
                 type: "Public",
                 capacity: 200,
-                class: cls
+                class: cls,
+                boardTitle: cls.get('className'),
             });
             
             newBoard.save();

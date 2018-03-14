@@ -4,6 +4,7 @@ export default DS.Model.extend({
     type: DS.attr(),
     capacity: DS.attr(),
     class: DS.belongsTo('class', {async: true}),
+    boardTitle: DS.attr(),
 });
 
 /*

@@ -26,7 +26,12 @@
                         <p><strong>From: {{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
                         {{/if}}
                         {{#if isSentMsgs}}
-                        <p><strong>To: {{mess.reciever.firstName}} {{mess.reciever.lastName}}</strong></p>
+                            {{#if (if-cond mess.reciever.content '===' null)}}
+                                <p><strong>To: {{mess.messageBoard.boardTitle}}</strong></p>    
+                            {{else}}
+                                <p><strong>To: {{mess.reciever.firstName}} {{mess.reciever.lastName}}</strong></p>
+                            {{/if}}
+                            
                         {{/if}}
                         <p><strong>Subject: </strong>{{mess.header}}</p>
                         <p>{{mess.body}}</p>
