@@ -12,16 +12,17 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var user = request.query;
-        if (!user.userName){
+        
+        if (!user.uName){
             SimHeaders.Model.find(function (error, messages) {
                 if (error) response.send(error);
                 response.json({simHeaders: messages});
             });
         }
         else {
-            SimHeaders.Model.find({"uName": user.userName}, function (error,simHeaders) {
+            SimHeaders.Model.find({"uName": user.uName}, function (error,simHeaders) {
                 if (error) response.send(error);
-                
+                console.log('in username');
                 response.json({simHeaders: simHeaders});
             });
         }
