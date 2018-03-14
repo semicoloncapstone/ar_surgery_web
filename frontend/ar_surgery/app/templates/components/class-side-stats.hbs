@@ -1,5 +1,5 @@
 <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
-    <h5><strong>Statistics for {{userSt.firstName}} {{userSt.lastName}}</strong></h5>
+    <h5><strong>User Log for {{userSt.firstName}} {{userSt.lastName}}</strong></h5>
 </header>
 
 {{#if noData}}
@@ -24,6 +24,10 @@
             </td>
         </tr>
         {{/each}}
+        <tr>
+            <td></td>
+            <td><strong>Average Time: </strong>{{averageTimeDisplay}}</td>
+        </tr>
         </tbody>
     </table>
 {{/if}}

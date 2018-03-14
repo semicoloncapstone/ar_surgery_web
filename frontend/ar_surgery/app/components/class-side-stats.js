@@ -6,6 +6,7 @@ export default Ember.Component.extend({
     username: null,
     userSimHeaders: null,
     noData: false,
+    averageTimeDisplay: 0,
 
     init(){
         this._super(...arguments);
@@ -34,6 +35,8 @@ export default Ember.Component.extend({
         var myStore = this.get('store');
         var thisUser = this.get('userSt');
         var UN = null;
+        var timeSum = 0;
+        var averageTime = 0;
         //console.log(this.get('userSt'));
 
         myStore.queryRecord('password', {user: thisUser.get('id')}).then(function(record){
@@ -46,6 +49,13 @@ export default Ember.Component.extend({
                     self.set('noData', true);
                 } else {
                     self.set('userSimHeaders', records);
+                    
+                    for (var i = 0; i < records.content.length; i++){
+                        timeSum += records.objectAt(i).get('simulaionDuration');
+                        //console.log(records.objectAt(i).get('simulaionDuration'));
+                    }
+                    averageTime = timeSum / records.content.length;
+                    self.set('averageTimeDisplay', averageTime);
                 }
                 
             });
