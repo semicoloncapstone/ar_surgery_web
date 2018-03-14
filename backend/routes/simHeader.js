@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Simulations = require('./ZZsimulation');
+var SimHeaders = require('./ZZsimHeader');
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var parseJSON = bodyParser.json();
@@ -12,70 +12,68 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var user = request.query;
-        console.log(user.user);
-        console.log(user.date);
-        if (!user.user){
-            Simulations.Model.find(function (error, messages) {
+        if (!user.userName){
+            SimHeaders.Model.find(function (error, messages) {
                 if (error) response.send(error);
-                response.json({simulations: messages});
+                response.json({simHeaders: messages});
             });
         }
         else {
-            Simulations.Model.findOne({"user": user.user, "date": user.date}, function (error,simulations) {
+            SimHeaders.Model.find({"uName": user.userName}, function (error,simHeaders) {
                 if (error) response.send(error);
                 
-                response.json({simulations: simulations});
+                response.json({simHeaders: simHeaders});
             });
         }
     })
     .post(parseUrlencoded, parseJSON, function (request, response) {
-        var newSimulation = new Simulations.Model(request.body.simulation);
-        newSimulation.save(function (error) {
+        var newSimHeader = new SimHeaders.Model(request.body.simHeader);
+        newSimHeader.save(function (error) {
             if (error) response.send(error);
-            response.json({newSimulation: newSimulation});
+            response.json({newSimHeader: newSimHeader});
         });
     });
-router.route('/:simulation_id')
+router.route('/:simHeader_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        Simulations.Model.findById(request.params.simulation_id, function (error, role) {
+        SimHeaders.Model.findById(request.params.simHeader_id, function (error, role) {
             if (error) {
                 response.send({error: error});
             }
             else {
-                console.log("Returned a simulation")
-                response.json({simulation: role});
+                console.log("Returned a simHeader")
+                response.json({simHeader: role});
             }
         });
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
-        Simulations.Model.findById(request.params.simulation_id, function (error, role) {
+        SimHeaders.Model.findById(request.params.simHeader_id, function (error, role) {
             if (error) {
                 response.send({error: error});
             }
             else {
                 // update the role info
-                role.date = request.body.simulation.date;
-                role.duration = request.body.simulation.duration;
-                role.type = request.body.simulation.type;
-                role.class = request.body.simulation.class;
-                role.user = request.body.simulation.user;
+                role.date = request.body.simHeader.date;
+                role.duration = request.body.simHeader.duration;
+                role.type = request.body.simHeader.type;
+                role.class = request.body.simHeader.class;
+                role.user = request.body.simHeader.user;
                 
                 role.save(function (error) {
                     if (error) {
                         response.send({error: error});
                     }
                     else {
-                        response.json({simulation: role});
+                        response.json({simHeader: role});
                     }
                 });
             }
         });
     })
     .delete(parseUrlencoded, parseJSON, function (request, response) {
-        Simulations.Model.findByIdAndRemove(request.params.simulation_id,
+        SimHeaders.Model.findByIdAndRemove(request.params.simHeader_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({simulation: deleted});
+                    response.json({simHeader: deleted});
                 };
             }
         );
