@@ -60,8 +60,9 @@ router.route('/')
         });
     })
     .get(parseUrlencoded, parseJSON, function (request, response) {
-        var Password = request.query.filter;
-        if (!Password) {
+        var Password = request.query;
+        console.log(Password);
+        if (!Password.user && !Password.userName) {
             Passwords.Model.find(function (error, UserShadow) {
                 if (error) response.send(error);
                 response.json({password: UserShadow});
@@ -70,13 +71,25 @@ router.route('/')
             if (Password.user) {
                 Passwords.Model.findOne({"user": Password.user}, function (error, UserShadow) {
                     if (error) response.send(error);
-                    response.json({password: UserShadow});
+                    var newUserShadow = new Passwords.Model({
+                        
+                        userName: UserShadow.userName,
+                        
+
+                    });
+                    response.json({password: newUserShadow});
                 });
             } else {
                 if (Password.userName){
                     Passwords.Model.findOne({"userName": Password.userName}, function (error, UserShadow) {
                         if (error) response.send(error);
-                        response.json({password: UserShadow});
+                        var newUserShadow = new Passwords.Model({
+                        
+                            user: UserShadow.user,
+                            
+
+                        });
+                        response.json({password: newUserShadow});
                     });
                 }
             }
