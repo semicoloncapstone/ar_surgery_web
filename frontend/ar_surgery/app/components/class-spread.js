@@ -157,7 +157,7 @@ export default Ember.Component.extend({
 
             myStore.queryRecord('messageBoard', {class: thisClass.id}).then(function(record){
                 myStore.query('message', {messageBoard: record.id}).then(function (records){
-                    //console.log(records);
+                    console.log(records);
                     self.set('Messages', records);
                      
                 });
@@ -202,6 +202,17 @@ export default Ember.Component.extend({
             this.set('A', 'w3-black');
             this.set('B', 'w3-black');
             this.set('C', 'w3-red');
+        },
+
+        removeMember(regID){
+            console.log(regID);
+            var myStore = this.get('store');
+            if (confirm ('Are you sure you need to drop this class registration?')) {
+                myStore.find('registration', regID).then(function(reg) {
+                    console.log(reg);
+                    reg.destroyRecord();
+                });
+            }
         }
     }
 });

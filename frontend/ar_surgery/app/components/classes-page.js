@@ -74,6 +74,31 @@ export default Ember.Component.extend({
         //myStore.query('class', {})
         
     },
+
+    didRender(){
+        this._super(...arguments);
+        var self = this;
+        var auth = this.get('oudaAuth');
+        var user = auth.getName;
+        var userID = null;
+        var myStore = this.get('store');
+        
+        myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+            self.set('currentUser', record);
+            //console.log(record.id);
+            userID = record.id;
+            myStore.query('class', {user: userID}).then(function(records) {
+                //console.log(self.get('currentUser'));
+                if (records.content.length === 0){
+                    self.set('noClass', true);
+                } else {
+                    self.set('personalClasses', records);
+                    //console.log(records.objectAt(0).id);
+                }
+                //console.log(records);
+            })
+        });
+    },
     
 
     actions: {
@@ -89,22 +114,21 @@ export default Ember.Component.extend({
             var myClasses = this.get('personalClasses');
             var buttonSet = [];
             var self = this;
+            var myStore = this.get('store');
 
-            this.get('store').findAll('class').then(function (records){
-                //console.log(records);
-                //console.log(myClasses);
+            myStore.findAll('class').then(function (records){
+                self.set('allClasses', records);
                 for (var i = 0; i < records.content.length; i++){
                     for (var j = 0; j < myClasses.content.length; j++){
                         if (records.objectAt(i).id === myClasses.objectAt(j).id){
-                            buttonSet[i] = "";
-                        } else {
-                            buttonSet[i] = "w3-disabled";
+                            buttonSet[i] = false;
                         }
                     }
+                    if(buttonSet[i] !== false){
+                        buttonSet[i] = true;
+                    }
                 }
-                //console.log(buttonSet);
-                self.set('regdClasses', buttonSet);
-                //console.log(self.get('regdClasses'));
+                self.set('regButton', buttonSet);
             });
             
         },
@@ -119,21 +143,52 @@ export default Ember.Component.extend({
             this.set('MC', 'w3-red');
         },
 
-        drop(id){
-            console.log(id);
-            var myStore = this.get('store');
-            if (confirm ('Are you sure you need to drop this class registration?')) {
-                /*myStore.find('registration', id).then(function(reg) {
-                    reg.destroyRecord();
-                });*/
-            }
-        },
-
         viewOneClassSpread(theClass){
             this.set('isOneClass', true);
             this.set('isMainClasses', false);
 
             this.set('oneClass', theClass);
+        },
+
+        register(cls){
+            var self = this;
+            var myStore = this.get('store');
+            var auth = this.get('oudaAuth');
+            var d = new Date();
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var thisClass = null;
+
+            console.log(cls);
+
+            if (confirm("Are you sure you would like to register for this class?")){
+                myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+                    var newReg = myStore.createRecord('registration', {
+                        date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(),
+                        duration: 6,
+                        type: "Public",
+                        class: cls,
+                        user: record
+                    });
+                    newReg.save()   
+                });
+            }
+
+            var myClasses = this.get('personalClasses');
+            var buttonSet = [];
+
+            myStore.findAll('class').then(function (records){
+                for (var i = 0; i < records.content.length; i++){
+                    for (var j = 0; j < myClasses.content.length; j++){
+                        if (records.objectAt(i).id === myClasses.objectAt(j).id){
+                            buttonSet[i] = false;
+                        }
+                    }
+                    if(buttonSet[i] !== false){
+                        buttonSet[i] = true;       
+                    }
+                }
+                self.set('regButton', buttonSet);
+            });
         },
 
     }
