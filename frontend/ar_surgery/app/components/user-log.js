@@ -20,7 +20,7 @@ export default Ember.Component.extend({
 
         
         myStore.query('simHeader', {uName: auth.getName}).then(function (records){
-            console.log(records);
+            //console.log(records);
             if (records.content.length === 0){
                 self.set('noData', true);
             } else {

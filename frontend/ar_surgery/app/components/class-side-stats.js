@@ -21,7 +21,7 @@ export default Ember.Component.extend({
             self.set('username', record.get('userName'));
             UN = record.get('userName');
             myStore.query('simHeader', {uName: UN}).then(function (records){
-                console.log(records);
+                //console.log(records);
                 self.set('userSimHeaders', records);
             });
 
@@ -44,7 +44,7 @@ export default Ember.Component.extend({
             self.set('username', record.get('userName'));
             UN = record.get('userName');
             myStore.query('simHeader', {uName: UN}).then(function (records){
-                console.log(records);
+                //console.log(records);
                 if (records.content.length === 0){
                     self.set('noData', true);
                 } else {
