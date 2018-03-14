@@ -15,7 +15,8 @@
     </div>-->
     <div class="w3-container w3-center">
       <span>Welcome, <strong>{{currentUser.firstName}}</strong></span><br>
-      <a class="w3-bar-item w3-button w3-round-large {{Hi}}" {{action "HistoryPress"}}><i class="fa fa-history"></i></a>
+      <a class="w3-bar-item w3-button w3-round-large {{Hi}}" {{action "HistoryPress"}}><i class="fas fa-chart-line"></i></a>
+      <a class="w3-bar-item w3-button w3-round-large {{Ul}}" {{action "LogPress"}}><i class="fa fa-history"></i></a>
       <a class="w3-bar-item w3-button w3-round-large {{M}}" {{action "MessagePress"}}><i class="fa fa-comment"></i></a>
       <a class="w3-bar-item w3-button w3-round-large {{S}}" {{action "SettingsPress"}}><i class="fa fa-cog"></i></a>
     </div>
@@ -23,7 +24,8 @@
   <hr>
   <div class="w3-bar-block">
     <a class="w3-bar-item w3-button w3-padding {{Ho}}" {{action "HomePress"}}><i class="fa fa-home fa-fw"></i>  Home</a>
-    <a class="w3-bar-item w3-button w3-padding {{Hi}}" {{action "HistoryPress"}}><i class="fa fa-history fa-fw"></i>  History</a>
+    <a class="w3-bar-item w3-button w3-padding {{Hi}}" {{action "HistoryPress"}}><i class="fas fa-chart-line"></i>  Statistics</a>
+    <a class="w3-bar-item w3-button w3-padding {{Ul}}" {{action "LogPress"}}><i class="fa fa-history fa-fw"></i>  User Log</a>
     <a class="w3-bar-item w3-button w3-padding {{C}}" {{action "ClassPress"}}><i class="fa fa-users fa-fw"></i>  Classes</a>
     <a class="w3-bar-item w3-button w3-padding {{M}}" {{action "MessagePress"}}><i class="fa fa-comments fa-fw"></i>  Messages</a>
     <a class="w3-bar-item w3-button w3-padding {{S}}" {{action "SettingsPress"}}><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
@@ -50,6 +52,9 @@
   </header>
   
 
+{{/if}}
+{{#if isUserLogPage}}
+  {{user-log}}
 {{/if}}
 {{#if isHistoryPage}}
   {{history-page}}

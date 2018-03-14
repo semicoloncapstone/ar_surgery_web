@@ -10,11 +10,13 @@ export default Ember.Component.extend({
     isClassesPage: false,
     isMessagesPage: false,
     isSettingsPage: false,
+    isUserLogPage: false,
     Ho: "w3-purple",
     Hi: "",
     C: "",
     M: "",
     S: "",
+    Ul: "",
 
     init() {
         this._super(...arguments);
@@ -47,6 +49,9 @@ export default Ember.Component.extend({
             this.set('M', "");
             this.set('isSettingsPage', false);
             this.set('S', "");
+            this.set('isUserLogPage', false);
+            this.set('Ul', "");
+
         },
         HistoryPress() {
             this.set('isHomePage', false);
@@ -59,6 +64,8 @@ export default Ember.Component.extend({
             this.set('M', "");
             this.set('isSettingsPage', false);
             this.set('S', "");
+            this.set('isUserLogPage', false);
+            this.set('Ul', "");
         },
         ClassPress() {
             this.set('isHomePage', false);
@@ -71,6 +78,8 @@ export default Ember.Component.extend({
             this.set('M', "");
             this.set('isSettingsPage', false);
             this.set('S', "");
+            this.set('isUserLogPage', false);
+            this.set('Ul', "");
         },
         MessagePress() {
             this.set('isHomePage', false);
@@ -83,6 +92,8 @@ export default Ember.Component.extend({
             this.set('M', "w3-green");
             this.set('isSettingsPage', false);
             this.set('S', "");
+            this.set('isUserLogPage', false);
+            this.set('Ul', "");
         },
         SettingsPress() {
             this.set('isHomePage', false);
@@ -95,9 +106,27 @@ export default Ember.Component.extend({
             this.set('M', "");
             this.set('isSettingsPage', true);
             this.set('S', "w3-orange");
-            console.log(this.get('oudaAuth').get('isAuthenticated'));
+            this.set('isUserLogPage', false);
+            this.set('Ul', "");
+            //console.log(this.get('oudaAuth').get('isAuthenticated'));
             //this.get('routing').transitionTo('add-user');
         },
+
+        LogPress(){
+            this.set('isHomePage', false);
+            this.set('Ho', "");
+            this.set('isHistoryPage', false);
+            this.set('Hi', "");
+            this.set('isClassesPage', false);
+            this.set('C', "");
+            this.set('isMessagesPage', false);
+            this.set('M', "");
+            this.set('isSettingsPage', false);
+            this.set('S', "");
+            this.set('isUserLogPage', true);
+            this.set('Ul', "w3-yellow");
+        },
+
         smallMenuClick(){
             
         },

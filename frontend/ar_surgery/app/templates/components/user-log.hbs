@@ -1,0 +1,37 @@
+<header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+    <h1><b><i class="fa fa-history fa-fw"></i> User Log</b></h1>
+</header>
+
+<div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-container w3-padding-16">
+        {{#if noData}}
+            <p class="w3-center">This User has no Simulation Data</p>
+        {{else}}
+            <table class="w3-table-all">
+                <thead>
+                <tr>
+                    <th>Date of Simulation</th>
+                    <th>Simulation Length</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {{#each userSimHeaders as |sim|}}
+                <tr>
+                    <td>
+                        {{sim.date}}
+                    </td>
+                    <td>
+                        {{sim.simulaionDuration}} seconds
+                    </td>
+                </tr>
+                {{/each}}
+                <tr>
+                    <td></td>
+                    <td><strong>Average Time: </strong>{{averageTimeDisplay}}</td>
+                </tr>
+                </tbody>
+            </table>
+        {{/if}}
+    </div>
+</div>
