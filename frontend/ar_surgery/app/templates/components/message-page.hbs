@@ -22,7 +22,7 @@
                 {{else}}
                 {{#each Messages as |mess index|}}
                     <div class="container darker">
-                        {{#if Msgs}}
+                        {{#if isRcvdMsgs}}
                         <p><strong>From: {{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
                         {{/if}}
                         {{#if isSentMsgs}}

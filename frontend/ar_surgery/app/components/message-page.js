@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     currentReciever: null,
     userArray: null,
     isSentMsgs: false,
-    isRcvdMsgs: false,
+    isRcvdMsgs: true,
     SM: "w3-black",
     RM: "w3-green",
     isZeroMsgs: false,

@@ -17,7 +17,7 @@
 </header>
 
 <div class="w3-row-padding w3-margin-bottom">
-        <div class="w3-third w3-round-large">
+        <div class="w3-quarter w3-round-large">
             <div class="w3-container w3-padding-16">
                 <button class="w3-button w3-round-large w3-block {{A}}" {{action 'showInfo'}}><i class="fas fa-question"></i>  Class Information</button>
                 <br>
@@ -31,7 +31,10 @@
             <br>
         </div>
     {{#if showMsgBrd}}
-        <div class="w3-twothird">
+        {{#if notHaveMessageBoard}}
+            <p class="w3-center">Message Board Not Established</p>
+        {{else}}
+        <div class="w3-threequarter">
             <div class="w3-container w3-padding-16">
                 {{#if isZeroMsgs}}
                     <h5 class="w3-center"><strong>No Messages</strong></h5>
@@ -48,18 +51,19 @@
             </div>
         </div>
         {{/if}}
+        {{/if}}
         {{#if showClassInfo}}
-        <div class="w3-twothird">
+        <div class="w3-threequarter">
             <div class="w3-container w3-padding-16">
             <div class="container">
-                <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+                <header class="w3-container w3-center">
                     <h5><strong>About {{cls.className}}</strong></h5>
                 </header>
                 <p>{{cls.programDesc}}</p>
             </div>
             <br>
             <div class="container">
-                <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+                <header class="w3-container w3-center">
                     <h5><strong>About {{cls.school}}</strong></h5>
                 </header>
                 <p>{{cls.schoolDesc}}</p>
@@ -69,11 +73,37 @@
         {{/if}}
         {{#if isOwningTeacher}}
             {{#if showClassUsers}}
-                <div class="w3-twothird">
+                <div class="w3-threequarter">
                     <div class="w3-container w3-padding-16">
-                        {{#each classRegs as |reg|}}
-                            {{reg.user.firstName}}
-                        {{/each}}
+                        <table class="w3-table-all">
+                            <thead>
+                            <tr>
+                                <th>Member Name</th>
+                                <th>Date Registered</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {{#each classRegs as |reg|}}
+                            <tr>
+                                <td>
+                                    {{reg.user.firstName}} {{reg.user.lastName}}
+                                </td>
+                                <td>
+                                    {{reg.date}}
+                                </td>
+                                <td>
+                                    <button class="w3-button w3-round-large w3-center w3-black" {{action 'removeMember' reg.id}}>Remove Member</button>
+                                </td>
+                                <td>
+                                    <button class="w3-button w3-round-large w3-center w3-black">View Statistics</button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
                     </div>
                 </div>                
             {{/if}}
