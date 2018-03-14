@@ -117,6 +117,9 @@ app.get('/ventricles.csv', function(req, res) {
 app.get('/skull.csv', function(req, res) {
     res.sendFile('C:/Users/Daniel/Documents/CapstoneProj/ar_surgery_web/backend/skull.csv')
 });
+app.get('/brain.csv', function(req, res) {
+    res.sendFile('C:/Users/Daniel/Documents/CapstoneProj/ar_surgery_web/backend/brain.csv')
+});
 app.listen(3700, function () {
     console.log('Server Listening: Port 3700');
 });
