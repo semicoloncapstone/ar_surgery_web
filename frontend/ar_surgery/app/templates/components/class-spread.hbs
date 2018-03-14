@@ -98,16 +98,21 @@
                                     <button class="w3-button w3-round-large w3-center w3-black" {{action 'removeMember' reg.id}}>Remove Member</button>
                                 </td>
                                 <td>
-                                    <button class="w3-button w3-round-large w3-center w3-black">View Statistics</button>
+                                    <button class="w3-button w3-round-large w3-center w3-black" {{action 'viewClassStats' reg.user}}>View Statistics</button>
                                 </td>
                             </tr>
                             {{/each}}
                             </tbody>
                         </table>
                     </div>
-                </div>                
+                </div>   
+                {{#if showViewStats}}
+                    <button class="w3-button w3-right w3-round-large w3-red" {{action 'showUsers'}}><i class="fas fa-times"></i></button>
+                    {{class-side-stats cls=cls userSt=userToStats}}
+                {{/if}}             
             {{/if}}
         {{/if}}
+        
     </div>
 
 {{#if isMakingNew}}

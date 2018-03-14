@@ -18,6 +18,8 @@ export default Ember.Component.extend({
     C: "w3-black",   
     classRegs: null,
     noRegs: false, 
+    showViewStats: false,
+    userToStats: null,
 
     init(){
         this._super(...arguments);
@@ -50,7 +52,7 @@ export default Ember.Component.extend({
         });
 
         myStore.query('registration', {class: thisClass.id}).then(function(records){
-            console.log(records);
+            //console.log(records);
             if (records === null){
                 self.set('noRegs', true);
             } else {
@@ -178,6 +180,7 @@ export default Ember.Component.extend({
             this.set('showClassInfo', true);
             this.set('showMsgBrd', false);
             this.set('showClassUsers', false);
+            this.set('showViewStats', false);
 
             this.set('A', 'w3-red');
             this.set('B', 'w3-black');
@@ -188,6 +191,7 @@ export default Ember.Component.extend({
             this.set('showClassInfo', false);
             this.set('showMsgBrd', true);
             this.set('showClassUsers', false);
+            this.set('showViewStats', false);
 
             this.set('A', 'w3-black');
             this.set('B', 'w3-red');
@@ -198,10 +202,16 @@ export default Ember.Component.extend({
             this.set('showClassInfo', false);
             this.set('showMsgBrd', false);
             this.set('showClassUsers', true);
+            this.set('showViewStats', false);
 
             this.set('A', 'w3-black');
             this.set('B', 'w3-black');
             this.set('C', 'w3-red');
+        },
+
+        viewClassStats(user){
+            this.set('showViewStats', true);
+            this.set('userToStats', user);
         },
 
         removeMember(regID){

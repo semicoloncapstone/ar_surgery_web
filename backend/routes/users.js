@@ -30,14 +30,11 @@ router.route('/')
         } else {
             //console.log(USER.userName);
             Passwords.Model.findOne({"userName": USER.userName}, function (error, pass) {
-                
                 if (error) response.send(error);
                 Users.Model.findById(pass.user, function (error, user) {
                     if (error) response.send(error);
                     response.json({user: user});
                 });
-                
-                
             });
         }
     });
