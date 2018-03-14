@@ -1,15 +1,27 @@
 import Ember from 'ember';
 /*
-TODO, check for qs,
+TODO for 3D, check for qs,
 get target pos, multiply it by our factor of 3.88, get relative position from origin
 target position-> get target pos ^, +3.88*point
+*/
+
+/*
+make an incision point, need to make sure they follow that path directly to target, calculate angle different between tool and what they should have followed
+
+also find angle between the true path and the path they should of followed, IE how accurate was their incision point
 */
 export default Ember.Component.extend({
     store: Ember.inject.service(),
     dataID: null,
     numberData: null,
+    numberData1: null,
+    numberData2: null,
     barOptions: null,
+    barOptions1: null,
+    barOptions2: null,
     myData: [],
+    myData1: [],
+    myData2: [],
     dataObject: null,
     duration: null,
     maxDistance: null,
@@ -57,7 +69,7 @@ export default Ember.Component.extend({
             target.x = self.get('origin').x + self.get('dataObject').get('target').get('position')[0]*self.get('scaleFactor');
             target.y = self.get('origin').y + self.get('dataObject').get('target').get('position')[2]*self.get('scaleFactor');
             target.z = self.get('origin').z + self.get('dataObject').get('target').get('position')[1]*self.get('scaleFactor');
-            for (var i =0; i<length; i++)
+            for (var i =0; i<length; i++)//plotly loop
             {
                 x = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[0];
                 y = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[1];
@@ -77,7 +89,51 @@ export default Ember.Component.extend({
                     myz.push(z*self.get('scaleFactor'));
                 }
                 
-                distance = Math.sqrt(x*x + y*y + z*z);
+                
+            }
+            var lastTimeInSkull = 0;
+            for (var i =length-1; i>0; i--)//IP loop phase 2, distance
+            {
+                if (self.get('dataObject').get('toolPoints').objectAt(i).get('inSkull')){
+                    x = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[0];
+                    y = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[1];
+                    z = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[2];
+                    distance = Math.sqrt(x*x + y*y + z*z);
+                    if (distance>max)
+                    {
+                        max = distance;
+                        self.set('maxDistance', max);
+                    }
+                    time = self.get('dataObject').get('toolPoints').objectAt(i).get('time') - initialTime;
+                    self.get('myData1').push({ x: time, y:distance});
+                }
+                else 
+                {
+                    lastTimeInSkull = i;
+                    break;
+                }
+            }
+            console.log(lastTimeInSkull);
+            self.set('numberData1', {
+                    
+                    datasets: [
+                        {
+                            backgroundColor: "rgba(0,0,128,.9)",
+                            
+                            data: self.get('myData1')
+                        }
+                    ]
+                    
+            });
+            var incisionx = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[0];
+            var incisiony = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[1];
+            var incisionz = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[2];
+            for (var i =0; i<=lastTimeInSkull; i++)//IP loop phase 1, distance
+            {
+                x = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[0];
+                y = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[1];
+                z = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[2];
+                distance = Math.sqrt((incisionx-x)*(incisionx-x) + (incisiony-y)*(incisiony-y) + (incisionz-z)*(incisionz-z));
                 if (distance>max)
                 {
                     max = distance;
@@ -85,9 +141,12 @@ export default Ember.Component.extend({
                 }
                 time = self.get('dataObject').get('toolPoints').objectAt(i).get('time') - initialTime;
                 self.get('myData').push({ x: time, y:distance});
+
+                if (self.get('dataObject').get('toolPoints').objectAt(i).get('inSkull')){
+                    
+                }
+                
             }
-            console.log(myx);
-            
             self.set('numberData', {
                     
                     datasets: [
@@ -98,7 +157,7 @@ export default Ember.Component.extend({
                         }
                     ]
                     
-                });
+            });
             Plotly.d3.csv('http://localhost:3700/brain.csv', function(err, rows){
                 function unpack(rows, key) {
                     return rows.map(function(row)
@@ -135,7 +194,7 @@ export default Ember.Component.extend({
                         opacity: 1},
                     type: 'scatter3d'};
                 var trace2 = {
-                    x:[-1, -2.858], y: [3.1, -10.2024], z: [6.8, 15.1032],
+                    x:[-1, -2.858, 0], y: [3.1, -10.2024, 0], z: [6.8, 15.1032, 0],
                     mode: 'markers',
                     marker: {
                         color: 'rgba(0, 255, 0)',
@@ -220,7 +279,7 @@ export default Ember.Component.extend({
                 Plotly.newPlot('tester', data, layout, {displaylogo: false, displayModeBar: false, markeredgewidth:0.0});
             }); 
         });
-        self.set('barOptions', {
+        self.set('barOptions1', {
                 pointRadius: 2,
                 responsive: false,
                 elements: {
@@ -233,7 +292,7 @@ export default Ember.Component.extend({
                     fontSize: 16,
                     fontStle:"bold",
                     fontColor:"#101",
-                    text: 'Students per Assestment Code'
+                    text: 'Performance Phase 2 - Distance'
                 },
                 legend: {
                     display: false,
@@ -248,7 +307,7 @@ export default Ember.Component.extend({
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Number of Students',
+                            labelString: 'Distance to Target',
                             
                         },
                         ticks: {
@@ -263,7 +322,7 @@ export default Ember.Component.extend({
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Assesment Code'
+                        labelString: 'Time(s)'
                     },
                     ticks: {
                             suggestedMin: 0,
@@ -273,6 +332,60 @@ export default Ember.Component.extend({
                     }]
                 }
             });
+        self.set('barOptions', {
+                pointRadius: 2,
+                responsive: false,
+                elements: {
+                    line: {
+                        tension: 0, // disables bezier curves
+                    }
+                },
+                title: {
+                    display: true,
+                    fontSize: 16,
+                    fontStle:"bold",
+                    fontColor:"#101",
+                    text: 'Performance Phase 1 - Distance'
+                },
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    yAxes: [{
+
+                        gridLines: {
+                            //display: false,
+                            color: 'rgba(0, 0, 0, 0)',
+                            zeroLineColor: 'rgba(0, 0, 0, 1)'
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Distance to Incision Point',
+                            
+                        },
+                        ticks: {
+                                suggestedMin: 0,
+                                suggestedMax: this.get('maxDistance')+2, 
+                        }
+                    }],
+                xAxes: [{
+                    gridLines: {
+                        color: 'rgba(0, 0, 0, 0)',
+                        zeroLineColor: 'rgba(0, 0, 0, 1)'
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time(s)'
+                    },
+                    ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: this.get('duration') + 2,
+                            
+                        }
+                    }]
+                }
+            });
+            
         /*this.set('numberData', {
             datasets: [
                     {
