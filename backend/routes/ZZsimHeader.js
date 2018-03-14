@@ -3,7 +3,7 @@ var simHeaderSchema = mongoose.Schema(
     {
         uName: String,
         date: String,
-        simulationDuration: Number,
+        simulaionDuration: Number,
         
     }
 );
