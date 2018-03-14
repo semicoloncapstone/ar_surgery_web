@@ -20,7 +20,8 @@ export default Ember.Component.extend({
                     color: 'rgba(0, 0, 0, 1)',
                     width: 0.5},
                     markeredgewidth: 0.0,
-                    opacity: 0.1},
+                    markeredgecolor:'red',
+                    opacity: .5},
                     
                 type: 'scatter3d'
             };
@@ -76,7 +77,7 @@ export default Ember.Component.extend({
                 }
             };
             //console.log(data);
-            Plotly.newPlot('tester', data, layout, {displaylogo: false, displayModeBar: false});
+            Plotly.newPlot('tester', data, layout, {displaylogo: false, displayModeBar: false, markeredgewidth:0.0});
         });
         /*Plotly.d3.csv("http://localhost:3700/ventricles.csv", function(err, rows){
             console.log(rows);

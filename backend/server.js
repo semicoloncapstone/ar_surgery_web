@@ -10,7 +10,7 @@ var fs = require('fs');
 
 var Messages = require('./routes/message');
 var Simulations = require('./routes/simulation');
-
+var SimHeaders = require('./routes/simHeader');
 //oudaAuth
 var users = require('./routes/users');
 var passwords = require('./routes/passwords');
@@ -44,6 +44,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(logger);
 app.use('/messages', Messages);
 app.use('/simulations', Simulations);
+app.use('/simHeaders', SimHeaders);
 app.use('/registrations', registrations);
 app.use('/classes', classes);
 app.use('/messageBoards', messageBoards);
