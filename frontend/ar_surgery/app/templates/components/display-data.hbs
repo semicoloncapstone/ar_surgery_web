@@ -1,16 +1,16 @@
 
 <div class="w3-bar w3-black">
     <a class="w3-bar-item w3-button w3-mobile {{threeD}}" style="width:50%" {{action "pressThree"}}>
-        <i class="fas fa-globe"></i>
+        <i class="fas fa-user-md"></i>
         3D Tracking Data
     </a>
     <a class="w3-bar-item w3-button w3-mobile {{perf}}" style="width:50%" {{action "pressPerf"}}>
-        <i class="fas fa-graduation-cap"></i>
+        <i class="fas fa-bolt"></i>
         Performance Data
     </a>
 </div>
 
-*** Current Test ID: {{dataID}} ***
+
 
 {{#if isPerfData}}
     <div class="w3-row-padding w3-margin-bottom">
@@ -28,13 +28,15 @@
                 </div>
             </div>
         </div>
+        <p>Angle of incision error: {{myAngle}}° <br>
+        Time spend in skull before phase 2: {{timeInSkull}}s</p>
     </div>
 
 {{/if}}
 {{#if isThreeData}}
     <div class="w3-row-padding w3-margin-bottom">
         <div class="w3-container w3-padding-16 w3-border w3-round-large w3-center">
-            <div id="tester" style="width:1200px;height:1200px;"></div>
+            <div id="tester" style="width:1200px;height:900px;"></div>
         </div>
     </div>
 {{/if}}

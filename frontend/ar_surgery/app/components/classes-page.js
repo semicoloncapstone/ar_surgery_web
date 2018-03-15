@@ -166,7 +166,7 @@ export default Ember.Component.extend({
             //console.log(record.id);
             userID = record.id;
             myStore.query('class', {user: userID}).then(function(records) {
-                console.log(records);
+                //console.log(records);
                 if (records.content.length === 0){
                     self.set('noClass', true);
                 } else {
@@ -176,7 +176,7 @@ export default Ember.Component.extend({
                 }
                 //console.log(records);
                 myStore.findAll('class').then(function (rcds){
-                    console.log(rcds);
+                    //console.log(rcds);
                     for (var i = 0; i < rcds.content.length; i++){
                         for (var j = 0; j < myClasses.content.length; j++){
                             if (rcds.objectAt(i).id === myClasses.objectAt(j).id){

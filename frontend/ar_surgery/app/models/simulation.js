@@ -13,6 +13,7 @@ export default DS.Model.extend({
     debugged: DS.attr(),
 
     target: fragment('datapoint'),
+    refCube: fragment('datapoint'),
     toolPoints: fragmentArray('datapoint'),
     headPoints: fragmentArray('datapoint'),
 });

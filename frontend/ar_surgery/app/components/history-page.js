@@ -2,8 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     store: Ember.inject.service(),
-    dataID: "5aa9959abd966f25d010ac04",
+    dataID: null,
     usersSims: null,
+    isChosen: false,
+    hasSims: false,
     
     init(){
         this._super(...arguments);
@@ -15,10 +17,16 @@ export default Ember.Component.extend({
         var self = this;
 
         myStore.query('simulation', {user: auth.getName}).then(function(sims){
-            //console.log(sims);
+            
             self.set('usersSims', sims);
-            self.set('dataID', sims.objectAt(0).id);
-            console.log('dataID', sims.objectAt(0).id);
+            if (sims.length>0)
+            {
+                self.set('dataID', sims.objectAt(0).id);
+                console.log('dataID', sims.objectAt(0).id);
+                self.set('isChosen', true);
+                self.set('hasSims', true);
+                
+            }
         });
 
         /*Plotly.d3.csv("http://localhost:3700/ventricles.csv", function(err, rows){
@@ -66,9 +74,14 @@ export default Ember.Component.extend({
     
     actions: {
         setSimID(id){
+            this.set('isChosen', false);
             this.set('dataID', id);
+            var self = this;
             console.log(id);
             console.log(this.get('dataID'));
+            Ember.run.next(function () {
+                self.set('isChosen', true);
+            });
         },
     }
 });
