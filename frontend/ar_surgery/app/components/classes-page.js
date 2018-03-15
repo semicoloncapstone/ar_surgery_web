@@ -35,7 +35,7 @@ export default Ember.Component.extend({
           return (authentication.get('userCList').indexOf("TCLDEL") >= 0);
         }
     }),
-
+/*
     init(){
         this._super(...arguments);
         var self = this;
@@ -49,7 +49,7 @@ export default Ember.Component.extend({
             //console.log(record.id);
             userID = record.id;
             myStore.query('class', {user: userID}).then(function(records) {
-                //console.log(self.get('currentUser'));
+                console.log(records);
                 if (records.content.length === 0){
                     self.set('noClass', true);
                 } else {
@@ -63,7 +63,7 @@ export default Ember.Component.extend({
         /*myStore.findAll('registration').then(function (records) {
             self.set('regModel', records);
             //console.log(self.get('regModel').objectAt(0).get('user'));
-        })*/
+        })
         //console.log(this.get('regModel'));
         myStore.findAll('class').then(function (records) {
             self.set('allClasses', records);
@@ -73,8 +73,8 @@ export default Ember.Component.extend({
         //console.log(teachID);
         //myStore.query('class', {})
         
-    },
-
+},*/
+/*
     didRender(){
         this._super(...arguments);
         var self = this;
@@ -98,6 +98,101 @@ export default Ember.Component.extend({
                 //console.log(records);
             })
         });
+    },*/
+
+    init(){
+        this._super(...arguments);
+        var self = this;
+        var auth = this.get('oudaAuth');
+        var myClasses = null;
+        var buttonSet = [];
+        var myStore = this.get('store');
+        var userID = null;
+        
+
+        myStore.findAll('class').then(function (records) {
+            self.set('allClasses', records);
+        });
+
+        myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+            self.set('currentUser', record);
+            //console.log(record.id);
+            userID = record.id;
+            myStore.query('class', {user: userID}).then(function(records) {
+                console.log(records);
+                if (records.content.length === 0){
+                    self.set('noClass', true);
+                } else {
+                    self.set('personalClasses', records);
+                    myClasses = records;
+                    //console.log(records.objectAt(0).id);
+                }
+                //console.log(records);
+                myStore.findAll('class').then(function (rcds){
+                    console.log(rcds);
+                    for (var i = 0; i < rcds.content.length; i++){
+                        for (var j = 0; j < myClasses.content.length; j++){
+                            if (rcds.objectAt(i).id === myClasses.objectAt(j).id){
+                                buttonSet[i] = false;
+                            }
+                        }
+                        if(buttonSet[i] !== false){
+                            buttonSet[i] = true;       
+                        }
+                    }
+                    self.set('regButton', buttonSet);
+                });
+            })
+        });
+        
+        
+    },
+    didRender(){
+        this._super(...arguments);
+        var self = this;
+        var auth = this.get('oudaAuth');
+        var myClasses = null;
+        var buttonSet = [];
+        var myStore = this.get('store');
+        var userID = null;
+        
+
+        myStore.findAll('class').then(function (records) {
+            self.set('allClasses', records);
+        });
+
+        myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+            self.set('currentUser', record);
+            //console.log(record.id);
+            userID = record.id;
+            myStore.query('class', {user: userID}).then(function(records) {
+                console.log(records);
+                if (records.content.length === 0){
+                    self.set('noClass', true);
+                } else {
+                    self.set('personalClasses', records);
+                    myClasses = records;
+                    //console.log(records.objectAt(0).id);
+                }
+                //console.log(records);
+                myStore.findAll('class').then(function (rcds){
+                    console.log(rcds);
+                    for (var i = 0; i < rcds.content.length; i++){
+                        for (var j = 0; j < myClasses.content.length; j++){
+                            if (rcds.objectAt(i).id === myClasses.objectAt(j).id){
+                                buttonSet[i] = false;
+                            }
+                        }
+                        if(buttonSet[i] !== false){
+                            buttonSet[i] = true;       
+                        }
+                    }
+                    self.set('regButton', buttonSet);
+                });
+            })
+        });
+        
+        
     },
     
 
@@ -150,7 +245,7 @@ export default Ember.Component.extend({
             this.set('oneClass', theClass);
         },
 
-        register(cls){
+        register(cls, ndx){
             var self = this;
             var myStore = this.get('store');
             var auth = this.get('oudaAuth');
@@ -158,7 +253,7 @@ export default Ember.Component.extend({
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             var thisClass = null;
 
-            console.log(cls);
+            //console.log(cls);
 
             if (confirm("Are you sure you would like to register for this class?")){
                 myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
@@ -172,23 +267,6 @@ export default Ember.Component.extend({
                     newReg.save()   
                 });
             }
-
-            var myClasses = this.get('personalClasses');
-            var buttonSet = [];
-
-            myStore.findAll('class').then(function (records){
-                for (var i = 0; i < records.content.length; i++){
-                    for (var j = 0; j < myClasses.content.length; j++){
-                        if (records.objectAt(i).id === myClasses.objectAt(j).id){
-                            buttonSet[i] = false;
-                        }
-                    }
-                    if(buttonSet[i] !== false){
-                        buttonSet[i] = true;       
-                    }
-                }
-                self.set('regButton', buttonSet);
-            });
         },
 
     }
