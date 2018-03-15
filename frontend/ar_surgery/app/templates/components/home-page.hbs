@@ -1,7 +1,11 @@
 
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"><i class="fa fa-bars"></i>  Menu</button>
+  {{#if sideBarClosed}}
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" {{action 'openSmallBar'}}><i class="fa fa-bars"></i>  Menu</button>
+  {{else}}
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" {{action 'closeSmallBar'}}><i class="fa fa-times"></i> Close Menu</button>
+  {{/if}}
   <span class="w3-bar-item">MedicART</span>
   {{log-out}}
 </div>
@@ -10,6 +14,7 @@
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-light-grey" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container">
+      <!--<button class="w3-bar-item w3-button w3-large w3-hide-large" {{action 'closeSmallBar'}}>Close <i class="w3-right fa fa-times"></i></button>-->
     <!--<div class="w3-col s4">
       <img src="/assets/images/generic_user.png" class="w3-circle w3-margin-right" style="width:46px">
     </div>-->
@@ -29,7 +34,6 @@
     <a class="w3-bar-item w3-button w3-padding {{C}}" {{action "ClassPress"}}><i class="fa fa-users fa-fw"></i>  Classes</a>
     <a class="w3-bar-item w3-button w3-padding {{M}}" {{action "MessagePress"}}><i class="fa fa-comments fa-fw"></i>  Messages</a>
     <a class="w3-bar-item w3-button w3-padding {{S}}" {{action "SettingsPress"}}><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
-    
   </div>
 </nav>
 
@@ -50,6 +54,26 @@
   <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
     <img src="/assets/images/medicartlogo.png" class="w3-image" style="width:33%">
   </header>
+  <div class="w3-container w3-center">
+    <div class="w3-panel w3-light-grey w3-topbar w3-bottombar w3-border-purple w3-round-xlarge">
+      <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+        <h3><b>About MedicART</b></h3>
+      </header>
+      <p> 
+        MedicART online is the web interface associated with the MedicART Android AR simulation application 
+        of the <a href="https://www.healthline.com/health/ventriculoperitoneal-shunt">ventriculoperitoneal (VP) shunting</a> 
+        insertion procedure. MedicART provides a more realistic and immersive learning experience than 
+        textbooks or existing 2D training applications for medical professionals.
+      </p>
+      <p>The MedicART application allows students to practice 
+        the VP shunting procedure under conditions similar to the real-world. Users of the system will be offered hands 
+        on training in the procedure and will be able to track their progress and improvements through statistics. 
+        Medical professionals will also be able to track the progress of a group of medical students in order to 
+        view grouped analytics.
+      </p>
+      <br><br>
+    </div>
+  </div>
   
 
 {{/if}}

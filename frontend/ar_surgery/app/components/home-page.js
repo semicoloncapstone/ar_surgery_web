@@ -17,6 +17,7 @@ export default Ember.Component.extend({
     M: "",
     S: "",
     Ul: "",
+    sideBarClosed: true,
 
     init() {
         this._super(...arguments);
@@ -51,6 +52,8 @@ export default Ember.Component.extend({
             this.set('S', "");
             this.set('isUserLogPage', false);
             this.set('Ul', "");
+            $('#mySidebar').css({ display: "none" });
+            this.set('sideBarClosed', true);
 
         },
         HistoryPress() {
@@ -66,6 +69,8 @@ export default Ember.Component.extend({
             this.set('S', "");
             this.set('isUserLogPage', false);
             this.set('Ul', "");
+            $('#mySidebar').css({ display: "none" });
+            this.set('sideBarClosed', true);
         },
         ClassPress() {
             this.set('isHomePage', false);
@@ -80,6 +85,8 @@ export default Ember.Component.extend({
             this.set('S', "");
             this.set('isUserLogPage', false);
             this.set('Ul', "");
+            $('#mySidebar').css({ display: "none" });
+            this.set('sideBarClosed', true);
         },
         MessagePress() {
             this.set('isHomePage', false);
@@ -94,6 +101,8 @@ export default Ember.Component.extend({
             this.set('S', "");
             this.set('isUserLogPage', false);
             this.set('Ul', "");
+            $('#mySidebar').css({ display: "none" });
+            this.set('sideBarClosed', true);
         },
         SettingsPress() {
             this.set('isHomePage', false);
@@ -108,6 +117,8 @@ export default Ember.Component.extend({
             this.set('S', "w3-orange");
             this.set('isUserLogPage', false);
             this.set('Ul', "");
+            $('#mySidebar').css({ display: "none" });
+            this.set('sideBarClosed', true);
             //console.log(this.get('oudaAuth').get('isAuthenticated'));
             //this.get('routing').transitionTo('add-user');
         },
@@ -125,11 +136,20 @@ export default Ember.Component.extend({
             this.set('S', "");
             this.set('isUserLogPage', true);
             this.set('Ul', "w3-yellow");
+            $('#mySidebar').css({ display: "none" });
+            this.set('sideBarClosed', true);
         },
 
-        smallMenuClick(){
-            
+        openSmallBar(){
+            //console.log($('#mySidebar').show());
+            $('#mySidebar').css({ display: "block" });
+            this.set('sideBarClosed', false);
         },
+
+        closeSmallBar(){
+            $('#mySidebar').css({ display: "none" });
+            this.set('sideBarClosed', true);
+        }
 
     }
     
