@@ -3,10 +3,24 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     store: Ember.inject.service(),
     dataID: "5aa9959abd966f25d010ac04",
+    usersSims: null,
     
     init(){
         this._super(...arguments);
         
+        //pull all sims for the given user
+
+        var auth = this.get('oudaAuth');
+        var myStore = this.get('store');
+        var self = this;
+
+        myStore.query('simulation', {user: auth.getName}).then(function(sims){
+            //console.log(sims);
+            self.set('usersSims', sims);
+            self.set('dataID', sims.objectAt(0).id);
+            console.log('dataID', sims.objectAt(0).id);
+        });
+
         /*Plotly.d3.csv("http://localhost:3700/ventricles.csv", function(err, rows){
             console.log(rows);
             function unpack(rows, key) {
@@ -51,6 +65,10 @@ export default Ember.Component.extend({
     },
     
     actions: {
-        
+        setSimID(id){
+            this.set('dataID', id);
+            console.log(id);
+            console.log(this.get('dataID'));
+        },
     }
 });

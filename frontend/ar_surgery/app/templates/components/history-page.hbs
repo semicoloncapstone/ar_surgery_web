@@ -1,6 +1,17 @@
 <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
     <h1><b><i class="fas fa-chart-line"></i> Statistics</b></h1>
 </header>
+
+<form class="w3-container w3-center">
+
+    <select class="ui dropdown" onchange={{action "setSimID" value="target.value"}}>
+        {{#each usersSims as |sim|}}
+            <option value={{sim.id}}>Simulation Date: {{sim.date}}</option>
+        {{/each}}
+    </select>
+
+</form>
+<br>
 {{display-data dataID = dataID}}
 
 

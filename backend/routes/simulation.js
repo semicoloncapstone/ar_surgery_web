@@ -21,7 +21,7 @@ router.route('/')
             });
         }
         else {
-            Simulations.Model.findOne({"user": user.user, "date": user.date}, function (error,simulations) {
+            Simulations.Model.find({"user": user.user}, function (error,simulations) {
                 if (error) response.send(error);
                 
                 response.json({simulations: simulations});
