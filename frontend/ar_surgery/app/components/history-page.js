@@ -5,7 +5,7 @@ export default Ember.Component.extend({
     dataID: null,
     usersSims: null,
     isChosen: false,
-    hasSims: false,
+    hasSims: true,
     
     init(){
         this._super(...arguments);
@@ -19,13 +19,14 @@ export default Ember.Component.extend({
         myStore.query('simulation', {user: auth.getName}).then(function(sims){
             
             self.set('usersSims', sims);
-            if (sims.length>0)
-            {
+            
+            if (sims.content.length>0){
                 self.set('dataID', sims.objectAt(0).id);
                 console.log('dataID', sims.objectAt(0).id);
                 self.set('isChosen', true);
-                self.set('hasSims', true);
-                
+                self.set('hasSims', true);   
+            } else {
+                self.set('hasSims', false);
             }
         });
 

@@ -212,8 +212,9 @@ export default Ember.Component.extend({
         },
 
         viewClassStats(user){
-            this.set('showViewStats', true);
+            this.set('showViewStats', false);
             this.set('userToStats', user);
+            this.set('showViewStats', true);
         },
 
         removeMember(regID){

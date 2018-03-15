@@ -2,9 +2,11 @@
     <h1><b><i class="fas fa-chart-line"></i> Statistics</b></h1>
 </header>
 
+{{#if hasSims}}
 <form class="w3-container w3-center">
     
         <select class="ui dropdown" onchange={{action "setSimID" value="target.value"}}>
+            
             {{#each usersSims as |sim|}}
                 <option value={{sim.id}}>Simulation Date: {{sim.date}}</option>
             {{/each}}
@@ -15,6 +17,9 @@
 <br>
 {{#if isChosen}}
     {{display-data dataID = dataID}}
+{{/if}}
+{{else}}
+    <p class="w3-center">This User has no Simulation Data</p>
 {{/if}}
 
 

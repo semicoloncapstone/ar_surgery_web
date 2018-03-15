@@ -28,9 +28,27 @@
                 </div>
             </div>
         </div>
-        <p>Angle of incision error: {{myAngle}}° <br>
-        Time spend in skull before phase 2: {{timeInSkull}}s</p>
     </div>
+    <div class="w3-row-padding w3-margin-bottom">
+        <table class="w3-table-all w3-centered">
+            <thead>
+                <tr>
+                    <th colspan="2">Simulation Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Angle of Incision Error</td>
+                    <td>{{myAngle}}°</td>
+                </tr>
+                <tr>
+                    <td>Time in Skull Before Phase 2</td>
+                    <td>{{timeInSkull}}s</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
 
 {{/if}}
 {{#if isThreeData}}
