@@ -49,23 +49,17 @@ export default Ember.Component.extend({
         }, function (error) {
           if (error === "passwordReset") {
             self.set('isPasswordChanging', true);
-          } else {
-            if (error === "wrongUserName") {
-              self.set('error', 'Please enter a correct user name');
-            } else {
-              if (error === "wrongPassword") {
-                console.log('wrong password')
-                self.set('error', 'Please enter a correct password');
-              } else {
-                if (error === "loginFailed") {
-                  self.set('error', 'Login Failed ...');
-                }
-              }
-            }
+          } else if (error === "wrongUserName") {
+            self.set('error', 'Please enter a correct user name');
+          } else if (error === "wrongPassword") {
+            console.log('wrong password error');
+
+            self.set('error', 'Please enter a correct password');
+          } else if (error === "loginFailed") {
+            self.set('error', 'Login Failed ...');
           }
         });
       }
-
     },
 
     save(){

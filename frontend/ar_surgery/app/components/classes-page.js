@@ -112,41 +112,47 @@ export default Ember.Component.extend({
 
         myStore.findAll('class').then(function (records) {
             self.set('allClasses', records);
+            for(var i =0; i < records.content.length; i++){
+                buttonSet[i] = true;
+            }
+            self.set('regButton', buttonSet);
+            myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+                self.set('currentUser', record);
+                //console.log(record.id);
+                userID = record.id;
+                myStore.query('class', {user: userID}).then(function(records) {
+                    //console.log(records);
+                    if (records.content.length === 0){
+                        self.set('noClass', true);
+                    } else {
+                        self.set('personalClasses', records);
+                        myClasses = records;
+                        //console.log(records.objectAt(0).id);
+                        myStore.findAll('class').then(function (rcds){
+                            //console.log(rcds);
+                            for (var i = 0; i < rcds.content.length; i++){
+                                for (var j = 0; j < myClasses.content.length; j++){
+                                    if (rcds.objectAt(i).id === myClasses.objectAt(j).id){
+                                        buttonSet[i] = false;
+                                    }
+                                }
+                                if(buttonSet[i] !== false){
+                                    buttonSet[i] = true;       
+                                }
+                            }
+                            self.set('regButton', buttonSet);
+                        });
+                    }
+                    
+                })
+            });
         });
 
-        myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
-            self.set('currentUser', record);
-            //console.log(record.id);
-            userID = record.id;
-            myStore.query('class', {user: userID}).then(function(records) {
-                console.log(records);
-                if (records.content.length === 0){
-                    self.set('noClass', true);
-                } else {
-                    self.set('personalClasses', records);
-                    myClasses = records;
-                    //console.log(records.objectAt(0).id);
-                }
-                //console.log(records);
-                myStore.findAll('class').then(function (rcds){
-                    console.log(rcds);
-                    for (var i = 0; i < rcds.content.length; i++){
-                        for (var j = 0; j < myClasses.content.length; j++){
-                            if (rcds.objectAt(i).id === myClasses.objectAt(j).id){
-                                buttonSet[i] = false;
-                            }
-                        }
-                        if(buttonSet[i] !== false){
-                            buttonSet[i] = true;       
-                        }
-                    }
-                    self.set('regButton', buttonSet);
-                });
-            })
-        });
+        
         
         
     },
+    /*
     didRender(){
         this._super(...arguments);
         var self = this;
@@ -159,41 +165,45 @@ export default Ember.Component.extend({
 
         myStore.findAll('class').then(function (records) {
             self.set('allClasses', records);
+            for(var i =0; i < records.content.length; i++){
+                buttonSet[i] = true;
+            }
+            self.set('regButton', buttonSet);
+            myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+                self.set('currentUser', record);
+                //console.log(record.id);
+                userID = record.id;
+                myStore.query('class', {user: userID}).then(function(records) {
+                    //console.log(records);
+                    if (records.content.length === 0){
+                        self.set('noClass', true);
+                    } else {
+                        self.set('personalClasses', records);
+                        myClasses = records;
+                        //console.log(records.objectAt(0).id);
+                        myStore.findAll('class').then(function (rcds){
+                            //console.log(rcds);
+                            for (var i = 0; i < rcds.content.length; i++){
+                                for (var j = 0; j < myClasses.content.length; j++){
+                                    if (rcds.objectAt(i).id === myClasses.objectAt(j).id){
+                                        buttonSet[i] = false;
+                                    }
+                                }
+                                if(buttonSet[i] !== false){
+                                    buttonSet[i] = true;       
+                                }
+                            }
+                            self.set('regButton', buttonSet);
+                        });
+                    }
+                })
+            });
         });
 
-        myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
-            self.set('currentUser', record);
-            //console.log(record.id);
-            userID = record.id;
-            myStore.query('class', {user: userID}).then(function(records) {
-                //console.log(records);
-                if (records.content.length === 0){
-                    self.set('noClass', true);
-                } else {
-                    self.set('personalClasses', records);
-                    myClasses = records;
-                    //console.log(records.objectAt(0).id);
-                }
-                //console.log(records);
-                myStore.findAll('class').then(function (rcds){
-                    //console.log(rcds);
-                    for (var i = 0; i < rcds.content.length; i++){
-                        for (var j = 0; j < myClasses.content.length; j++){
-                            if (rcds.objectAt(i).id === myClasses.objectAt(j).id){
-                                buttonSet[i] = false;
-                            }
-                        }
-                        if(buttonSet[i] !== false){
-                            buttonSet[i] = true;       
-                        }
-                    }
-                    self.set('regButton', buttonSet);
-                });
-            })
-        });
         
         
-    },
+        
+    },*/
     
 
     actions: {
@@ -213,19 +223,25 @@ export default Ember.Component.extend({
 
             myStore.findAll('class').then(function (records){
                 self.set('allClasses', records);
-                for (var i = 0; i < records.content.length; i++){
-                    for (var j = 0; j < myClasses.content.length; j++){
-                        if (records.objectAt(i).id === myClasses.objectAt(j).id){
-                            buttonSet[i] = false;
-                        }
-                    }
-                    if(buttonSet[i] !== false){
+                if (myClasses === null){
+                    for(var i =0; i < records.content.length; i++){
                         buttonSet[i] = true;
                     }
+                    self.set('regButton', buttonSet);
+                } else {
+                    for (var i = 0; i < records.content.length; i++){
+                        for (var j = 0; j < myClasses.content.length; j++){
+                            if (records.objectAt(i).id === myClasses.objectAt(j).id){
+                                buttonSet[i] = false;
+                            }
+                        }
+                        if(buttonSet[i] !== false){
+                            buttonSet[i] = true;
+                        }
+                    }
+                    self.set('regButton', buttonSet);
                 }
-                self.set('regButton', buttonSet);
             });
-            
         },
 
         myClass(){

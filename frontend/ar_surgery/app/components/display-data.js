@@ -258,7 +258,7 @@ export default Ember.Component.extend({
                         },
                         opacity: .1
                     },
-                        
+                    name: 'Skull',                        
                     type: 'scatter3d'
                 };
 
@@ -275,6 +275,7 @@ export default Ember.Component.extend({
                             width: .5
                         },
                         opacity: 1},
+                        name: 'Ventricles',
                     type: 'scatter3d'};
                 var trace2 = {
                     x:[target.x, 29.177, target2.x], y: [target.y, 4.454, target2.y], z: [target.z, 3.792, target2.z],
@@ -318,6 +319,7 @@ export default Ember.Component.extend({
                             width: .5
                         },
                         opacity: 1},
+                        name: 'Tracked Path',
                     type: 'scatter3d'};
 
                 var data = [trace0, trace1, trace4];
@@ -700,7 +702,7 @@ export default Ember.Component.extend({
                         },
                         opacity: .1
                     },
-                        
+                    name: 'Skull',                        
                     type: 'scatter3d'
                 };
 
@@ -717,6 +719,7 @@ export default Ember.Component.extend({
                             width: .5
                         },
                         opacity: 1},
+                    name: 'Ventricles',
                     type: 'scatter3d'};
                 var trace2 = {
                     x:[target.x, 29.177, target2.x], y: [target.y, 4.454, target2.y], z: [target.z, 3.792, target2.z],
@@ -760,6 +763,7 @@ export default Ember.Component.extend({
                             width: .5
                         },
                         opacity: 1},
+                    name: 'Tracked Path',
                     type: 'scatter3d'};
 
                 var data = [trace0, trace1, trace4];
