@@ -20,6 +20,10 @@ export default Ember.Component.extend({
     noRegs: false, 
     showViewStats: false,
     userToStats: null,
+    isChosen: false,
+    hasSims: true,
+    dataID: null,
+
 
     init(){
         this._super(...arguments);
@@ -214,6 +218,7 @@ export default Ember.Component.extend({
         viewClassStats(user){
             this.set('showViewStats', false);
             this.set('userToStats', user);
+            
             this.set('showViewStats', true);
         },
 
@@ -226,6 +231,46 @@ export default Ember.Component.extend({
                     reg.destroyRecord();
                 });
             }
-        }
+        },
+
+        closeUserStats(){
+            //close the stats window
+            this.set('showUserSims', false);
+        },
+
+        viewUserSims(userPass){
+            var auth = this.get('oudaAuth');
+            var myStore = this.get('store');
+            var self = this;
+            self.set('showUserSims', false);
+            
+            myStore.queryRecord('password', {user: userPass.get('id')}).then(function(record){
+                myStore.query('simulation', {user: record.get('userName')}).then(function(sims){
+                    self.set('usersSims', sims);
+                    if (sims.content.length>0){
+                        self.set('dataID', sims.objectAt(0).id);
+                        console.log('dataID', sims.objectAt(0).id);
+                        self.set('isChosen', true);
+                        self.set('hasSims', true);   
+                    } else {
+                        self.set('hasSims', false);
+                    }
+                    self.set('showUserSims', true);
+                });
+            });
+            
+        },
+
+        setSimID(id){
+            this.set('isChosen', false);
+            this.set('dataID', id);
+            var self = this;
+            console.log(id);
+            console.log(this.get('dataID'));
+            Ember.run.next(function () {
+                self.set('isChosen', true);
+            });
+        },
+
     }
 });

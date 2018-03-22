@@ -17,7 +17,6 @@ export default Ember.Component.extend({
         var self = this;
 
         myStore.query('simulation', {user: auth.getName}).then(function(sims){
-            
             self.set('usersSims', sims);
             
             if (sims.content.length>0){

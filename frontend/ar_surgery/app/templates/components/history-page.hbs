@@ -4,15 +4,11 @@
 
 {{#if hasSims}}
 <form class="w3-container w3-center">
-    
-        <select class="ui dropdown" onchange={{action "setSimID" value="target.value"}}>
-            
-            {{#each usersSims as |sim|}}
-                <option value={{sim.id}}>Simulation Date: {{sim.date}}</option>
-            {{/each}}
-        </select>
-    
-
+    <select class="ui dropdown" onchange={{action "setSimID" value="target.value"}}>
+        {{#each usersSims as |sim|}}
+            <option value={{sim.id}}>Simulation Date: {{sim.date}}</option>
+        {{/each}}
+    </select>
 </form>
 <br>
 {{#if isChosen}}
