@@ -216,9 +216,10 @@ export default Ember.Component.extend({
         },
 
         viewClassStats(user){
+            this.set('hasSims', true);
+            this.set('showUserSims', false);
             this.set('showViewStats', false);
             this.set('userToStats', user);
-            
             this.set('showViewStats', true);
         },
 
@@ -239,6 +240,8 @@ export default Ember.Component.extend({
         },
 
         viewUserSims(userPass){
+            this.set('showViewStats', false);
+            this.set('hasSims', true);
             var auth = this.get('oudaAuth');
             var myStore = this.get('store');
             var self = this;
