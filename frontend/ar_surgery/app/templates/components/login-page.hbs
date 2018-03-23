@@ -4,48 +4,65 @@
 
 <div class="w3-main">
 
-<div class="w3-container w3-card w3-white w3-margin w3-padding w3-display-left" style="width: 45%">
-    <header class="w3-container w3-round-large w3-center w3-black"> 
-        <h2>User Login</h2>
-    </header>
+<div class="w3-container w3-round w3-margin w3-padding w3-display-middle" style="width: 45%">
+<!--    <header class="w3-container w3-center"> 
+        <h2>Login</h2>
+    </header>-->
+    
+        <img class="w3-image" src="/assets/images/logo.png" style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
 
-    <div class="w3-container">
-        <header class="w3-container" style="padding-top:22px; padding-bottom:22px">
+
+    
+    
+        <!--<header class="w3-container" style="padding-top:22px; padding-bottom:22px">
             <h3><b><i class="fa fa-user"></i> Username</b></h3>
-        </header>
+        </header>-->
         <!--<label>Username</label>-->
-            {{input value=name type="text"  class="w3-input w3-border w3-round-large"}}
+        <div class="w3-container">
+        <div class="ui labeled big fluid input">
+            <div class="ui black label">
+                <i class="fa fa-user"></i> Username
+            </div>
+            {{input value=name type="text"}}
+        </div>
+           <!-- {{input value=name type="text"  class="w3-input w3-border w3-round-large"}}-->
         <br>
-        <header class="w3-container" style="padding-top:22px; padding-bottom:22px">
+        <!--<header class="w3-container" style="padding-top:22px; padding-bottom:22px">
             <h3 class="w3-left"><b><i class="fa fa-lock"></i> Password</b></h3>
             <button class="w3-button w3-round-large w3-black w3-right" {{action 'seePass'}}><i class={{buttonIcon}}></i></button>
-        </header>
+        </header>-->
         
+        <div class="ui labeled big action fluid input">
+            <div class="ui black label">
+                <i class="fa fa-lock"></i> Password
+            </div>
+            {{input value=password type=seeNoSee  class="w3-input w3-border w3-round-large"}}
+            <button class="ui black button" {{action 'seePass'}}><i class={{buttonIcon}}></i></button>
+        </div>
         
-        <!--<label>Password</label>-->
+        <!--<label>Password</label>
         
         {{input value=password type=seeNoSee  class="w3-input w3-border w3-round-large"}}
         
         {{error}}
-        
+        -->
+        <br>
+        <button id="login" class="ui fluid big black button" {{action 'login'}}><i class="fas fa-sign-in-alt"></i> Login</button>
         <br><br>
-        <button id="login" class="w3-button w3-round-large w3-black w3-bar" {{action 'login'}}><i class="fas fa-sign-in-alt"></i> Login</button>
-        <br><br>
-        
     </div>
 </div>
-    
-<div class="w3-container w3-margin w3-padding w3-display-right" style="width:45%">
+<!-- 
+<div class="w3-container w3-margin w3-padding w3-display-middle" style="width:45%">
     <img class="w3-image" src="/assets/images/medicartWebLogo.png">
-</div>
+</div>-->
 
 
 </div>
-
+<!--
 <footer class="w3-container w3-padding-16 w3-center w3-light-grey" style="position:absolute; bottom:0; width:100%">
     <a href="https://github.com/semicoloncapstone" target="_blank"><i class="fab fa-github w3-xxlarge w3-hover-opacity"></i></a>
     <a href="https://www.emberjs.com/" target="_blank"><i class="fab fa-ember w3-xxlarge w3-hover-opacity"></i></a>
     <a href="https://www.w3schools.com/w3css/default.asp" target="_blank"><i class="fab fa-css3-alt w3-xxlarge w3-hover-opacity"></i></a>
     <br>
     <p><strong>Semicolon Software, 2018</strong></p>
-</footer>
+</footer>-->
