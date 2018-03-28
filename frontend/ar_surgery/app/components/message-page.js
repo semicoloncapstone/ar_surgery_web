@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     isSentMsgs: false,
     isRcvdMsgs: true,
     SM: "w3-black",
-    RM: "w3-green",
+    RM: "w3-blue",
     isZeroMsgs: false,
     regs: null,
 
@@ -113,7 +113,7 @@ export default Ember.Component.extend({
             this.set('isSentMsgs', false);
 
             this.set('SM', 'w3-black');
-            this.set('RM', 'w3-green');
+            this.set('RM', 'w3-blue');
 
             var auth = this.get('oudaAuth');
             var self = this;
@@ -147,7 +147,7 @@ export default Ember.Component.extend({
             this.set('isRcvdMsgs', false);
             this.set('isSentMsgs', true);
 
-            this.set('SM', 'w3-green');
+            this.set('SM', 'w3-blue');
             this.set('RM', 'w3-black');
 
             var auth = this.get('oudaAuth');

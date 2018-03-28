@@ -10,11 +10,11 @@ export default Ember.Component.extend({
   EditUserEnabled: false,
   
 
-  UA: "w3-orange",
+  UA: "w3-blue",
   SR: "",
   SP: "",
 
-  CP: "w3-orange",
+  CP: "w3-blue",
   EU: "",
 
 
@@ -72,7 +72,7 @@ export default Ember.Component.extend({
       this.set('isFeaturesEditing', false);
       this.set('isRolesEditing', false);
       
-      this.set('UA', 'w3-orange');
+      this.set('UA', 'w3-blue');
       this.set('SR', '');
       this.set('SP', '');
 
@@ -83,7 +83,7 @@ export default Ember.Component.extend({
       this.set('isRolesEditing', true);
       
       this.set('UA', '');
-      this.set('SR', 'w3-orange');
+      this.set('SR', 'w3-blue');
       this.set('SP', '');
     },
 
@@ -94,14 +94,14 @@ export default Ember.Component.extend({
       
       this.set('UA', '');
       this.set('SR', '');
-      this.set('SP', 'w3-orange');
+      this.set('SP', 'w3-blue');
     },
 
     changePassword (){
       this.set('ChangePasswordEnabled', true);
       this.set('EditUserEnabled', false);
 
-      this.set('CP', 'w3-orange');
+      this.set('CP', 'w3-blue');
       this.set('EU', '');
     },
 
@@ -110,7 +110,7 @@ export default Ember.Component.extend({
       this.set('EditUserEnabled', true);
 
       this.set('CP', '');
-      this.set('EU', 'w3-orange');
+      this.set('EU', 'w3-blue');
     }
 
 

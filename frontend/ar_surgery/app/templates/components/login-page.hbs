@@ -1,15 +1,16 @@
+<div class="loginPage">
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
   <span class="w3-bar-item">MedicART</span>
 </div>
 
 <div class="w3-main">
 
-<div class="w3-container w3-round w3-margin w3-padding w3-display-middle" style="width: 45%">
+<div class="w3-container w3-white w3-margin w3-padding w3-display-middle w3-mobile" style="width: 45%">
 <!--    <header class="w3-container w3-center"> 
         <h2>Login</h2>
     </header>-->
-    
-        <img class="w3-image" src="/assets/images/logo.png" style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
+        <br>
+        <img class="w3-image" src="/assets/images/newLogo.png" style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
 
 
     
@@ -19,7 +20,7 @@
         </header>-->
         <!--<label>Username</label>-->
         <div class="w3-container">
-        <div class="ui labeled big fluid input">
+        <div class="ui labeled fluid input">
             <div class="ui black label">
                 <i class="fa fa-user"></i> Username
             </div>
@@ -32,11 +33,11 @@
             <button class="w3-button w3-round-large w3-black w3-right" {{action 'seePass'}}><i class={{buttonIcon}}></i></button>
         </header>-->
         
-        <div class="ui labeled big action fluid input">
+        <div class="ui labeled action fluid input">
             <div class="ui black label">
                 <i class="fa fa-lock"></i> Password
             </div>
-            {{input value=password type=seeNoSee  class="w3-input w3-border w3-round-large"}}
+            {{input value=password type=seeNoSee  class="w3-input w3-border"}}
             <button class="ui black button" {{action 'seePass'}}><i class={{buttonIcon}}></i></button>
         </div>
         
@@ -47,7 +48,7 @@
         {{error}}
         -->
         <br>
-        <button id="login" class="ui fluid big black button" {{action 'login'}}><i class="fas fa-sign-in-alt"></i> Login</button>
+        <button id="login" class="w3-black w3-round w3-button w3-right" {{action 'login'}}><i class="fas fa-sign-in-alt"></i> Login</button>
         <br><br>
     </div>
 </div>
@@ -66,3 +67,4 @@
     <br>
     <p><strong>Semicolon Software, 2018</strong></p>
 </footer>-->
+</div>

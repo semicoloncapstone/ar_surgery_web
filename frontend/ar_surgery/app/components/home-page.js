@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     isMessagesPage: false,
     isSettingsPage: false,
     isUserLogPage: false,
-    Ho: "w3-purple",
+    Ho: "w3-blue",
     Hi: "",
     C: "",
     M: "",
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     
         HomePress () {
             this.set('isHomePage', true);
-            this.set('Ho', "w3-purple");
+            this.set('Ho', "w3-blue");
             this.set('isHistoryPage', false);
             this.set('Hi', "");
             this.set('isClassesPage', false);
@@ -78,7 +78,7 @@ export default Ember.Component.extend({
             this.set('isHistoryPage', false);
             this.set('Hi', "");
             this.set('isClassesPage', true);
-            this.set('C', "w3-red");
+            this.set('C', "w3-blue");
             this.set('isMessagesPage', false);
             this.set('M', "");
             this.set('isSettingsPage', false);
@@ -96,7 +96,7 @@ export default Ember.Component.extend({
             this.set('isClassesPage', false);
             this.set('C', "");
             this.set('isMessagesPage', true);
-            this.set('M', "w3-green");
+            this.set('M', "w3-blue");
             this.set('isSettingsPage', false);
             this.set('S', "");
             this.set('isUserLogPage', false);
@@ -114,7 +114,7 @@ export default Ember.Component.extend({
             this.set('isMessagesPage', false);
             this.set('M', "");
             this.set('isSettingsPage', true);
-            this.set('S', "w3-orange");
+            this.set('S', "w3-blue");
             this.set('isUserLogPage', false);
             this.set('Ul', "");
             $('#mySidebar').css({ display: "none" });
@@ -135,7 +135,7 @@ export default Ember.Component.extend({
             this.set('isSettingsPage', false);
             this.set('S', "");
             this.set('isUserLogPage', true);
-            this.set('Ul', "w3-yellow");
+            this.set('Ul', "w3-blue");
             $('#mySidebar').css({ display: "none" });
             this.set('sideBarClosed', true);
         },

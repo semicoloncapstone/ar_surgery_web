@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     isAllClass: false,
     isMyClass: true,
     AC: "w3-black",
-    MC: "w3-red",
+    MC: "w3-blue",
     regdClasses: null,
     isMainClasses: true,
     isOneClass: false,
@@ -213,7 +213,7 @@ export default Ember.Component.extend({
             this.set('isMainClasses', false);
             this.set('isOneClass', false);
 
-            this.set('AC', 'w3-red');
+            this.set('AC', 'w3-blue');
             this.set('MC', 'w3-black');
 
             var myClasses = this.get('personalClasses');
@@ -251,7 +251,7 @@ export default Ember.Component.extend({
             this.set('isMainClasses', true);
 
             this.set('AC', 'w3-black');
-            this.set('MC', 'w3-red');
+            this.set('MC', 'w3-blue');
         },
 
         viewOneClassSpread(theClass){

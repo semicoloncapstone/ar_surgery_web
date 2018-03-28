@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     showMsgBrd: false,
     showClassInfo: true,
     showClassUsers: false,
-    A: "w3-red",
+    A: "w3-blue",
     B: "w3-black",
     C: "w3-black",   
     classRegs: null,
@@ -188,7 +188,7 @@ export default Ember.Component.extend({
             this.set('showClassUsers', false);
             this.set('showViewStats', false);
 
-            this.set('A', 'w3-red');
+            this.set('A', 'w3-blue');
             this.set('B', 'w3-black');
             this.set('C', 'w3-black');
         },
@@ -200,7 +200,7 @@ export default Ember.Component.extend({
             this.set('showViewStats', false);
 
             this.set('A', 'w3-black');
-            this.set('B', 'w3-red');
+            this.set('B', 'w3-blue');
             this.set('C', 'w3-black');
         },
 
@@ -212,7 +212,7 @@ export default Ember.Component.extend({
 
             this.set('A', 'w3-black');
             this.set('B', 'w3-black');
-            this.set('C', 'w3-red');
+            this.set('C', 'w3-blue');
         },
 
         viewClassStats(user){
