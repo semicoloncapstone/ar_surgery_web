@@ -25,7 +25,7 @@ var messageBoards = require('./routes/messageBoards');
 
 
 app.use(function (request, response, next) {
-    response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    response.setHeader('Access-Control-Allow-Origin', 'http://medicart.surge.sh');
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     response.header('Access-Control-Allow-Methods', 'POST, PATCH, GET, PUT, DELETE, OPTIONS');
     next();
