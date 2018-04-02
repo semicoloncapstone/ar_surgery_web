@@ -197,7 +197,21 @@ export default Ember.Component.extend({
                     break;
                 }
             }
-            
+            /*console.log('jere');
+            console.log(self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')); ANGLE<<<<<<<<<<<<
+            x = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[0];
+            y = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[1];
+            z = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[2];
+            var x2 = self.get('dataObject').get('truePath')[0];
+            var y2 = self.get('dataObject').get('truePath')[1];
+            var z2 = self.get('dataObject').get('truePath')[2];
+            var angle = Math.acos((Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2) ) ) );
+            console.log(x*x2 +"+"+ y*y2 +"+"+ z*z2);
+            console.log(Math.sqrt(x*x + y*y + z*z));
+            console.log(Math.sqrt(x2*x2 + y2*y2 + z2*z2));
+            console.log(Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2)));
+            console.log(angle);
+            self.set('myAngle', angle*(180/Math.PI));*/
             self.set('numberData1', {
                     
                     datasets: [
