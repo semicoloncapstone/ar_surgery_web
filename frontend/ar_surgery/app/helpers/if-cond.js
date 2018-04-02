@@ -5,10 +5,6 @@ export function ifCond([v1, condition, v2]) {
     case '==':
         return (v1 == v2)
     case '===':
-      console.log('in condition');
-      console.log(v1 === v2);
-      console.log(v1);
-      console.log(v2);
       return (v1 === v2)
     case '!=':
         return (v1 != v2)

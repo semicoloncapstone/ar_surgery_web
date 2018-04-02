@@ -24,15 +24,26 @@ router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var query = request.query;
         console.log(query);
-        if (query.sender)
-        {
-            Messages.find({"sender": query.sender}, function (error, messages) {
+        if (query.sender && query.reciever){
+            var allMess = [];
+            console.log('Getting Sender/Reciever');
+            Messages.find({"sender": query.sender, "reciever": query.reciever}, function (error, ssrr) {
                 if (error) response.send(error);
-                response.json({message: messages});
-            });
+                //response.json({message: messages});
+                for (var i=0; i<ssrr.length; i++){
+                    allMess.push(ssrr[i]);
+                }
+            }).then(Messages.find({"sender": query.reciever, "reciever": query.sender}, function (error, messages) {
+                if (error) response.send(error);
+                for (var i=0; i<messages.length; i++){
+                    allMess.push(messages[i]);
+                }
+                response.json({message: allMess});
+            }));
         }
         else if (query.reciever)
         {
+            console.log('Getting Reciever');
             Messages.find({"reciever": query.reciever}, function (error, messages) {
                 if (error) response.send(error);
                 response.json({message: messages});
@@ -40,12 +51,22 @@ router.route('/')
         }
         else if (query.messageBoard)
         {
+            console.log('Getting Board');
             Messages.find({"messageBoard": query.messageBoard}, function (error, messages) {
                 if (error) response.send(error);
                 response.json({message: messages});
             });
         }
+        else if (query.sender)
+        {
+            console.log('Getting Sender');
+            Messages.find({"sender": query.sender}, function (error, messages) {
+                if (error) response.send(error);
+                response.json({message: messages});
+            });
+        }
         else {
+            console.log('Getting Other');
             Messages.find(function (error, messages) {
                 if (error) response.send(error);
                 response.json({message: messages});
