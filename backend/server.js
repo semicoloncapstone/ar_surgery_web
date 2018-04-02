@@ -112,13 +112,17 @@ app.post('/upload', function(request, response){
   form.parse(request);
 });
 app.get('/ventricles.csv', function(req, res) {
-    res.sendFile('/Users/bencassidy/Projects/ar_surgery_web/backend/ventricles.csv')
+    //res.sendFile('/Users/bencassidy/Projects/ar_surgery_web/backend/ventricles.csv');
+    res.sendFile(path.resolve(__dirname, './ventricles.csv'));
 });
 app.get('/skull.csv', function(req, res) {
-    res.sendFile('/Users/bencassidy/Projects/ar_surgery_web/backend/skull.csv')
+    //res.sendFile('/Users/bencassidy/Projects/ar_surgery_web/backend/skull.csv');
+    res.sendFile(path.resolve(__dirname, './skull.csv'));
 });
 app.get('/brain.csv', function(req, res) {
-    res.sendFile('C:/Users/Daniel/Documents/CapstoneProj/ar_surgery_web/backend/brain.csv')
+    //console.log('Getting Brain');
+    //console.log(path.resolve(__dirname, './brain.csv'));
+    res.sendFile(path.resolve(__dirname, './brain.csv'));
 });
 app.listen(3700, function () {
     console.log('Server Listening: Port 3700');
