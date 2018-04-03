@@ -12,6 +12,7 @@ also find angle between the true path and the path they should of followed, IE h
 */
 export default Ember.Component.extend({
     store: Ember.inject.service(),
+    poll: Ember.inject.service(),
     dataID: null,
     numberData: null,
     numberData1: null,
@@ -33,13 +34,17 @@ export default Ember.Component.extend({
     myxAll: [],
     myyAll: [],
     myzAll: [],
+    isPlaying: false,
 
     /* VARIABLES FOR UI */
     perf: "w3-black",
     threeD: 'w3-blue',
     isPerfData: false,
     isThreeData: true,
-
+    willDestroyElement() {
+        this.get('poll').stopAll();
+        this.get('poll').clearAll();
+    },
     init(){
         this._super(...arguments);
         var self = this;
@@ -47,6 +52,7 @@ export default Ember.Component.extend({
         this.set('myData1', []);
         this.set('myData2', []);
         
+        //this.get('poll').stopPollByLabel( 'my-poll' );
         this.get('store').findRecord('simulation', this.get('dataID')).then(function (simulation) {
             
             self.set('dataObject', simulation);
@@ -298,7 +304,7 @@ export default Ember.Component.extend({
                     name: 'Ventricles',
                     type: 'scatter3d'};
                 var trace2 = {
-                    x:[target.x, 29.177, target2.x, self.get('nose').x], y: [target.y, 4.454, target2.y, self.get('nose').y], z: [target.z, 3.792, target2.z, self.get('nose').z],
+                    x:[target.x, target2.x, self.get('nose').x], y: [target.y, target2.y, self.get('nose').y], z: [target.z, target2.z, self.get('nose').z],
                     mode: 'markers',
                     marker: {
                         color: 'rgba(0, 255, 0)',
@@ -361,10 +367,9 @@ export default Ember.Component.extend({
                     type: 'scatter3d'
                 };
 
-                var data = [trace0, trace1, trace2, trace3];
+                var data = [trace0, trace1, trace2, trace3, trace4];
                 var layout = {
                     hovermode: true,
-                    
                     scene : {
                         xaxis: {
                             autorange: true,
@@ -516,6 +521,8 @@ export default Ember.Component.extend({
     
     actions: {
         pressPerf(){
+            this.get('poll').stopAll();
+            this.get('poll').clearAll();
             this.set('perf', 'w3-blue');
             this.set('threeD', 'w3-black')
 
@@ -995,21 +1002,46 @@ export default Ember.Component.extend({
                 });
         },
         moveGraph(){
-            Plotly.animate('tester', {
-                data: [{x: [this.get('myxAll').objectAt(this.get('currentDisp'))], y:[this.get('myyAll').objectAt(this.get('currentDisp'))], z:[this.get('myzAll').objectAt(this.get('currentDisp'))]}],
-                traces:[3],
-                layout:{}
-            },
-            {transition: {
-                duration: 0
-            },
-            frame: {
-                duration: 0,
-                redraw: false
-            }});
+            if(this.get('isPlaying')){
+                this.get('poll').stopAll();
+                this.get('poll').clearAll();
+                
+                this.set('isPlaying', false);
+                console.log('here');
+            }
+            else {
+                var graphDiv = document.getElementById('tester');
+                console.log(graphDiv.data.length);
+                if (graphDiv.data.length == 5)
+                {
+                    Plotly.deleteTraces(tester, 4);
+                }
+                
+                this.get('poll').addPoll({
+                interval: 300,
+                label: 'my-poll',
+                callback: () => {
+                        Plotly.animate('tester', {
+                            data: [{x: [this.get('myxAll').objectAt(this.get('currentDisp')),this.get('myxAll').objectAt((this.get('currentDisp')+1)%this.get('myxAll').length),this.get('myxAll').objectAt((this.get('currentDisp')+2)%this.get('myxAll').length)], 
+                            y:[this.get('myyAll').objectAt(this.get('currentDisp')),this.get('myyAll').objectAt((this.get('currentDisp')+1)%this.get('myyAll').length),this.get('myyAll').objectAt((this.get('currentDisp')+2)%this.get('myxAll').length)], 
+                            z:[this.get('myzAll').objectAt(this.get('currentDisp')),this.get('myzAll').objectAt((this.get('currentDisp')+1)%this.get('myzAll').length),this.get('myzAll').objectAt((this.get('currentDisp')+2)%this.get('myxAll').length)]}],
+                            traces:[3],
+                            layout:{}
+                        },
+                        {transition: {
+                            duration: 0
+                        },
+                        frame: {
+                            duration: 0,
+                            redraw: false
+                        }});
+                        this.set('currentDisp', (this.get('currentDisp')+3)%this.get('myzAll').length);
+                    }
+                }); 
+                this.set('isPlaying', true);
+            }
             
-            this.set('currentDisp', this.get('currentDisp') +1);
-            this.send('moveGraph');
+            //this.send('moveGraph');
         },
         load(){
             
