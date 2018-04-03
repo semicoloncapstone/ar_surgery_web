@@ -1,0 +1,31 @@
+<header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
+    <h1><b><i class="fa fa-comments"></i> New Message Page *TEST*</b></h1>
+</header>
+    <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-third w3-round-large">
+            <div class="w3-container w3-padding-16">
+                <div class="w3-bar-block w3-black">
+                    {{#each allUsers as |user|}}
+                        <a class="w3-bar-item w3-button" {{action 'openMessage' user}}>{{user.firstName}} {{user.lastName}}</a>
+                    {{/each}}
+                </div>
+            </div>
+            <br>
+            
+        </div>
+        <div class="w3-twothird">
+            <div class="w3-container w3-padding-16">
+                {{#each displayMessages as |mess|}}
+                    <div class="container darker">
+                        <p><strong>{{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
+                        <p>{{mess.body}}</p>
+                        <p class="w3-right">{{mess.date}}</p>
+                    </div>
+                {{/each}}
+                <div class="ui action fluid input">
+                    {{input value=body type='text' placeholder='Type new message...' class="w3-input w3-border"}}
+                    <button class="ui w3-blue button" {{action 'sendMessage'}}><!--<i class="fas fa-paper-plane"></i>-->Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
