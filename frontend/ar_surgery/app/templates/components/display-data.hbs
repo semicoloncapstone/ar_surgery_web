@@ -52,10 +52,13 @@
 
 {{/if}}
 {{#if isThreeData}}
+    <br>
     <div class="w3-white w3-row-padding w3-margin-bottom w3-mobile">
-        <button class="ui icon button" {{action 'moveGraph'}}>
-                <i class="delete icon"></i>
-        </button>
+        <form class="w3-container w3-center">
+            <button class="w3-button {{buttonColor}} w3-round w3-center" {{action 'moveGraph'}}>
+                <i class={{buttonIcon}}></i>  {{PP}} Simulation
+            </button>
+        </form>
         <div class="w3-container w3-padding-16 w3-center">
             <div id="tester" style="width:1200px;height:900px;"></div>
         </div>

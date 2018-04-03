@@ -35,6 +35,9 @@ export default Ember.Component.extend({
     myyAll: [],
     myzAll: [],
     isPlaying: false,
+    buttonIcon: 'fas fa-play',
+    PP: 'Play',
+    buttonColor: 'w3-green',
 
     /* VARIABLES FOR UI */
     perf: "w3-black",
@@ -1005,7 +1008,9 @@ export default Ember.Component.extend({
             if(this.get('isPlaying')){
                 this.get('poll').stopAll();
                 this.get('poll').clearAll();
-                
+                this.set('buttonIcon', 'fas fa-play');
+                this.set('PP', 'Play');
+                this.set('buttonColor', 'w3-green');
                 this.set('isPlaying', false);
                 console.log('here');
             }
@@ -1039,6 +1044,9 @@ export default Ember.Component.extend({
                     }
                 }); 
                 this.set('isPlaying', true);
+                this.set('buttonIcon', 'fas fa-stop');
+                this.set('PP', 'Stop');
+                this.set('buttonColor', 'w3-red')
             }
             
             //this.send('moveGraph');
