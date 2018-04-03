@@ -21,7 +21,7 @@ export default Ember.Component.extend({
             
             if (sims.content.length>0){
                 self.set('dataID', sims.objectAt(0).id);
-                console.log('dataID', sims.objectAt(0).id);
+                //console.log('dataID', sims.objectAt(0).id);
                 self.set('isChosen', true);
                 self.set('hasSims', true);   
             } else {
@@ -77,8 +77,8 @@ export default Ember.Component.extend({
             this.set('isChosen', false);
             this.set('dataID', id);
             var self = this;
-            console.log(id);
-            console.log(this.get('dataID'));
+            //console.log(id);
+            //console.log(this.get('dataID'));
             Ember.run.next(function () {
                 self.set('isChosen', true);
             });
