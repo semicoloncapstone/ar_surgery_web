@@ -59,6 +59,8 @@
 #messageCon {
     height: 500px;
     overflow: auto;
+    position: relative;
+    bottom: 0;
 }
 
 #showHov{
@@ -66,4 +68,10 @@
 }
 #showHov:hover{
     display: block;
+}
+
+input.break {
+    word-wrap: break-word;
+    word-break: break-all;
+    height: 80px;
 }

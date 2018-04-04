@@ -29,7 +29,7 @@ export default Ember.Component.extend({
         });
         
         //console.log($('#messageCon'));
-        //$("#mydiv").scrollTop($("#mydiv").scrollHeight);
+        
     
     },
 
@@ -49,25 +49,30 @@ export default Ember.Component.extend({
                 } else {
                     self.set('zeroMsgs', false);
                     self.set('displayMessages', messages.toArray());
+                    $("#messageCon").scrollTop($('#messageCon').prop('scrollHeight'));
                 }
                 self.get('poll').stopAll();
                 self.get('poll').clearAll();
                 self.get('poll').addPoll({
-                        interval: 3000,
-                        label: 'my-poll',
-                        callback: () => {
-                            myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
-                                self.set('messageNotViewing', false);
-                                if (messages.content.length === 0){
-                                    self.set('zeroMsgs', true);
-                                    self.set('displayMessages', []);
-                                } else {
-                                    self.set('zeroMsgs', false);
-                                    self.set('displayMessages', messages.toArray());
-                                }
-                            });
-                        }
+                    interval: 100,
+                    label: 'my-poll',
+                    
+                    callback: () => {
+                        
+                        myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
+                            self.set('messageNotViewing', false);
+                            if (messages.content.length === 0){
+                                self.set('zeroMsgs', true);
+                                self.set('displayMessages', []);
+                            } else {
+                                self.set('zeroMsgs', false);
+                                self.set('displayMessages', messages.toArray());
+                            }
+                        });
+                    }
+                    
                 }); 
+                
             });
         },
 
@@ -97,7 +102,9 @@ export default Ember.Component.extend({
                 });
                 //console.log(newClass);
                 newMessage.save();
-                self.get('displayMessages').pushObject(newMessage);
+                self.get('displayMessages').pushObject(newMessage).then(
+                    $("#messageCon").scrollTop($('#messageCon').prop('scrollHeight'))
+                );
                 /*myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
                     //console.log(messages);
                     self.set('messageNotViewing', false);

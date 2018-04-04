@@ -49,7 +49,7 @@
                     {{/if}}
                     <br>
                     <div class="ui action fluid input">
-                        {{input value=body type='text' placeholder='Type new message...' class="w3-input w3-border"}}
+                        {{textarea value=body type='text' placeholder='Type new message...' class="w3-input w3-border w3-round-large" rows=2}}
                         <button class="ui w3-blue button" {{action 'sendMessage'}}><!--<i class="fas fa-paper-plane"></i>-->Send Message</button>
                     </div>
                 {{/if}}
