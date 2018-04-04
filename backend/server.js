@@ -124,8 +124,8 @@ app.get('/brain.csv', function(req, res) {
     //console.log(path.resolve(__dirname, './brain.csv'));
     res.sendFile(path.resolve(__dirname, './brain.csv'));
 });
-app.listen(443, function () {
-    console.log('Server Listening: Port 443 (HTTPS)');
+app.listen(3700, function () {
+    console.log('Server Listening: Port 3700');
 });
 
 
