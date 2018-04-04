@@ -1040,6 +1040,7 @@ export default Ember.Component.extend({
                             duration: 0,
                             redraw: false
                         }});
+                        
                         this.set('currentDisp', (this.get('currentDisp')+3)%this.get('myzAll').length);
                     }
                 }); 

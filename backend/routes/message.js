@@ -87,7 +87,7 @@ router.route('/')
         var newMessage = new Messages(request.body.message);
         newMessage.save(function (error) {
             if (error) response.send(error);
-            response.json({newMessage: newMessage});
+            response.json({message: newMessage});
         });
     });
 

@@ -5,10 +5,14 @@ export default Ember.Component.extend({
     store: Ember.inject.service(),
     allUsers: null,
     currentUser: null,
-    displayMessages: null,
+    displayMessages: [],
     messageNotViewing: true,
     zeroMsgs: false,
-
+    poll: Ember.inject.service(),
+    willDestroyElement() {
+        this.get('poll').stopAll();
+        this.get('poll').clearAll();
+    },
     init(){
         this._super(...arguments);
         var myStore = this.get('store');
@@ -41,11 +45,29 @@ export default Ember.Component.extend({
                 self.set('messageNotViewing', false);
                 if (messages.content.length === 0){
                     self.set('zeroMsgs', true);
+                    self.set('displayMessages', []);
                 } else {
                     self.set('zeroMsgs', false);
-                    self.set('displayMessages', messages);
+                    self.set('displayMessages', messages.toArray());
                 }
-                
+                self.get('poll').stopAll();
+                self.get('poll').clearAll();
+                self.get('poll').addPoll({
+                        interval: 3000,
+                        label: 'my-poll',
+                        callback: () => {
+                            myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
+                                self.set('messageNotViewing', false);
+                                if (messages.content.length === 0){
+                                    self.set('zeroMsgs', true);
+                                    self.set('displayMessages', []);
+                                } else {
+                                    self.set('zeroMsgs', false);
+                                    self.set('displayMessages', messages.toArray());
+                                }
+                            });
+                        }
+                }); 
             });
         },
 
@@ -75,8 +97,8 @@ export default Ember.Component.extend({
                 });
                 //console.log(newClass);
                 newMessage.save();
-
-                myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
+                self.get('displayMessages').pushObject(newMessage);
+                /*myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
                     //console.log(messages);
                     self.set('messageNotViewing', false);
                     if (messages.content.length === 0){
@@ -87,7 +109,7 @@ export default Ember.Component.extend({
                         console.log(messages);
                     }
                     
-                });
+                });*/
                 self.set('body', '');
                 
             }
