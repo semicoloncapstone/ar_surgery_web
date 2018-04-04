@@ -6,6 +6,8 @@ export default Ember.Component.extend({
     allUsers: null,
     currentUser: null,
     displayMessages: null,
+    messageNotViewing: true,
+    zeroMsgs: false,
 
     init(){
         this._super(...arguments);
@@ -21,7 +23,10 @@ export default Ember.Component.extend({
         myStore.findAll('user').then(function(records){
             self.set('allUsers', records);
         });
-
+        
+        //console.log($('#messageCon'));
+        //$("#mydiv").scrollTop($("#mydiv").scrollHeight);
+    
     },
 
     actions: {
@@ -33,7 +38,14 @@ export default Ember.Component.extend({
             self.set('currentReciever', user);
             myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
                 //console.log(messages);
-                self.set('displayMessages', messages);
+                self.set('messageNotViewing', false);
+                if (messages.content.length === 0){
+                    self.set('zeroMsgs', true);
+                } else {
+                    self.set('zeroMsgs', false);
+                    self.set('displayMessages', messages);
+                }
+                
             });
         },
 
@@ -44,23 +56,39 @@ export default Ember.Component.extend({
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             
             if(self.get('body') === ''){
-                alert('No message entered!');
+                alert('No message entered! Please type a message to send.');
             } else {
+                var newDate = '';
+                if (d.getMinutes()<10){
+                    newDate = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + d.getHours() + ":0" + d.getMinutes()
+                } else {
+                    newDate = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+                }
                 var newMessage = myStore.createRecord('message', {
                     sender: self.get('currentUser'),
                     reciever: self.get('currentReciever'),
                     messageBoard: null,
-                    date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes(),
+                    date: newDate,
                     header: null, 
                     body: self.get('body'),
                     type: "Public"
                 });
                 //console.log(newClass);
-                newMessage.save().then(myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: self.get('currentReciever').get('id')}).then(function(messages){
+                newMessage.save();
+
+                myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
                     //console.log(messages);
-                    self.set('displayMessages', messages);
-                    })
-                );
+                    self.set('messageNotViewing', false);
+                    if (messages.content.length === 0){
+                        self.set('zeroMsgs', true);
+                    } else {
+                        self.set('zeroMsgs', false);
+                        self.set('displayMessages', messages);
+                        console.log(messages);
+                    }
+                    
+                });
+                self.set('body', '');
                 
             }
         }

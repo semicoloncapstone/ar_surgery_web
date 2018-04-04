@@ -27,7 +27,16 @@ router.route('/')
         if (query.sender && query.reciever){
             var allMess = [];
             console.log('Getting Sender/Reciever');
-            Messages.find({"sender": query.sender, "reciever": query.reciever}, function (error, ssrr) {
+            Messages.find({"sender": {$in: [query.sender, query.reciever]}, "reciever": {$in: [query.sender, query.reciever]}}, function(error, messages){
+                if (error) response.send(error);
+                for (var i=0; i<messages.length; i++){
+                    if (messages[i].sender != messages[i].reciever){
+                        allMess.push(messages[i]);
+                    }
+                }
+                response.json({message: allMess});
+            });
+            /*Messages.find({"sender": query.sender, "reciever": query.reciever}, function (error, ssrr) {
                 if (error) response.send(error);
                 //response.json({message: messages});
                 for (var i=0; i<ssrr.length; i++){
@@ -39,7 +48,7 @@ router.route('/')
                     allMess.push(messages[i]);
                 }
                 response.json({message: allMess});
-            }));
+            }));*/
         }
         else if (query.reciever)
         {
