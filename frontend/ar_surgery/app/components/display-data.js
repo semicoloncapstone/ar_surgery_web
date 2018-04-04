@@ -34,6 +34,12 @@ export default Ember.Component.extend({
     myxAll: [],
     myyAll: [],
     myzAll: [],
+    xdisplayHead: [],
+    ydisplayHead: [],
+    zdisplayHead: [],
+    xdisplayTail: [],
+    ydisplayTail: [],
+    zdisplayTail: [],
     isPlaying: false,
     buttonIcon: 'fas fa-play',
     PP: 'Play',
@@ -86,19 +92,21 @@ export default Ember.Component.extend({
             var myduration = self.get('dataObject').get('toolPoints').objectAt(length-1).get('time') - initialTime;
             self.set('duration', myduration);
             var endTime = myduration - myduration%1;
-            var myx = [];
-            var myy = [];
-            var myz = [];
-            var myxIn = [];
-            var myyIn = [];
-            var myzIn = [];
-            var myxIn2 = [];
-            var myyIn2 = [];
-            var myzIn2 = [];
+            
+            
             var target = {x: 0, y:0, z:0};
             var target2 = {x: 0, y:0, z:0};
             var noseToTarget = {x: 0, y:0, z:0};
             var flipFactor = 1;
+            self.set('xdisplayHead', []);
+            self.set('ydisplayHead', []);
+            self.set('zdisplayHead', []);
+            self.set('xdisplayTail', []);
+            self.set('ydisplayTail', []);
+            self.set('zdisplayTail', []);
+            self.set('myxAll', []);
+            self.set('myyAll', []);
+            self.set('myzAll', []);
             //console.log("Target Position in Unity");
             //console.log(self.get('dataObject').get('target').get('position')[0]+", "+self.get('dataObject').get('target').get('position')[1]+", "+self.get('dataObject').get('target').get('position')[2]);
             //console.log("refCube Position in Unity");
@@ -137,44 +145,30 @@ export default Ember.Component.extend({
                 x = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[0];
                 y = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[1];
                 z = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[2];
-                
-                if (true)//self.get('dataObject').get('toolPoints').objectAt(i).get('inSkull'))
-                {
-                    var tempx = target2.x + x*self.get('scaleFactor')*flipFactor;
-                    var tempy= target2.y + z*self.get('scaleFactor')*flipFactor;
-                    var tempz= target2.z+y*self.get('scaleFactor');
+            
+                var tempx = target2.x + x*self.get('scaleFactor')*flipFactor;
+                var tempy= target2.y + z*self.get('scaleFactor')*flipFactor;
+                var tempz= target2.z+y*self.get('scaleFactor');
 
-                    if (i<1)
-                    {
-                        myx.push(tempx);
-                        myy.push(tempy);
-                        myz.push(tempz);
-                    }
-                    else if (false)
-                    {
-                        myxIn2.push(tempx);
-                        myyIn2.push(tempy);
-                        myzIn2.push(tempz);
-                    }
-                    else {
-                        myxIn.push(tempx);
-                        myyIn.push(tempy);
-                        myzIn.push(tempz);
-                        self.get('myxAll').push(tempx);
-                        self.get('myyAll').push(tempy);
-                        self.get('myzAll').push(tempz);
-                    }
+                    
+                
+                self.get('myxAll').push(tempx);
+                self.get('myyAll').push(tempy);
+                self.get('myzAll').push(tempz);
+                if (i>=length -3)
+                {
+                    console.log(i);
+                    self.get('xdisplayHead').push(tempx);
+                    self.get('ydisplayHead').push(tempy);
+                    self.get('zdisplayHead').push(tempz);
                 }
                 else {
-                    var tempx = target2.x + x*self.get('scaleFactor')*flipFactor;
-                    var tempy= target2.y + z*self.get('scaleFactor')*flipFactor;
-                    var tempz= target2.z+y*self.get('scaleFactor');
-                    
-                    
-                    myxIn.push(tempx);
-                    myyIn.push(tempy);
-                    myzIn.push(tempz);
+                    self.get('xdisplayTail').push(tempx);
+                    self.get('ydisplayTail').push(tempy);
+                    self.get('zdisplayTail').push(tempz);
                 }
+                
+                
                 
                 
             }
@@ -279,13 +273,14 @@ export default Ember.Component.extend({
                     x:unpack(rows, 'x1'), y: unpack(rows, 'y1'), z: unpack(rows, 'z1'),
                     mode: 'markers',
                     marker: {
-                        color: 'rgba(0, 0, 255)',
+                        color: '#FFFFFF',
                         size: 6,
                         line: {
-                            color: 'rgba(0, 0, 0)',
-                            width: 0.5
+                            color: '#FFFFFF',
+                            width: 0.5,
+                            opacity:1
                         },
-                        opacity: .1
+                        opacity: .05
                     },
                     name: 'Skull',                        
                     type: 'scatter3d'
@@ -295,11 +290,11 @@ export default Ember.Component.extend({
                     x:unpack(rows, 'x2'), y: unpack(rows, 'y2'), z: unpack(rows, 'z2'),
                     mode: 'markers',
                     marker: {
-                        color: 'rgba(0, 0, 0)',
+                        color: '#630000',
                         size: 6,
                         symbol: 'circle',
                         line: {
-                            color: 'rgb(255, 0, 0)',
+                            color: '#8e0202',
                             opacity: 0.1,
                             width: .5
                         },
@@ -307,14 +302,14 @@ export default Ember.Component.extend({
                     name: 'Ventricles',
                     type: 'scatter3d'};
                 var trace2 = {
-                    x:[target.x, target2.x, self.get('nose').x], y: [target.y, target2.y, self.get('nose').y], z: [target.z, target2.z, self.get('nose').z],
+                    x:[target2.x], y: [target2.y], z: [target2.z],
                     mode: 'markers',
                     marker: {
-                        color: 'rgba(0, 255, 0)',
+                        color: '#d2e033',
                         size: 20,
                         symbol: 'circle',
                         line: {
-                            color: 'rgb(0, 0, 0)',
+                            color: '#000000',
                             opacity: 0.1,
                             width: .5
                         },
@@ -322,57 +317,51 @@ export default Ember.Component.extend({
                     name: 'Target',
                     type: 'scatter3d'};
                 var trace3 = {
-                    x:myx, y: myy, z: myz,
+                    x:self.get('xdisplayHead'), y: self.get('ydisplayHead'), z: self.get('zdisplayHead'),
                     mode: 'markers',
                     marker: {
-                        color: 'rgba(255, 255, 0)',
+                        color: '#807f83',
                         size: 10,
                         symbol: 'circle',
                         line: {
-                            color: 'rgb(0, 0, 0)',
+                            color: '#FFFFFF',
                             opacity: 0.1,
                             width: .5
                         },
                         opacity: 1},
-                    name: 'In Skull',
+                    name: 'Tool Position',
                     type: 'scatter3d',
                     
                 };
                 var trace4 = {
-                    x:myxIn, y: myyIn, z: myzIn,
+                    x:self.get('xdisplayTail'), y: self.get('ydisplayTail'), z: self.get('zdisplayTail'),
                     mode: 'markers',
                     marker: {
-                        color: 'rgba(0, 255, 0)',
+                        color: '#4f2683',
                         size: 10,
                         symbol: 'circle',
                         line: {
-                            color: 'rgb(0, 0, 0)',
+                            color: '#807f83',
                             opacity: 0.1,
                             width: .5
                         },
                         opacity: 1},
-                    name: 'Tracked Path',
+                    name: 'Tool Path',
                     type: 'scatter3d'};
-                var trace5 = {
-                    x:myxIn2, y: myyIn2, z: myzIn2,
-                    mode: 'markers',
-                    marker: {
-                        color: 'rgba(0, 255, 255)',
-                        size: 10,
-                        symbol: 'circle',
-                        line: {
-                            color: 'rgb(0, 0, 0)',
-                            opacity: 0.1,
-                            width: .5
-                        },
-                        opacity: 1},
-                    name: 'Tracked Path2',
-                    type: 'scatter3d'
-                };
 
                 var data = [trace0, trace1, trace2, trace3, trace4];
                 var layout = {
+                    height: 580,
                     hovermode: true,
+                    autosize:true,
+                    paper_bgcolor: '#000000',
+                    margin: {
+                        l: 0,
+                        r: 0,
+                        b: 0,
+                        t: 0,
+                        pad: 0
+                    },
                     scene : {
                         xaxis: {
                             autorange: true,
@@ -408,7 +397,7 @@ export default Ember.Component.extend({
                 };
                 
                 //console.log(data);
-                Plotly.newPlot('tester', data, layout, {displaylogo: false, displayModeBar: false, markeredgewidth:0.0});
+                Plotly.newPlot('tester', data, layout, {displaylogo: false, displayModeBar: false, markeredgewidth:1.0});
             }); 
         });
         self.set('barOptions1', {
@@ -1015,22 +1004,63 @@ export default Ember.Component.extend({
                 console.log('here');
             }
             else {
-                var graphDiv = document.getElementById('tester');
-                console.log(graphDiv.data.length);
-                if (graphDiv.data.length == 5)
-                {
-                    Plotly.deleteTraces(tester, 4);
-                }
+                
                 
                 this.get('poll').addPoll({
                 interval: 300,
                 label: 'my-poll',
                 callback: () => {
+                        
+                        if(this.get('currentDisp')>=this.get('myzAll').length-3)
+                        {
+                            console.log("here");
+                            this.set('currentDisp',this.get('myzAll').length-3);
+                            this.get('poll').stopAll();
+                            this.get('poll').clearAll();
+                            this.set('buttonIcon', 'fas fa-play');
+                            this.set('PP', 'Play');
+                            this.set('buttonColor', 'w3-green');
+                            this.set('isPlaying', false);
+                        }
+                        this.set('xdisplayHead', [this.get('myxAll').objectAt(this.get('currentDisp')), this.get('myxAll').objectAt(this.get('currentDisp')+1), this.get('myxAll').objectAt(this.get('currentDisp')+2)]);
+                        this.set('ydisplayHead', [this.get('myyAll').objectAt(this.get('currentDisp')), this.get('myyAll').objectAt(this.get('currentDisp')+1), this.get('myyAll').objectAt(this.get('currentDisp')+2)]);
+                        this.set('zdisplayHead', [this.get('myzAll').objectAt(this.get('currentDisp')), this.get('myzAll').objectAt(this.get('currentDisp')+1), this.get('myzAll').objectAt(this.get('currentDisp')+2)]);
+                        if (this.get('currentDisp')==0)
+                        {
+                            this.set('xdisplayTail',[]);
+                            this.set('ydisplayTail',[]);
+                            this.set('zdisplayTail',[]);
+                            /*Plotly.animate('tester', {
+                            data: [{x: [], 
+                            y:[], 
+                            z:[]}],
+                            traces:[4],
+                            layout:{}
+                            },
+                            {transition: {
+                                duration: 0
+                            },
+                            frame: {
+                                duration: 0,
+                                redraw: false
+                            }});*/
+                        }
+                        else if(this.get('currentDisp')>2)
+                        {
+                            this.get('xdisplayTail').push(this.get('myxAll').objectAt(this.get('currentDisp')-1));
+                            this.get('xdisplayTail').push(this.get('myxAll').objectAt(this.get('currentDisp')-2));
+                            this.get('xdisplayTail').push(this.get('myxAll').objectAt(this.get('currentDisp')-3));
+                            this.get('ydisplayTail').push(this.get('myyAll').objectAt(this.get('currentDisp')-1));
+                            this.get('ydisplayTail').push(this.get('myyAll').objectAt(this.get('currentDisp')-2));
+                            this.get('ydisplayTail').push(this.get('myyAll').objectAt(this.get('currentDisp')-3));
+                            this.get('zdisplayTail').push(this.get('myzAll').objectAt(this.get('currentDisp')-1));
+                            this.get('zdisplayTail').push(this.get('myzAll').objectAt(this.get('currentDisp')-2));
+                            this.get('zdisplayTail').push(this.get('myzAll').objectAt(this.get('currentDisp')-3));
+                        }
                         Plotly.animate('tester', {
-                            data: [{x: [this.get('myxAll').objectAt(this.get('currentDisp')),this.get('myxAll').objectAt((this.get('currentDisp')+1)%this.get('myxAll').length),this.get('myxAll').objectAt((this.get('currentDisp')+2)%this.get('myxAll').length)], 
-                            y:[this.get('myyAll').objectAt(this.get('currentDisp')),this.get('myyAll').objectAt((this.get('currentDisp')+1)%this.get('myyAll').length),this.get('myyAll').objectAt((this.get('currentDisp')+2)%this.get('myxAll').length)], 
-                            z:[this.get('myzAll').objectAt(this.get('currentDisp')),this.get('myzAll').objectAt((this.get('currentDisp')+1)%this.get('myzAll').length),this.get('myzAll').objectAt((this.get('currentDisp')+2)%this.get('myxAll').length)]}],
-                            traces:[3],
+                            data: [{x:  this.get('xdisplayHead'), y:this.get('ydisplayHead'), z:this.get('zdisplayHead')},
+                            {x:  this.get('xdisplayTail'), y:this.get('ydisplayTail'), z:this.get('zdisplayTail')}],
+                            traces:[3, 4],
                             layout:{}
                         },
                         {transition: {
@@ -1042,6 +1072,7 @@ export default Ember.Component.extend({
                         }});
                         
                         this.set('currentDisp', (this.get('currentDisp')+3)%this.get('myzAll').length);
+                        console.log(this.get('currentDisp'));
                     }
                 }); 
                 this.set('isPlaying', true);
