@@ -125,9 +125,9 @@ app.get('/brain.csv', function(req, res) {
     res.sendFile(path.resolve(__dirname, './brain.csv'));
 });
 
-var key = fs.readFileSync('./private.key');
-var cert = fs.readFileSync('./primary.crt');
-var ca = fs.readFileSync('./intermediate.crt');
+var key = fs.readFileSync('./server-key.pem');
+var cert = fs.readFileSync('./server-crt.pem');
+var ca = fs.readFileSync('./ca-crt.pem');
 
 var options = {
     key: key,
