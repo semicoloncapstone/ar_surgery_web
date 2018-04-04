@@ -6,9 +6,12 @@
             <div class="w3-container">
                 <div class="w3-bar-block w3-blue w3-center">
                     {{#each allUsers as |user|}}
+                        {{#if (if-cond user.id '===' currentUser.id)}}
+                        {{else}}
                         <a class="w3-bar-item w3-button" {{action 'openMessage' user}}>
                                 {{user.firstName}} {{user.lastName}}
                         </a>
+                        {{/if}}
                     {{/each}}
                 </div>
             </div>
