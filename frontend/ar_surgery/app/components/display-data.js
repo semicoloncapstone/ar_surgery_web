@@ -264,7 +264,7 @@ export default Ember.Component.extend({
                     ]
                     
             });
-            Plotly.d3.csv('https://ec2-18-217-102-250.us-east-2.compute.amazonaws.com:3700/brain.csv', function(err, rows){
+            Plotly.d3.csv('http://ec2-18-217-102-250.us-east-2.compute.amazonaws.com:3700/brain.csv', function(err, rows){
                 function unpack(rows, key) {
                     return rows.map(function(row)
                     { return row[key]; });}
@@ -744,7 +744,7 @@ export default Ember.Component.extend({
                         ]
                         
                 });
-                Plotly.d3.csv('https://ec2-18-217-102-250.us-east-2.compute.amazonaws.com:3700/brain.csv', function(err, rows){
+                Plotly.d3.csv('http://ec2-18-217-102-250.us-east-2.compute.amazonaws.com:3700/brain.csv', function(err, rows){
                     function unpack(rows, key) {
                         return rows.map(function(row)
                         { return row[key]; });}
