@@ -24,8 +24,8 @@ module.exports = function(environment) {
 
     contentSecurityPolicy: {
       
-      'connect-src' : "'self' https://ec2-18-217-102-250.us-east-2.compute.amazonaws.com:3700"
-      //'connect-src' : "'self' http://localhost:3700"
+      //'connect-src' : "'self' https://ec2-18-217-102-250.us-east-2.compute.amazonaws.com:3700"
+      'connect-src' : "'self' http://localhost:3700"
     }
   };
 
