@@ -5,12 +5,6 @@
         {{/if}}
     {{/if}}
 {{/if}}
-{{#if notHaveMessageBoard}}
-{{else}}
-    {{#if showMsgBrd}}
-        <button class="w3-button w3-right w3-round-large w3-black" {{action 'openNewMessage'}}><i class="fas fa-comments"></i>  Send New Class Message</button>
-    {{/if}}
-{{/if}}
 
 <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
     <h3><b><i class="fas fa-graduation-cap"></i> {{cls.className}}</b></h3>
@@ -39,15 +33,31 @@
                 {{#if isZeroMsgs}}
                     <h5 class="w3-center"><strong>No Messages</strong></h5>
                 {{else}}
-                {{#each Messages as |mess index|}}
-                    <div class="container">
-                        <p><strong>From: {{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
-                        <p><strong>Subject: </strong>{{mess.header}}</p>
-                        <p>{{mess.body}}</p>
-                        <p class="w3-right">{{mess.date}}</p>
+                    <div id="messageGroup">
+                        {{#each Messages as |mess index|}}
+                            {{#if (if-cond mess.sender.id '===' currentUser.id)}}
+                                <div class="container user">
+                                    <p><strong>{{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
+                                    
+                                    <p>{{mess.body}}</p>
+                                    <p class="w3-right">{{mess.date}}</p>
+                                </div>
+                            {{else}}
+                                <div class="container sender">
+                                    <p><strong>{{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>
+                                    
+                                    <p>{{mess.body}}</p>
+                                    <p class="w3-right">{{mess.date}}</p>
+                                </div>
+                            {{/if}}
+                        {{/each}}
                     </div>
-                {{/each}}
                 {{/if}}
+                <br>
+                <div class="ui action fluid input">
+                    {{textarea value=body type='text' placeholder='Type new message...' class="w3-input w3-border w3-round-large" rows=2}}
+                    <button id='send' class="ui w3-blue button" {{action 'sendMessage'}}><!--<i class="fas fa-paper-plane"></i>-->Send Message</button>
+                </div>
             </div>
         </div>
         {{/if}}
@@ -55,14 +65,14 @@
         {{#if showClassInfo}}
         <div class="w3-threequarter">
             <div class="w3-container w3-padding-16">
-            <div class="container">
+            <div class="container sender" style="width:100%">
                 <header class="w3-container w3-center">
                     <h5><strong>About {{cls.className}}</strong></h5>
                 </header>
                 <p>{{cls.programDesc}}</p>
             </div>
             <br>
-            <div class="container">
+            <div class="container sender" style="width:100%">
                 <header class="w3-container w3-center">
                     <h5><strong>About {{cls.school}}</strong></h5>
                 </header>

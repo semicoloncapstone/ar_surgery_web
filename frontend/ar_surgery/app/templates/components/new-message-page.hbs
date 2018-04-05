@@ -21,7 +21,7 @@
         <div class="w3-twothird">
             <div class="w3-container w3-padding-16">
                 {{#if messageNotViewing}}
-                    
+                    <p class="w3-center">Select a Message Thread to View Messages</p>
                 {{else}}
                     <header class="w3-container w3-center" style="padding-top:22px; padding-bottom:22px">
                         <h5><i class="fa fa-user"></i>  <b>{{currentReciever.firstName}} {{currentReciever.lastName}}</b></h5>
@@ -35,13 +35,13 @@
                                     <div class="container sender">
                                         <!--<p><strong>{{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>-->
                                         <p>{{mess.body}}</p>
-                                        <p class="w3-right">{{mess.date}}</p>
+                                        <p id='showHov' class="w3-right">{{mess.date}}</p>
                                     </div>
                                 {{else}}
                                     <div class="container user">
                                         <!--<p><strong>{{mess.sender.firstName}} {{mess.sender.lastName}}</strong></p>-->
                                         <p>{{mess.body}}</p>
-                                        <p class="w3-right">{{mess.date}}</p>
+                                        <p id='showHov' class="w3-right">{{mess.date}}</p>
                                     </div>
                                 {{/if}}
                             {{/each}}
@@ -50,7 +50,7 @@
                     <br>
                     <div class="ui action fluid input">
                         {{textarea value=body type='text' placeholder='Type new message...' class="w3-input w3-border w3-round-large" rows=2}}
-                        <button class="ui w3-blue button" {{action 'sendMessage'}}><!--<i class="fas fa-paper-plane"></i>-->Send Message</button>
+                        <button id='send' class="ui w3-blue button" {{action 'sendMessage'}}><!--<i class="fas fa-paper-plane"></i>-->Send Message</button>
                     </div>
                 {{/if}}
             </div>

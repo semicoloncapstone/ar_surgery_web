@@ -13,6 +13,7 @@
     background-color: #2296F3;
     width: 65%;
     float: right;
+    color: white;
 }
 
 .sender{
@@ -61,11 +62,26 @@
     overflow: auto;
     position: relative;
     bottom: 0;
+    border-width: 2px;
+    border-radius: 20;
+    border-color: lightgray;
+    border-style: solid;
+    padding: 20px;
 }
 
-#showHov{
-    display: none;
+#messageGroup {
+    height: 350px;
+    overflow: auto;
+    position: relative;
+    bottom: 0;
+    border-width: 2px;
+    border-radius: 20;
+    border-color: lightgray;
+    border-style: solid;
+    padding: 20px;
 }
+
+
 #showHov:hover{
     display: block;
 }

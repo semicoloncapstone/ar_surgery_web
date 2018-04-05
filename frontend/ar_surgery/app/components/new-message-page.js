@@ -8,11 +8,15 @@ export default Ember.Component.extend({
     displayMessages: [],
     messageNotViewing: true,
     zeroMsgs: false,
+    scrollHeight: 0,
     poll: Ember.inject.service(),
     willDestroyElement() {
         this.get('poll').stopAll();
         this.get('poll').clearAll();
     },
+
+
+
     init(){
         this._super(...arguments);
         var myStore = this.get('store');
@@ -31,6 +35,13 @@ export default Ember.Component.extend({
         //console.log($('#messageCon'));
         
     
+    },
+
+    keyPress: function (e) {
+        if (e.which === 13){
+            e.preventDefault();
+            $('#send').click();
+        }
     },
 
     actions: {
@@ -58,7 +69,7 @@ export default Ember.Component.extend({
                     label: 'my-poll',
                     
                     callback: () => {
-                        
+                        self.set('scrollHeight', $('#messageCon').prop('scrollHeight'));
                         myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
                             self.set('messageNotViewing', false);
                             if (messages.content.length === 0){
@@ -87,11 +98,32 @@ export default Ember.Component.extend({
                 alert('No message entered! Please type a message to send.');
             } else {
                 var newDate = '';
-                if (d.getMinutes()<10){
-                    newDate = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + d.getHours() + ":0" + d.getMinutes()
+                var mins = '';
+                var hours = '';
+                if (d.getHours() === 0){
+                    hours = 12;
+                    if (d.getMinutes()<10){
+                        mins = "0" + d.getMinutes() + ' AM';    
+                    } else {
+                        mins = d.getMinutes() + ' AM';
+                    }
+                } else if (d.getHours() > 12){
+                    hours = d.getHours() - 12;
+                    if (d.getMinutes()<10){
+                        mins = "0" + d.getMinutes() + ' PM';    
+                    } else {
+                        mins = d.getMinutes() + ' PM';
+                    }
                 } else {
-                    newDate = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+                    hours = d.getHours();
+                    if (d.getMinutes()<10){
+                        mins = "0" + d.getMinutes() + ' AM';    
+                    } else {
+                        mins = d.getMinutes() + ' AM';
+                    }
                 }
+                newDate = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + hours + ":" + mins;
+                
                 var newMessage = myStore.createRecord('message', {
                     sender: self.get('currentUser'),
                     reciever: self.get('currentReciever'),
@@ -104,21 +136,7 @@ export default Ember.Component.extend({
                 //console.log(newClass);
                 newMessage.save();
                 self.get('displayMessages').pushObject(newMessage);
-                //$("#messageCon").scrollTop($('#messageCon').prop('scrollHeight'));
-                /*myStore.query('message', {sender: self.get('currentUser').get('id'), reciever: user.get('id')}).then(function(messages){
-                    //console.log(messages);
-                    self.set('messageNotViewing', false);
-                    if (messages.content.length === 0){
-                        self.set('zeroMsgs', true);
-                    } else {
-                        self.set('zeroMsgs', false);
-                        self.set('displayMessages', messages);
-                        console.log(messages);
-                    }
-                    
-                });*/
-                self.set('body', '');
-                
+                self.set('body', '');  
             }
         }
     }

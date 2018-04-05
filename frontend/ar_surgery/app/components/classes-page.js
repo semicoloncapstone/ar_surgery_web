@@ -273,17 +273,16 @@ export default Ember.Component.extend({
 
             if (confirm("Are you sure you would like to register for this class?")){
                 myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
-                    var newReg = myStore.createRecord('registration', {
+                    var registration = myStore.createRecord('registration', {
                         date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(),
                         duration: 6,
                         type: "Public",
                         class: cls,
                         user: record
                     });
-                    newReg.save()   
+                    registration.save()   
                 });
             }
         },
-
     }
 });

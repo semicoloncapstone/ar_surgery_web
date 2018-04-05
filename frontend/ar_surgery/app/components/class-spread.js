@@ -24,6 +24,18 @@ export default Ember.Component.extend({
     hasSims: true,
     dataID: null,
 
+    poll: Ember.inject.service(),
+    willDestroyElement() {
+        this.get('poll').stopAll();
+        this.get('poll').clearAll();
+    },
+    keyPress: function (e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            $('#send').click();
+        }
+    },
+
 
     init(){
         this._super(...arguments);
@@ -45,13 +57,33 @@ export default Ember.Component.extend({
                 //console.log(record);
                 myStore.query('message', {messageBoard: record.id}).then(function (records){
                     if (records.content.length === 0){
-                        self.set('isZeroMsgs', true);
-                        //console.log('no messages');
+                        self.set('zeroMsgs', true);
+                        self.set('Messages', []);
                     } else {
-                        self.set('Messages', records);
-                        //console.log(records);
+                        self.set('zeroMsgs', false);
+                        self.set('Messages', records.toArray());
                     }
                 });
+                self.get('poll').stopAll();
+                self.get('poll').clearAll();
+                self.get('poll').addPoll({
+                    interval: 3000,
+                    label: 'my-poll',
+                    
+                    callback: () => {
+                        
+                        myStore.query('message', {messageBoard: record.id}).then(function(messages){
+                            if (messages.content.length === 0){
+                                self.set('zeroMsgs', true);
+                                self.set('Messages', []);
+                            } else {
+                                self.set('zeroMsgs', false);
+                                self.set('Messages', messages.toArray());
+                            }
+                        });
+                    }
+                    
+                }); 
             }
         });
 
@@ -143,37 +175,56 @@ export default Ember.Component.extend({
         },
 
         sendMessage(){
+            var thisBoard = this.get('thisMessageBoard');
             var self = this;
             var myStore = this.get('store');
             var d = new Date();
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            var thisBoard = this.get('thisMessageBoard');
-
-            var newMessage = myStore.createRecord('message', {
-                sender: self.get('currentUser'),
-                reciever: null,
-                messageBoard: thisBoard,
-                date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(),
-                header: self.get('header'), 
-                body: self.get('body'),
-                type: "Board"
-            });
-            //console.log(newClass);
-            newMessage.save();
-
-            var thisClass = this.get('cls');
-
-            myStore.queryRecord('messageBoard', {class: thisClass.id}).then(function(record){
-                myStore.query('message', {messageBoard: record.id}).then(function (records){
-                    console.log(records);
-                    self.set('Messages', records);
-                     
+            
+            if(self.get('body') === ''){
+                alert('No message entered! Please type a message to send.');
+            } else {
+                var newDate = '';
+                var mins = '';
+                var hours = '';
+                if (d.getHours() === 0){
+                    hours = 12;
+                    if (d.getMinutes()<10){
+                        mins = "0" + d.getMinutes() + ' AM';    
+                    } else {
+                        mins = d.getMinutes() + ' AM';
+                    }
+                } else if (d.getHours() > 12){
+                    hours = d.getHours() - 12;
+                    if (d.getMinutes()<10){
+                        mins = "0" + d.getMinutes() + ' PM';    
+                    } else {
+                        mins = d.getMinutes() + ' PM';
+                    }
+                } else {
+                    hours = d.getHours();
+                    if (d.getMinutes()<10){
+                        mins = "0" + d.getMinutes() + ' AM';    
+                    } else {
+                        mins = d.getMinutes() + ' AM';
+                    }
+                }
+                newDate = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " " + hours + ":" + mins;
+                
+                var message = myStore.createRecord('message', {
+                    sender: self.get('currentUser'),
+                    reciever: null,
+                    messageBoard: thisBoard,
+                    date: newDate,
+                    header: null, 
+                    body: self.get('body'),
+                    type: "Board"
                 });
-            });
-
-            this.set('isUserFormEditing', false);
-            Ember.$('.ui.modal.auth').modal('hide');
-            Ember.$('.ui.modal.auth').remove();
+                //console.log(newClass);
+                message.save();
+                self.get('Messages').pushObject(message);
+                self.set('body', '');  
+            }
         },
         
         cancelSend(){
