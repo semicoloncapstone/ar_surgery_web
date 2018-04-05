@@ -199,8 +199,17 @@ router.route('/')
                                             message4.nonce = null;
                                             message4.response = null;
                                             message4.wrongPassword = true;
+                                            var wrongPassword= new Logins.Model({
+                                                userName: request.body.login.userName,
+                                                password: null,
+                                                nonce: null,
+                                                response: null,
+                                                token: null,
+                                                wrongUserName: null,
+                                                wrongPassword: true,
+                                            });
                                             console.log("wrong password");
-                                            response.json({login: message4});
+                                            response.json({login: wrongPassword});
                                         }
                                     }
                                     else

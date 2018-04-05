@@ -47,6 +47,7 @@ export default Ember.Component.extend({
           self.set('error', "");
           self.get('routing').transitionTo('home');
         }, function (error) {
+          console.log(error);
           if (error === "passwordReset") {
             self.set('isPasswordChanging', true);
           } else if (error === "wrongUserName") {
