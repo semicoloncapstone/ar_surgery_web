@@ -1,4 +1,4 @@
-<body id="login">
+<body>
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
   <span class="w3-bar-item">MedicART</span>
 </div>
@@ -20,7 +20,7 @@
         </header>-->
         <!--<label>Username</label>-->
         <div class="w3-container">
-        <div class="ui labeled fluid input">
+        <div class="ui labeled fluid input {{passwordError}}">
             <div class="ui black label">
                 <i class="fa fa-user"></i> Username
             </div>
@@ -33,7 +33,7 @@
             <button class="w3-button w3-round-large w3-black w3-right" {{action 'seePass'}}><i class={{buttonIcon}}></i></button>
         </header>-->
         
-        <div class="ui labeled action fluid input">
+        <div class="ui labeled action fluid input {{passwordError}}">
             <div class="ui black label">
                 <i class="fa fa-lock"></i> Password
             </div>
@@ -47,8 +47,10 @@
         
         {{error}}
         -->
-        <br>
-        <button id="login" class="w3-bar w3-round w3-button w3-right" {{action 'login'}} style="color:white; background-color: #CB0917"><b><i class="fas fa-sign-in-alt"></i> Login{{error}}</b></button>
+        
+        <p class='w3-center' style="color: #CB0917">{{error}}</p>
+        
+        <button id="login" class="w3-bar w3-round w3-button w3-right" {{action 'login'}} style="color:white; background-color: #CB0917"><b><i class="fas fa-sign-in-alt"></i> Login</b></button>
         <br><br>
     </div>
 </div>

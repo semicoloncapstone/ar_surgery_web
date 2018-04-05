@@ -10,11 +10,15 @@ export default Ember.Component.extend({
   self: this,
   buttonIcon: "fas fa-eye",
   seeNoSee: "password",
+  usernameError: '',
+  passwordError: '',
 
   keyPress: function (e) {
-      
+        console.log('Key Pressed');
         if (e.which === 13) {
-            Ember.$('#login').click();
+          console.log($('#login'));
+          $('#login').click();
+            console.log('Enter Pressed');
         }
   },
   
@@ -51,11 +55,11 @@ export default Ember.Component.extend({
           if (error === "passwordReset") {
             self.set('isPasswordChanging', true);
           } else if (error === "wrongUserName") {
-            self.set('error', 'Please enter a correct user name');
+            self.set('passwordError', 'error');
+            self.set('error', 'Incorrect Username or Password');
           } else if (error === "wrongPassword") {
-            console.log('wrong password error');
-
-            self.set('error', 'Please enter a correct password');
+            self.set('passwordError', 'error');
+            self.set('error', 'Incorrect Username or Password');
           } else if (error === "loginFailed") {
             self.set('error', 'Login Failed ...');
           }
