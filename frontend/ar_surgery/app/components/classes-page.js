@@ -283,6 +283,7 @@ export default Ember.Component.extend({
                     registration.save()   
                 });
             }
+            
         },
     }
 });
