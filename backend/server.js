@@ -124,7 +124,7 @@ app.get('/brain.csv', function(req, res) {
     //console.log(path.resolve(__dirname, './brain.csv'));
     res.sendFile(path.resolve(__dirname, './brain.csv'));
 });
-
+/*
 var key = fs.readFileSync('./server-key.pem');
 var cert = fs.readFileSync('./server-crt.pem');
 var ca = fs.readFileSync('./ca-crt.pem');
@@ -140,12 +140,13 @@ var https = require('https');
 https.createServer(options, app).listen(3700, function () {
     console.log('Server Listening: Port 3700 (HTTPS)');
 });
+*/
 
-/*
+
 app.listen(3700, function () {
     console.log('Server Listening: Port 3700');
 });
-*/
+
 
 
 
