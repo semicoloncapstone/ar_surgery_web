@@ -55,7 +55,10 @@ export default Ember.Component.extend({
               teacher: this.get('currentUser')
             });
             //console.log(newClass);
-            newClass.save();
+            newClass.save().then(function()
+            {
+                self.get('onConfirm')();
+            });
 
             console.log(newClass);
 

@@ -17,7 +17,7 @@
   <div class="w3-row-padding w3-margin-bottom">
       <div class="w3-container w3-padding-16">
         {{#if TCLADDIsPermitted}}
-          {{add-new-class}}
+          {{add-new-class onConfirm=(action "update")}}
         {{/if}}
           <table class="w3-table-all w3-hoverable">
             <thead>
@@ -51,7 +51,7 @@
                 </td>
                 <td>
                   {{#if (index-of regButton index)}}
-                    <button class="w3-button w3-black w3-round-large w3-center" {{action 'register' class index}}>
+                    <button id={{index}} class="w3-button w3-black w3-round-large w3-center" {{action 'register' class index}}>
                       Register
                     </button>
                   {{else}}
@@ -114,7 +114,7 @@
                 </td>
                 {{#if TCLDELIsPermitted}}
                 <td>
-                  {{delete-class ID=class.id}}
+                  {{delete-class ID=class.id onConfirm=(action "update")}}
                 </td>
                 {{/if}}
               </tr>

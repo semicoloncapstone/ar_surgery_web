@@ -13,8 +13,7 @@ var mongoose = require('mongoose');
 router.route('/')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         var user = request.query;
-        console.log("HEY THIS:" + user);
-        console.log("here");
+        
         if (user.user == null){
             Classes.Model.find(function (error, messages) {
                 if (error) response.send(error);
@@ -24,8 +23,7 @@ router.route('/')
         else {
             Registrations.Model.find({"user": user.user}, function (error,registrations) {
                 if (error) response.send(error);
-                console.log(user.user);
-                console.log(registrations);
+                
                 var idArray = [];
                 //response.json({registrations: registrations});
                 for(var i =0; i<registrations.length; i++)
@@ -46,7 +44,18 @@ router.route('/')
         var newclass = new Classes.Model(request.body.class);
         newclass.save(function (error) {
             if (error) response.send(error);
-            response.json({newclass: newclass});
+            var newRegistration = new Registrations.Model();
+            var d = new Date();
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            newRegistration.date= months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+            newRegistration.duration = 7;
+            newRegistration.type = "Teacher";
+            newRegistration.class = newclass._id;
+            newRegistration.user=newclass.teacher;
+            newRegistration.save(function (error){
+                response.json({class: newclass});
+            });
+            
         });
     });
 
@@ -54,7 +63,7 @@ router.route('/:class_id')
     .get(parseUrlencoded, parseJSON, function (request, response) {
         Classes.Model.findById(request.params.class_id, function (error, theclass) {
             if (error) response.send(error);
-            response.json({theclass: theclass});
+            response.json({class: theclass});
         })
     })
     .put(parseUrlencoded, parseJSON, function (request, response) {
@@ -74,7 +83,7 @@ router.route('/:class_id')
                         response.send({error: error});
                     }
                     else {
-                        response.json({theclass: theclass});
+                        response.json({class: theclass});
                     }
                 });
             }
@@ -86,7 +95,7 @@ router.route('/:class_id')
        Classes.Model.findByIdAndRemove(request.params.class_id,
             function (error, deleted) {
                 if (!error) {
-                    response.json({theclass: deleted});
+                    response.json({class: deleted});
                 }
             }
         );

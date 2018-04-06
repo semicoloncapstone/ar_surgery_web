@@ -29,7 +29,7 @@ export default Ember.Component.extend({
     nose: {x:-.263, y: -1.306, z: 13.3},
     scaleFactor: 3.88,
     myAngle: null,
-    timeInSkull: 0,
+    timeInSkull: null,
     currentDisp:0,
     myxAll: [],
     myyAll: [],
@@ -54,6 +54,7 @@ export default Ember.Component.extend({
     threeD: 'w3-blue',
     isPerfData: false,
     isThreeData: true,
+    error: null,
     willDestroyElement() {
         this.get('poll').stopAll();
         this.get('poll').clearAll();
@@ -74,14 +75,14 @@ export default Ember.Component.extend({
             else {
                 this.get('slider').value = this.get('currentDisp');
             }
-            this.get('timeDisplay').innerHTML = (this.get('slider').value / 10).toFixed(1) + " (s)";
+            this.get('timeDisplay').innerHTML = " "+(this.get('slider').value / 10).toFixed(1) + " (s)";
             var self = this;
 
 
             this.get('slider').oninput = function () {
                 self.set('currentDisp', this.value - 2);
 
-                self.get('timeDisplay').innerHTML = (self.get('slider').value / 10).toFixed(1) + " (s)";
+                self.get('timeDisplay').innerHTML = " "+(self.get('slider').value / 10).toFixed(1) + " (s)";
                 if (self.get('currentDisp') >= self.get('myzAll').length - 3) {
                     //console.log("here");
                     self.set('currentDisp', self.get('myzAll').length - 3);
@@ -259,21 +260,31 @@ export default Ember.Component.extend({
                     break;
                 }
             }
-            /*console.log('jere');
-            console.log(self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')); ANGLE<<<<<<<<<<<<
-            x = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[0];
-            y = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[1];
-            z = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[2];
-            var x2 = self.get('dataObject').get('truePath')[0];
-            var y2 = self.get('dataObject').get('truePath')[1];
-            var z2 = self.get('dataObject').get('truePath')[2];
-            var angle = Math.acos((Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2) ) ) );
-            console.log(x*x2 +"+"+ y*y2 +"+"+ z*z2);
-            console.log(Math.sqrt(x*x + y*y + z*z));
-            console.log(Math.sqrt(x2*x2 + y2*y2 + z2*z2));
-            console.log(Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2)));
-            console.log(angle);
-            self.set('myAngle', angle*(180/Math.PI));*/
+            if (lastTimeInSkull != 0 && lastTimeInSkull != length -1)
+            {
+                x = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[0];
+                y = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[1];
+                z = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[2];
+                var x2 = self.get('dataObject').get('truePath')[0];
+                var y2 = self.get('dataObject').get('truePath')[1];
+                var z2 = self.get('dataObject').get('truePath')[2];
+                var angle = Math.acos((Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2) ) ) );
+                //console.log(x*x2 +"+"+ y*y2 +"+"+ z*z2);
+                //console.log(Math.sqrt(x*x + y*y + z*z));
+                //console.log(Math.sqrt(x2*x2 + y2*y2 + z2*z2));
+                //console.log(Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2)));
+                //console.log(angle);
+                var temp = parseFloat(angle*(180/Math.PI)).toFixed(2);
+                
+                self.set('myAngle', temp);
+                
+            }
+            else 
+            {
+                self.set('myAngle', "N/A");
+            }
+            console.log("TIMEINSKULL" + lastTimeInSkull);
+            //console.log(self.get('myAngle').toFixed(2));
             self.set('numberData1', {
                     
                     datasets: [
@@ -291,15 +302,16 @@ export default Ember.Component.extend({
             if (lastTimeInSkull == length-1)
             {
                 incisionx = 0;
-                incisiony = 0;
-                incisionz = 0;
+                incisiony = 3;
+                incisionz = 6.2;
             }
             else{
                 incisionx = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[0];
                 incisiony = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[1];
                 incisionz = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[2];
             }
-            for (var i =0; i<=lastTimeInSkull; i++)//IP loop phase 1, distance
+            var timeIn = 0;
+            for (var i =0; i<lastTimeInSkull; i++)//IP loop phase 1, distance
             {
                 x = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[0];
                 y = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[1];
@@ -314,10 +326,19 @@ export default Ember.Component.extend({
                 self.get('myData').push({ x: time, y:distance});
 
                 if (self.get('dataObject').get('toolPoints').objectAt(i).get('inSkull')){
-                    
+                    timeIn ++;
                 }
                 
             }
+            if(self.get('dataObject').timeOut)
+            {
+                self.set('error', "Too slow, timed out");
+            }
+            else if(self.get('myData1').length == 0)
+            {
+                self.set('error', "Did not finish procedure in Skull");
+            }
+            self.set('timeInSkull', (timeIn/10).toFixed(1));
             self.set('numberData', {
                     
                     datasets: [
@@ -497,7 +518,7 @@ export default Ember.Component.extend({
                             
                         },
                         ticks: {
-                                suggestedMin: 0,
+                                //suggestedMin: 0,
                                 //suggestedMax: this.get('maxDistance')+2, 
                         }
                     }],
@@ -511,7 +532,7 @@ export default Ember.Component.extend({
                         labelString: 'Time(s)'
                     },
                     ticks: {
-                            suggestedMin: 0,
+                            //suggestedMin: 0,
                             //suggestedMax: this.get('duration') + 2,
                             
                         }
@@ -550,7 +571,7 @@ export default Ember.Component.extend({
                             
                         },
                         ticks: {
-                                suggestedMin: 0,
+                                //suggestedMin: 0,
                                 //suggestedMax: this.get('maxDistance')+2, 
                         }
                     }],
@@ -580,11 +601,15 @@ export default Ember.Component.extend({
         moveLeft(){
             if (this.get('slider').value != this.get('slider').min)
             {
+                if (this.get('slider').value == this.get('slider').max)
+                {
+                    this.set('currentDisp', this.get('slider').max-2);
+                }
                 this.get('slider').value = this.get('currentDisp')-1;
                 
                 this.set('currentDisp', this.get('slider').value-2);
             
-                this.get('timeDisplay').innerHTML = (this.get('slider').value / 10).toFixed(1) + " (s)";
+                this.get('timeDisplay').innerHTML = " "+(this.get('slider').value / 10).toFixed(1) + " (s)";
                 if (this.get('currentDisp') >= this.get('myzAll').length - 3) {
                     //console.log("here");
                     this.set('currentDisp', this.get('myzAll').length - 3);
@@ -629,7 +654,7 @@ export default Ember.Component.extend({
                 
                 this.set('currentDisp', this.get('slider').value-2);
             
-                this.get('timeDisplay').innerHTML = (this.get('slider').value / 10).toFixed(1) + " (s)";
+                this.get('timeDisplay').innerHTML =" "+ (this.get('slider').value / 10).toFixed(1) + " (s)";
                 if (this.get('currentDisp') >= this.get('myzAll').length - 3) {
                     //console.log("here");
                     this.set('currentDisp', this.get('myzAll').length - 3);
@@ -818,21 +843,31 @@ export default Ember.Component.extend({
                     break;
                 }
             }
-            /*console.log('jere');
-            console.log(self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')); ANGLE<<<<<<<<<<<<
-            x = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[0];
-            y = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[1];
-            z = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[2];
-            var x2 = self.get('dataObject').get('truePath')[0];
-            var y2 = self.get('dataObject').get('truePath')[1];
-            var z2 = self.get('dataObject').get('truePath')[2];
-            var angle = Math.acos((Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2) ) ) );
-            console.log(x*x2 +"+"+ y*y2 +"+"+ z*z2);
-            console.log(Math.sqrt(x*x + y*y + z*z));
-            console.log(Math.sqrt(x2*x2 + y2*y2 + z2*z2));
-            console.log(Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2)));
-            console.log(angle);
-            self.set('myAngle', angle*(180/Math.PI));*/
+            if (lastTimeInSkull != 0 && lastTimeInSkull != length -1)
+            {
+                x = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[0];
+                y = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[1];
+                z = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull).get('position')[2];
+                var x2 = self.get('dataObject').get('truePath')[0];
+                var y2 = self.get('dataObject').get('truePath')[1];
+                var z2 = self.get('dataObject').get('truePath')[2];
+                var angle = Math.acos((Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2) ) ) );
+                //console.log(x*x2 +"+"+ y*y2 +"+"+ z*z2);
+                //console.log(Math.sqrt(x*x + y*y + z*z));
+                //console.log(Math.sqrt(x2*x2 + y2*y2 + z2*z2));
+                //console.log(Math.abs(x*x2 + y*y2 + z*z2)/(Math.sqrt(x*x + y*y + z*z)* Math.sqrt(x2*x2 + y2*y2 + z2*z2)));
+                //console.log(angle);
+                var temp = parseFloat(angle*(180/Math.PI)).toFixed(2);
+                
+                self.set('myAngle', temp);
+                
+            }
+            else 
+            {
+                self.set('myAngle', "N/A");
+            }
+            console.log("TIMEINSKULL" + lastTimeInSkull);
+            //console.log(self.get('myAngle').toFixed(2));
             self.set('numberData1', {
                     
                     datasets: [
@@ -850,15 +885,16 @@ export default Ember.Component.extend({
             if (lastTimeInSkull == length-1)
             {
                 incisionx = 0;
-                incisiony = 0;
-                incisionz = 0;
+                incisiony = 3;
+                incisionz = 6.2;
             }
             else{
                 incisionx = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[0];
                 incisiony = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[1];
                 incisionz = self.get('dataObject').get('toolPoints').objectAt(lastTimeInSkull+1).get('position')[2];
             }
-            for (var i =0; i<=lastTimeInSkull; i++)//IP loop phase 1, distance
+            var timeIn = 0;
+            for (var i =0; i<lastTimeInSkull; i++)//IP loop phase 1, distance
             {
                 x = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[0];
                 y = self.get('dataObject').get('toolPoints').objectAt(i).get('position')[1];
@@ -873,10 +909,19 @@ export default Ember.Component.extend({
                 self.get('myData').push({ x: time, y:distance});
 
                 if (self.get('dataObject').get('toolPoints').objectAt(i).get('inSkull')){
-                    
+                    timeIn ++;
                 }
                 
             }
+            if(self.get('dataObject').timeOut)
+            {
+                self.set('error', "Too slow, timed out");
+            }
+            else if(self.get('myData1').length == 0)
+            {
+                self.set('error', "Did not finish procedure in Skull");
+            }
+            self.set('timeInSkull', (timeIn/10).toFixed(1));
             self.set('numberData', {
                     
                     datasets: [
@@ -1056,7 +1101,7 @@ export default Ember.Component.extend({
                             
                         },
                         ticks: {
-                                suggestedMin: 0,
+                                //suggestedMin: 0,
                                 //suggestedMax: this.get('maxDistance')+2, 
                         }
                     }],
@@ -1070,7 +1115,7 @@ export default Ember.Component.extend({
                         labelString: 'Time(s)'
                     },
                     ticks: {
-                            suggestedMin: 0,
+                            //suggestedMin: 0,
                             //suggestedMax: this.get('duration') + 2,
                             
                         }
@@ -1109,7 +1154,7 @@ export default Ember.Component.extend({
                             
                         },
                         ticks: {
-                                suggestedMin: 0,
+                                //suggestedMin: 0,
                                 //suggestedMax: this.get('maxDistance')+2, 
                         }
                     }],
@@ -1213,7 +1258,7 @@ export default Ember.Component.extend({
                             this.get('zdisplayTail').push(this.get('myzAll').objectAt(this.get('currentDisp')-3));
                         }
                         this.get('slider').value=this.get('currentDisp')+2; //slider
-                         this.get('timeDisplay').innerHTML = (this.get('slider').value/10).toFixed(1) + " (s)";
+                         this.get('timeDisplay').innerHTML = " "+(this.get('slider').value/10).toFixed(1) + " (s)";
                         Plotly.animate('tester', {
                             data: [{x:  this.get('xdisplayHead'), y:this.get('ydisplayHead'), z:this.get('zdisplayHead')},
                             {x:  this.get('xdisplayTail'), y:this.get('ydisplayTail'), z:this.get('zdisplayTail')}],

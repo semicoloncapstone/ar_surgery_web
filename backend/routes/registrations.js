@@ -33,7 +33,7 @@ router.route('/')
         var newRegistration = new Registrations.Model(request.body.registration);
         newRegistration.save(function (error) {
             if (error) response.send(error);
-            response.json({newRegistration: newRegistration});
+            response.json({registration: newRegistration});
         });
     });
 router.route('/:registration_id')

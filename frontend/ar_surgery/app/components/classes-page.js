@@ -125,7 +125,7 @@ export default Ember.Component.extend({
                     if (records.content.length === 0){
                         self.set('noClass', true);
                     } else {
-                        self.set('personalClasses', records);
+                        self.set('personalClasses', records.toArray());
                         myClasses = records;
                         //console.log(records.objectAt(0).id);
                         myStore.findAll('class').then(function (rcds){
@@ -230,7 +230,7 @@ export default Ember.Component.extend({
                     self.set('regButton', buttonSet);
                 } else {
                     for (var i = 0; i < records.content.length; i++){
-                        for (var j = 0; j < myClasses.content.length; j++){
+                        for (var j = 0; j < myClasses.length; j++){
                             if (records.objectAt(i).id === myClasses.objectAt(j).id){
                                 buttonSet[i] = false;
                             }
@@ -260,7 +260,52 @@ export default Ember.Component.extend({
 
             this.set('oneClass', theClass);
         },
-
+        update(){
+            var self = this;
+            var auth = this.get('oudaAuth');
+            var myClasses = null;
+            var buttonSet = [];
+            var myStore = this.get('store');
+            var userID = null;
+        
+            myStore.findAll('class').then(function (records) {
+                self.set('allClasses', records);
+                for(var i =0; i < records.content.length; i++){
+                    buttonSet[i] = true;
+                }
+                self.set('regButton', buttonSet);
+                myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
+                    self.set('currentUser', record);
+                    //console.log(record.id);
+                    userID = record.id;
+                    myStore.query('class', {user: userID}).then(function(records) {
+                        //console.log(records);
+                        if (records.content.length === 0){
+                            self.set('noClass', true);
+                        } else {
+                            self.set('personalClasses', records.toArray());
+                            myClasses = records;
+                            //console.log(records.objectAt(0).id);
+                            myStore.findAll('class').then(function (rcds){
+                                //console.log(rcds);
+                                for (var i = 0; i < rcds.content.length; i++){
+                                    for (var j = 0; j < myClasses.content.length; j++){
+                                        if (rcds.objectAt(i).id === myClasses.objectAt(j).id){
+                                            buttonSet[i] = false;
+                                        }
+                                    }
+                                    if(buttonSet[i] !== false){
+                                        buttonSet[i] = true;       
+                                    }
+                                }
+                                self.set('regButton', buttonSet);
+                            });
+                        }
+                        
+                    })
+                });
+            });
+        },
         register(cls, ndx){
             var self = this;
             var myStore = this.get('store');
@@ -272,6 +317,8 @@ export default Ember.Component.extend({
             //console.log(cls);
 
             if (confirm("Are you sure you would like to register for this class?")){
+                self.get('regButton')[ndx] = false;
+                
                 myStore.queryRecord('user', {userName: auth.getName}).then(function (record){
                     var registration = myStore.createRecord('registration', {
                         date: months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(),
@@ -280,7 +327,10 @@ export default Ember.Component.extend({
                         class: cls,
                         user: record
                     });
-                    registration.save()   
+                    registration.save();   
+                    
+                    self.get('personalClasses').pushObject(cls);
+                    self.send('myClass');
                 });
             }
             

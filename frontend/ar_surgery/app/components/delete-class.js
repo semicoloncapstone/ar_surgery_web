@@ -6,10 +6,12 @@ export default Ember.Component.extend({
     actions: {
         deleteOneClass: function(id){
             var myStore = this.get('store');
+            var self=this;
             if (confirm ('Are you sure you need to delete this class?')) {
 
                 myStore.find('class', id).then(function(theClass) {
                     theClass.destroyRecord();
+                    self.get('onConfirm')();
                 });
             }
         },

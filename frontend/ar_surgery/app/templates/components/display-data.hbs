@@ -1,3 +1,12 @@
+{{#if dataObject.debugged}}
+    <div class="ui warning message">
+    
+    <div class="header">
+        This Simulation was done in Debug Mode.
+    </div>
+        
+    </div>
+{{/if}}
 <br>
 <div class="w3-bar w3-black">
     <a class="w3-bar-item w3-button w3-mobile {{threeD}}" style="width:50%" {{action "pressThree"}}>
@@ -29,6 +38,7 @@
             </div>
         </div>
     </div>
+    
     <div class="w3-row-padding w3-margin-bottom">
         <table class="w3-table-all w3-centered w3-hoverable">
             <thead>
@@ -38,6 +48,10 @@
             </thead>
             <tbody>
                 <tr>
+                    <td>Mistakes</td>
+                    <td>{{error}}</td>
+                </tr>
+                <tr>
                     <td>Angle of Incision Error</td>
                     <td>{{myAngle}}°</td>
                 </tr>
@@ -45,6 +59,7 @@
                     <td>Time in Skull Before Phase 2</td>
                     <td>{{timeInSkull}}s</td>
                 </tr>
+                
             </tbody>
         </table>
     </div>
