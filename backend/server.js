@@ -25,7 +25,7 @@ var messageBoards = require('./routes/messageBoards');
 
 
 app.use(function (request, response, next) {
-    response.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    response.setHeader('Access-Control-Allow-Origin', 'https://medicart.surge.sh');
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     response.header('Access-Control-Allow-Methods', 'POST, PATCH, GET, PUT, DELETE, OPTIONS');
     next();
@@ -124,7 +124,7 @@ app.get('/brain.csv', function(req, res) {
     //console.log(path.resolve(__dirname, './brain.csv'));
     res.sendFile(path.resolve(__dirname, './brain.csv'));
 });
-/*
+
 var key = fs.readFileSync('./server-key.pem');
 var cert = fs.readFileSync('./server-crt.pem');
 var ca = fs.readFileSync('./ca-crt.pem');
@@ -139,12 +139,13 @@ var https = require('https');
 
 https.createServer(options, app).listen(3700, function () {
     console.log('Server Listening: Port 3700 (HTTPS)');
-});*/
+});
 
-
+/*
 app.listen(3700, function () {
     console.log('Server Listening: Port 3700');
 });
+*/
 
 
 
