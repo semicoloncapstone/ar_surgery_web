@@ -20,10 +20,51 @@
                 {{#if isOwningTeacher}}
                     <button class="w3-button w3-block w3-round-large {{C}}" {{action 'showUsers'}}><i class="fas fa-users"></i>  Class User Information</button>
                     <br>
+                {{else}}
+                    <button class="w3-button w3-block w3-round-large {{D}}" {{action 'viewSimulations'}}><i class="fas fa-comments"></i>  View Simulations</button>
+                    <br>
                 {{/if}}
+                <button class="w3-button w3-block w3-round-large {{E}}" {{action 'viewModuleDescription'}}><i class="fas fa-comments"></i>  Course Module</button>
+                <br>
+                
+                <br>
             </div>
             <br>
         </div>
+    {{#if viewSims}}
+        {{#if is4450}}
+            {{#if hasSims}}
+                <form class="w3-container w3-center">
+                    <select class="ui dropdown" onchange={{action "setSimID" value="target.value"}}>
+                        {{#each usersSims as |sim|}}
+                            <option value={{sim.id}}>SE4450: {{sim.date}}</option>
+                        {{/each}}
+                    </select>
+                </form>
+                <br>
+                {{#if isChosen}}
+                    {{display-data dataID = dataID}}
+                {{/if}}
+            {{else}}
+                <p class="w3-center">This User has no Simulation Data</p>
+            {{/if}}
+        {{else}}
+            <h1> No Module for this class has been created.</h1>
+        {{/if}}
+    {{/if}}
+    {{#if modDesc}}
+        {{#if is4450}}
+        <img class="w3-image" src="/assets/images/vpshunt.png" style="display: block; margin-left: auto; margin-right: auto; width: 250px;">
+        <img class="w3-image" src="/assets/images/brain.png" style="display: block; margin-left: auto; margin-right: auto; width: 300px;">
+        <div class="container sender" style="width:100%">
+            <p>The module for SE4450 is a very basic simulation of a targetting task of the Lateral Ventricle of the brain. This is type of targeting task helps the trainee practice skills in spatial reasoning
+                that are applicable to many very common procedures such as insertion of a drain into brain as in ER room situations, the insertions of ventriculoperitoneal (VP) shunt. These procedures require
+                absolute accurary and fair speed. By repeatedly practicing with these simulations trainees will be more comfortable when they perform these tasks on real patients. </p>
+        </div>
+        {{else}}
+            <h1> No Module for this class has been created.</h1>
+        {{/if}}
+    {{/if}}
     {{#if showMsgBrd}}
         {{#if notHaveMessageBoard}}
             <p class="w3-center">Message Board Not Established</p>
@@ -83,6 +124,7 @@
         {{/if}}
         {{#if isOwningTeacher}}
             {{#if showClassUsers}}
+            {{#if is4450}}
                 <div class="w3-threequarter">
                     <div class="w3-container w3-padding-16">
                         <table class="w3-table-all w3-hoverable">
@@ -119,7 +161,10 @@
                             </tbody>
                         </table>
                     </div>
-                </div>   
+                </div>  
+                {{else}}
+                    <h1> No Module for this class has been created.</h1>
+                {{/if}} 
                 {{#if showViewStats}}
                     <button class="w3-button w3-right w3-round-large w3-red" {{action 'showUsers'}}><i class="fas fa-times"></i></button>
                     {{class-side-stats cls=cls userSt=userToStats}}

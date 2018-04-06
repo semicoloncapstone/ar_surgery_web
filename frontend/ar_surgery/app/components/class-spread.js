@@ -13,9 +13,13 @@ export default Ember.Component.extend({
     showMsgBrd: false,
     showClassInfo: true,
     showClassUsers: false,
+    viewSims: false,
+    modDesc: null,
     A: "w3-blue",
     B: "w3-black",
     C: "w3-black",   
+    D: "w3-black",
+    E: "w3-black",
     classRegs: null,
     noRegs: false, 
     showViewStats: false,
@@ -23,8 +27,11 @@ export default Ember.Component.extend({
     isChosen: false,
     hasSims: true,
     dataID: null,
-
+    usersSims: null,
+    isChosen: false,
+    hasSims: true,
     poll: Ember.inject.service(),
+    is4450: null,
     willDestroyElement() {
         this.get('poll').stopAll();
         this.get('poll').clearAll();
@@ -43,11 +50,29 @@ export default Ember.Component.extend({
         var self = this;
         var thisClass = this.get('cls');
         var auth = this.get('oudaAuth');
-        
+        if(this.get('cls').id == "5aa023a841dc3a156b00018a")
+        {
+            this.set('is4450', true);
+        }
+        else 
+        {
+            this.set('is4450', false);
+        }
         myStore.queryRecord('user', {userName: auth.getName}).then(function(record){
             self.set('currentUser', record);
         });
-
+        myStore.query('simulation', {user: auth.getName}).then(function(sims){
+            self.set('usersSims', sims);
+            
+            if (sims.content.length>0){
+                self.set('dataID', sims.objectAt(0).id);
+                //console.log('dataID', sims.objectAt(0).id);
+                self.set('isChosen', true);
+                self.set('hasSims', true);   
+            } else {
+                self.set('hasSims', false);
+            }
+        });
         myStore.queryRecord('messageBoard', {class: thisClass.id}).then(function(record){
             if (record === null){
                 self.set('notHaveMessageBoard', true);
@@ -138,6 +163,16 @@ export default Ember.Component.extend({
     }),
 
     actions: {
+        setSimID(id){
+            this.set('isChosen', false);
+            this.set('dataID', id);
+            var self = this;
+            //console.log(id);
+            //console.log(this.get('dataID'));
+            Ember.run.next(function () {
+                self.set('isChosen', true);
+            });
+        },
         establishMsgBoard(cls){
             //createRecord --> messageBoard
             //console.log(cls.get('className'));
@@ -238,10 +273,14 @@ export default Ember.Component.extend({
             this.set('showMsgBrd', false);
             this.set('showClassUsers', false);
             this.set('showViewStats', false);
+            this.set('viewSims', false);
+            this.set('modDesc', false);
 
             this.set('A', 'w3-blue');
             this.set('B', 'w3-black');
             this.set('C', 'w3-black');
+            this.set('D', 'w3-black');
+            this.set('E', 'w3-black');
         },
 
         showBrd(){
@@ -249,10 +288,14 @@ export default Ember.Component.extend({
             this.set('showMsgBrd', true);
             this.set('showClassUsers', false);
             this.set('showViewStats', false);
+            this.set('viewSims', false);
+            this.set('modDesc', false);
 
             this.set('A', 'w3-black');
             this.set('B', 'w3-blue');
             this.set('C', 'w3-black');
+            this.set('D', 'w3-black');
+            this.set('E', 'w3-black');
         },
 
         showUsers(){
@@ -260,10 +303,42 @@ export default Ember.Component.extend({
             this.set('showMsgBrd', false);
             this.set('showClassUsers', true);
             this.set('showViewStats', false);
+            this.set('viewSims', false);
+            this.set('modDesc', false);
 
             this.set('A', 'w3-black');
             this.set('B', 'w3-black');
             this.set('C', 'w3-blue');
+            this.set('D', 'w3-black');
+            this.set('E', 'w3-black');
+        },
+        viewSimulations(){
+            this.set('showClassInfo', false);
+            this.set('showMsgBrd', false);
+            this.set('showClassUsers', false);
+            this.set('showViewStats', false);
+            this.set('viewSims', true);
+            this.set('modDesc', false);
+
+            this.set('A', 'w3-black');
+            this.set('B', 'w3-black');
+            this.set('C', 'w3-black');
+            this.set('D', 'w3-blue');
+            this.set('E', 'w3-black');
+        },
+        viewModuleDescription(){
+            this.set('showClassInfo', false);
+            this.set('showMsgBrd', false);
+            this.set('showClassUsers', false);
+            this.set('showViewStats', false);
+            this.set('viewSims', false);
+            this.set('modDesc', true);
+
+            this.set('A', 'w3-black');
+            this.set('B', 'w3-black');
+            this.set('C', 'w3-black');
+            this.set('D', 'w3-black');
+            this.set('E', 'w3-blue');
         },
 
         viewClassStats(user){
